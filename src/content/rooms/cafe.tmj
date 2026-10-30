@@ -1,0 +1,1687 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.10.2",
+ "orientation": "isometric",
+ "renderorder": "right-down",
+ "width": 14,
+ "height": 10,
+ "tilewidth": 32,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "room",
+   "type": "string",
+   "value": "cafe"
+  },
+  {
+   "name": "wallHeight",
+   "type": "int",
+   "value": 90
+  }
+ ],
+ "layers": [
+  {
+   "id": 1,
+   "name": "Floor",
+   "type": "tilelayer",
+   "width": 14,
+   "height": 10,
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    4,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    4,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    5
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Walls",
+   "type": "tilelayer",
+   "width": 14,
+   "height": 10,
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+    30,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    9,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    11,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    12,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    13,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    14,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    15,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Furniture",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 1,
+     "name": "silo",
+     "type": "furniture",
+     "x": 4.0,
+     "y": 124.0,
+     "width": 24.0,
+     "height": 24.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-silo"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "name": "banquette",
+     "type": "furniture",
+     "x": 0,
+     "y": 8.0,
+     "width": 20.0,
+     "height": 84.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-banquette"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "name": "two-top-1",
+     "type": "furniture",
+     "x": 24.0,
+     "y": 20.0,
+     "width": 14.0,
+     "height": 14.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-two-top"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "two-top-2",
+     "type": "furniture",
+     "x": 24.0,
+     "y": 56.0,
+     "width": 14.0,
+     "height": 14.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-two-top"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "chair-1",
+     "type": "furniture",
+     "x": 41.6,
+     "y": 23.2,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-nw"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "chair-2",
+     "type": "furniture",
+     "x": 41.6,
+     "y": 59.2,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-nw"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "counter",
+     "type": "furniture",
+     "x": 44.0,
+     "y": 100.0,
+     "width": 16,
+     "height": 48,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-counter-run"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "counter-return",
+     "type": "furniture",
+     "x": 28.0,
+     "y": 148.0,
+     "width": 32,
+     "height": 12.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-counter-return"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "bin",
+     "type": "furniture",
+     "x": 63.2,
+     "y": 151.2,
+     "width": 7.04,
+     "height": 7.04,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-bin"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "counter-plant",
+     "type": "furniture",
+     "x": 72.0,
+     "y": 150.4,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-plant-small"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "table-a",
+     "type": "furniture",
+     "x": 100.0,
+     "y": 60.0,
+     "width": 16,
+     "height": 16,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-table"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "chair-a1",
+     "type": "furniture",
+     "x": 88.8,
+     "y": 64.0,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-se"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "chair-a2",
+     "type": "furniture",
+     "x": 119.2,
+     "y": 64.0,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-nw"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "table-b",
+     "type": "furniture",
+     "x": 100.0,
+     "y": 104.0,
+     "width": 16,
+     "height": 16,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-table"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "chair-b1",
+     "type": "furniture",
+     "x": 88.8,
+     "y": 108.0,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-se"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "chair-b2",
+     "type": "furniture",
+     "x": 119.2,
+     "y": 108.0,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-chair-nw"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "armchair-1",
+     "type": "furniture",
+     "x": 56.0,
+     "y": 6.4,
+     "width": 16,
+     "height": 16,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-armchair"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "side-table",
+     "type": "furniture",
+     "x": 73.6,
+     "y": 8.8,
+     "width": 12.0,
+     "height": 10.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-side-table"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "armchair-2",
+     "type": "furniture",
+     "x": 92.0,
+     "y": 6.4,
+     "width": 16,
+     "height": 16,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-armchair"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "sofa",
+     "type": "furniture",
+     "x": 120.0,
+     "y": 5.6,
+     "width": 44.0,
+     "height": 18.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-sofa"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "side-plant",
+     "type": "furniture",
+     "x": 167.2,
+     "y": 6.4,
+     "width": 8.0,
+     "height": 8.0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-side-plant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "plant-corner",
+     "type": "furniture",
+     "x": 36.8,
+     "y": 0.0,
+     "width": 11.2,
+     "height": 11.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-plant-tall"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "plant-window",
+     "type": "furniture",
+     "x": 208.0,
+     "y": 5.6,
+     "width": 11.2,
+     "height": 11.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-plant-tall"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "plant-front",
+     "type": "furniture",
+     "x": 208.8,
+     "y": 51.2,
+     "width": 11.2,
+     "height": 11.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-plant-tall"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "pendant-banquette-1",
+     "type": "furniture",
+     "x": 29.6,
+     "y": 25.6,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "name": "pendant-banquette-2",
+     "type": "furniture",
+     "x": 29.6,
+     "y": 61.6,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "pendant-counter",
+     "type": "furniture",
+     "x": 50.4,
+     "y": 122.4,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "pendant-table-a",
+     "type": "furniture",
+     "x": 106.4,
+     "y": 66.4,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "pendant-table-b",
+     "type": "furniture",
+     "x": 106.4,
+     "y": 110.4,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "pendant-armchairs",
+     "type": "furniture",
+     "x": 78.4,
+     "y": 12.8,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "pendant-sofa",
+     "type": "furniture",
+     "x": 140.0,
+     "y": 16.0,
+     "width": 3.2,
+     "height": 3.2,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "art",
+       "type": "string",
+       "value": "cafe-pendant"
+      },
+      {
+       "name": "solid",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Hotspots",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 32,
+     "name": "silo",
+     "type": "hotspot",
+     "x": 16.0,
+     "y": 136.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bean silo"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Today's special · daily quests"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 56
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 2.25
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 7.0
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 33,
+     "name": "banquette",
+     "type": "hotspot",
+     "x": 9.6,
+     "y": 48.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "The regulars"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Daily quests"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 24
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 3.4
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 2.7
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 34,
+     "name": "mural",
+     "type": "hotspot",
+     "x": 0.0,
+     "y": 48.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "The mural"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Art Cards & museums"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 66
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 3.6
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 2.9
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 35,
+     "name": "counter",
+     "type": "hotspot",
+     "x": 52.0,
+     "y": 124.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Espresso bar"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Morning Rush"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 32
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 2.25
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 7.75
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 36,
+     "name": "sofa",
+     "type": "hotspot",
+     "x": 142.4,
+     "y": 14.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Window sofa"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Pick a book"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 24
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 8.9
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 2.1
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 37,
+     "name": "door",
+     "type": "hotspot",
+     "x": 192.0,
+     "y": 0.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Glass door"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Open the map"
+      },
+      {
+       "name": "z",
+       "type": "int",
+       "value": 48
+      },
+      {
+       "name": "standU",
+       "type": "float",
+       "value": 12.0
+      },
+      {
+       "name": "standV",
+       "type": "float",
+       "value": 1.0
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Spots",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 38,
+     "name": "roxy-bar",
+     "type": "spot",
+     "x": 36.0,
+     "y": 124.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 39,
+     "name": "roxy-sofa",
+     "type": "seat",
+     "x": 140.0,
+     "y": 16.8,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 40,
+     "name": "hook",
+     "type": "spot",
+     "x": 13.6,
+     "y": 110.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 41,
+     "name": "door",
+     "type": "spot",
+     "x": 192.0,
+     "y": 11.2,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 42,
+     "name": "queue-0",
+     "type": "spot",
+     "x": 69.6,
+     "y": 128.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 43,
+     "name": "queue-1",
+     "type": "spot",
+     "x": 79.2,
+     "y": 139.2,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 44,
+     "name": "queue-2",
+     "type": "spot",
+     "x": 88.8,
+     "y": 150.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 45,
+     "name": "seat-a1",
+     "type": "seat",
+     "x": 92.8,
+     "y": 68.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 46,
+     "name": "seat-a2",
+     "type": "seat",
+     "x": 123.2,
+     "y": 68.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 47,
+     "name": "seat-b1",
+     "type": "seat",
+     "x": 92.8,
+     "y": 112.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 48,
+     "name": "seat-b2",
+     "type": "seat",
+     "x": 123.2,
+     "y": 112.0,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 49,
+     "name": "seat-arm1",
+     "type": "seat",
+     "x": 64.0,
+     "y": 15.2,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 50,
+     "name": "seat-arm2",
+     "type": "seat",
+     "x": 100.0,
+     "y": 15.2,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 51,
+     "name": "regular-1",
+     "type": "seat",
+     "x": 13.6,
+     "y": 26.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 52,
+     "name": "regular-2",
+     "type": "seat",
+     "x": 13.6,
+     "y": 62.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 53,
+     "name": "parcel",
+     "type": "spot",
+     "x": 182.4,
+     "y": 22.4,
+     "width": 0.0,
+     "height": 0.0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "tilesets": [
+  {
+   "firstgid": 1,
+   "name": "cafe-floor",
+   "tilewidth": 32,
+   "tileheight": 26,
+   "tilecount": 5,
+   "columns": 5,
+   "image": "tiles/cafe-floor.png",
+   "imagewidth": 160,
+   "imageheight": 26,
+   "margin": 0,
+   "spacing": 0,
+   "tileoffset": {
+    "x": 0,
+    "y": 10
+   }
+  },
+  {
+   "firstgid": 6,
+   "name": "cafe-walls",
+   "tilewidth": 32,
+   "tileheight": 106,
+   "tilecount": 25,
+   "columns": 25,
+   "image": "tiles/cafe-walls.png",
+   "imagewidth": 800,
+   "imageheight": 106,
+   "margin": 0,
+   "spacing": 0,
+   "tileoffset": {
+    "x": 0,
+    "y": 0
+   }
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 54
+}

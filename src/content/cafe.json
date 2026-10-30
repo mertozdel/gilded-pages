@@ -1,0 +1,20 @@
+{
+  "hotspots": [
+    { "id": "bar", "label": "Espresso bar", "hint": "Play Morning Rush", "x": 0.13 },
+    { "id": "records", "label": "Record player", "hint": "Pick the music", "x": 0.33 },
+    { "id": "piano", "label": "Piano", "hint": "Roxy plays a tune", "x": 0.47 },
+    { "id": "tables", "label": "Café tables", "hint": "Chat with the regulars", "x": 0.63 },
+    { "id": "window", "label": "Window table", "hint": "Take a reading break", "x": 0.79 },
+    { "id": "door", "label": "Street door", "hint": "Open the map", "x": 0.94 }
+  ],
+  "hookX": 0.27,
+  "counter": { "from": 0.06, "to": 0.24 },
+  "drinks": [
+    { "id": "flat-white", "name": "Flat white", "key": "1" },
+    { "id": "oat-latte", "name": "Oat latte", "key": "2" },
+    { "id": "cortado", "name": "Cortado", "key": "3" },
+    { "id": "iced-matcha", "name": "Iced matcha", "key": "4" },
+    { "id": "pour-over", "name": "Pour-over", "key": "5" },
+    { "id": "cafe-creme", "name": "Café crème", "key": "6" }
+  ]
+}

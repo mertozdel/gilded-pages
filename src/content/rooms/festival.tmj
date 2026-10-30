@@ -1,0 +1,2893 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.10.2",
+ "orientation": "isometric",
+ "renderorder": "right-down",
+ "width": 34,
+ "height": 34,
+ "tilewidth": 64,
+ "tileheight": 32,
+ "infinite": false,
+ "nextlayerid": 114,
+ "nextobjectid": 114,
+ "properties": [
+  {
+   "name": "room",
+   "type": "string",
+   "value": "festival"
+  },
+  {
+   "name": "frameX",
+   "type": "int",
+   "value": 128
+  },
+  {
+   "name": "frameY",
+   "type": "int",
+   "value": 0
+  },
+  {
+   "name": "frameWidth",
+   "type": "int",
+   "value": 1920
+  },
+  {
+   "name": "frameHeight",
+   "type": "int",
+   "value": 1080
+  },
+  {
+   "name": "artWidth",
+   "type": "int",
+   "value": 1024
+  },
+  {
+   "name": "artHeight",
+   "type": "int",
+   "value": 906
+  },
+  {
+   "name": "figureScale",
+   "type": "int",
+   "value": 1
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 5,
+   "name": "stage",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 1,
+     "name": "stage-top",
+     "type": "stage",
+     "x": 404.10596026490066,
+     "y": 716.4238410596026,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -29.80132450331132,
+       "y": -339.73509933774824
+      },
+      {
+       "x": 318.87417218543055,
+       "y": -330.79470198675494
+      },
+      {
+       "x": 295.03311258278154,
+       "y": 2.9801324503312117
+      }
+     ],
+     "properties": []
+    },
+    {
+     "id": 2,
+     "name": "stage-front",
+     "type": "overlay",
+     "x": 404.10596026490066,
+     "y": 716.4238410596026,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 295.03311258278154,
+       "y": 2.9801324503312117
+      },
+      {
+       "x": 318.87417218543055,
+       "y": -330.79470198675494
+      },
+      {
+       "x": 419.0066225165564,
+       "y": -233.04635761589395
+      },
+      {
+       "x": 420.79470198675506,
+       "y": 108.47682119205308
+      },
+      {
+       "x": 92.98013245033121,
+       "y": 92.98013245033121
+      }
+     ],
+     "properties": []
+    },
+    {
+     "id": 3,
+     "name": "monitor",
+     "type": "overlay",
+     "x": 649.0728476821192,
+     "y": 676.4900662251656,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 30.397350993377586,
+       "y": -25.629139072847693
+      },
+      {
+       "x": 72.1192052980133,
+       "y": 16.09271523178802
+      },
+      {
+       "x": 41.721854304635826,
+       "y": 41.721854304635826
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "led-floor",
+     "type": "led-floor",
+     "x": 426.75496688741725,
+     "y": 712.8476821192054,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 20.264900662251648,
+       "y": -98.94039735099341
+      },
+      {
+       "x": 194.90066225165572,
+       "y": -273.5761589403975
+      },
+      {
+       "x": 308.7417218543046,
+       "y": -308.7417218543046
+      },
+      {
+       "x": 280.7284768211921,
+       "y": -8.940397350993408
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "name": "stands",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 6,
+     "name": "stand-left",
+     "type": "stand",
+     "x": 195.49668874172187,
+     "y": 805.8278145695365,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -47.68211920529802,
+       "y": -166.88741721854308
+      },
+      {
+       "x": 156.15894039735105,
+       "y": -156.158940397351
+      },
+      {
+       "x": 370.7284768211921,
+       "y": 58.41059602649
+      },
+      {
+       "x": 351.65562913907286,
+       "y": 220.5298013245033
+      },
+      {
+       "x": 214.56953642384104,
+       "y": 214.5695364238411
+      }
+     ],
+     "properties": []
+    },
+    {
+     "id": 7,
+     "name": "stand-right",
+     "type": "stand",
+     "x": 690.1986754966887,
+     "y": 358.8079470198676,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -44.7019867549667,
+       "y": -181.7880794701988
+      },
+      {
+       "x": 115.6291390728478,
+       "y": -163.31125827814566
+      },
+      {
+       "x": 377.88079470198693,
+       "y": 98.94039735099341
+      },
+      {
+       "x": 339.73509933774847,
+       "y": 160.92715231788077
+      },
+      {
+       "x": 149.00662251655638,
+       "y": 137.08609271523176
+      }
+     ],
+     "properties": []
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "name": "benches",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 9,
+     "name": "table-a",
+     "type": "bench",
+     "x": 627.6158940397352,
+     "y": 1041.2582781456954,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 2.980132450331098,
+       "y": -122.18543046357615
+      },
+      {
+       "x": 87.61589403973505,
+       "y": -111.45695364238406
+      },
+      {
+       "x": 125.76158940397352,
+       "y": -73.3112582781456
+      },
+      {
+       "x": 116.82119205298022,
+       "y": 45.29801324503319
+      },
+      {
+       "x": 45.29801324503319,
+       "y": 45.29801324503319
+      }
+     ],
+     "properties": [
+      {
+       "name": "overlay",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "table-b",
+     "type": "bench",
+     "x": 785.5629139072848,
+     "y": 1050.1986754966888,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -11.920529801324506,
+       "y": -143.04635761589395
+      },
+      {
+       "x": 78.67549668874176,
+       "y": -138.27814569536417
+      },
+      {
+       "x": 134.70198675496692,
+       "y": -82.25165562913901
+      },
+      {
+       "x": 139.4701986754967,
+       "y": 32.18543046357627
+      },
+      {
+       "x": 50.06622516556297,
+       "y": 50.06622516556308
+      }
+     ],
+     "properties": [
+      {
+       "name": "overlay",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "table-c",
+     "type": "bench",
+     "x": 967.3509933774835,
+     "y": 939.9337748344371,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -8.940397350993408,
+       "y": -134.10596026490066
+      },
+      {
+       "x": 99.53642384105956,
+       "y": -123.37748344370857
+      },
+      {
+       "x": 137.68211920529802,
+       "y": -85.2317880794701
+      },
+      {
+       "x": 123.37748344370857,
+       "y": 33.97350993377472
+      },
+      {
+       "x": 38.14569536423846,
+       "y": 38.14569536423846
+      }
+     ],
+     "properties": [
+      {
+       "name": "overlay",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "table-d",
+     "type": "bench",
+     "x": 922.6490066225166,
+     "y": 722.384105960265,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 5.960264900662196,
+       "y": -125.16556291390725
+      },
+      {
+       "x": 114.43708609271528,
+       "y": -114.43708609271528
+      },
+      {
+       "x": 152.58278145695374,
+       "y": -76.29139072847681
+      },
+      {
+       "x": 146.62251655629154,
+       "y": 39.33774834437088
+      },
+      {
+       "x": 50.06622516556297,
+       "y": 50.06622516556297
+      }
+     ],
+     "properties": [
+      {
+       "name": "overlay",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 76,
+   "name": "cheers",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 14,
+     "name": "cheer-1",
+     "type": "cheer",
+     "x": 362.98013245033115,
+     "y": 802.8476821192053,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "cheer-2",
+     "type": "cheer",
+     "x": 438.07947019867555,
+     "y": 854.1059602649007,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "cheer-3",
+     "type": "cheer",
+     "x": 440.46357615894044,
+     "y": 804.0397350993378,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "cheer-4",
+     "type": "cheer",
+     "x": 451.19205298013253,
+     "y": 767.0860927152319,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "cheer-5",
+     "type": "cheer",
+     "x": 560.2649006622518,
+     "y": 872.5827814569537,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "cheer-6",
+     "type": "cheer",
+     "x": 548.9403973509934,
+     "y": 998.3443708609273,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "cheer-7",
+     "type": "cheer",
+     "x": 559.0728476821191,
+     "y": 928.6092715231789,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "cheer-8",
+     "type": "cheer",
+     "x": 649.6688741721855,
+     "y": 885.6953642384105,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "cheer-9",
+     "type": "cheer",
+     "x": 721.1920529801325,
+     "y": 880.9271523178809,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "cheer-10",
+     "type": "cheer",
+     "x": 720,
+     "y": 932.1854304635763,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "cheer-11",
+     "type": "cheer",
+     "x": 804.6357615894041,
+     "y": 883.3112582781458,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "cheer-12",
+     "type": "cheer",
+     "x": 650.8609271523179,
+     "y": 762.9139072847682,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "name": "cheer-13",
+     "type": "cheer",
+     "x": 702.1192052980134,
+     "y": 747.4172185430464,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "cheer-14",
+     "type": "cheer",
+     "x": 824.3046357615895,
+     "y": 589.4701986754967,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "cheer-15",
+     "type": "cheer",
+     "x": 836.8211920529802,
+     "y": 541.1920529801325,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "cheer-16",
+     "type": "cheer",
+     "x": 917.8807947019868,
+     "y": 543.5761589403974,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "cheer-17",
+     "type": "cheer",
+     "x": 861.2582781456953,
+     "y": 419.0066225165564,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "cheer-18",
+     "type": "cheer",
+     "x": 920.2649006622516,
+     "y": 615.0993377483444,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 32,
+     "name": "cheer-19",
+     "type": "cheer",
+     "x": 870.1986754966888,
+     "y": 750.9933774834437,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 33,
+     "name": "cheer-20",
+     "type": "cheer",
+     "x": 897.6158940397352,
+     "y": 723.5761589403974,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 34,
+     "name": "cheer-21",
+     "type": "cheer",
+     "x": 891.655629139073,
+     "y": 936.9536423841059,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 35,
+     "name": "cheer-22",
+     "type": "cheer",
+     "x": 909.5364238410597,
+     "y": 900.0000000000001,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 36,
+     "name": "cheer-23",
+     "type": "cheer",
+     "x": 1105.629139072848,
+     "y": 672.9139072847682,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 37,
+     "name": "cheer-24",
+     "type": "cheer",
+     "x": 1159.8675496688743,
+     "y": 656.8211920529802,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 38,
+     "name": "cheer-25",
+     "type": "cheer",
+     "x": 1094.9006622516556,
+     "y": 902.9801324503312,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 39,
+     "name": "cheer-26",
+     "type": "cheer",
+     "x": 1098.4768211920532,
+     "y": 863.6423841059603,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 40,
+     "name": "cheer-1",
+     "type": "cheer",
+     "x": 540,
+     "y": 807.019867549669,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 41,
+     "name": "cheer-2",
+     "type": "cheer",
+     "x": 608.5430463576159,
+     "y": 817.1523178807948,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 42,
+     "name": "cheer-3",
+     "type": "cheer",
+     "x": 650.8609271523179,
+     "y": 762.9139072847682,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 43,
+     "name": "cheer-4",
+     "type": "cheer",
+     "x": 696.1589403973511,
+     "y": 741.4569536423841,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 44,
+     "name": "cheer-5",
+     "type": "cheer",
+     "x": 770.066225165563,
+     "y": 741.4569536423841,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 45,
+     "name": "cheer-6",
+     "type": "cheer",
+     "x": 807.019867549669,
+     "y": 723.5761589403974,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 46,
+     "name": "cheer-7",
+     "type": "cheer",
+     "x": 804.0397350993377,
+     "y": 659.8013245033113,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 47,
+     "name": "cheer-8",
+     "type": "cheer",
+     "x": 750.9933774834439,
+     "y": 565.0331125827814,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 48,
+     "name": "cheer-9",
+     "type": "cheer",
+     "x": 790.9271523178809,
+     "y": 525.0993377483444,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 49,
+     "name": "cheer-10",
+     "type": "cheer",
+     "x": 818.3443708609271,
+     "y": 485.7615894039735,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 50,
+     "name": "cheer-11",
+     "type": "cheer",
+     "x": 830.2649006622518,
+     "y": 595.430463576159,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 51,
+     "name": "cheer-12",
+     "type": "cheer",
+     "x": 838.6092715231789,
+     "y": 539.4039735099338,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 52,
+     "name": "cheer-13",
+     "type": "cheer",
+     "x": 919.0728476821192,
+     "y": 544.7682119205298,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 53,
+     "name": "cheer-14",
+     "type": "cheer",
+     "x": 867.2185430463576,
+     "y": 424.9668874172187,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 54,
+     "name": "cheer-15",
+     "type": "cheer",
+     "x": 518.5430463576159,
+     "y": 1028.7417218543046,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 55,
+     "name": "cheer-16",
+     "type": "cheer",
+     "x": 511.9867549668874,
+     "y": 1085.364238410596,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 56,
+     "name": "cheer-17",
+     "type": "cheer",
+     "x": 566.8211920529802,
+     "y": 1004.3046357615895,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 57,
+     "name": "cheer-18",
+     "type": "cheer",
+     "x": 544.1721854304636,
+     "y": 893.4437086092715,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 58,
+     "name": "cheer-19",
+     "type": "cheer",
+     "x": 721.1920529801325,
+     "y": 888.0794701986756,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 59,
+     "name": "cheer-20",
+     "type": "cheer",
+     "x": 791.523178807947,
+     "y": 829.6688741721855,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 60,
+     "name": "cheer-21",
+     "type": "cheer",
+     "x": 870.1986754966888,
+     "y": 750.9933774834437,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 61,
+     "name": "cheer-22",
+     "type": "cheer",
+     "x": 900.5960264900664,
+     "y": 732.5165562913908,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 62,
+     "name": "cheer-23",
+     "type": "cheer",
+     "x": 989.4039735099338,
+     "y": 717.6158940397352,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 63,
+     "name": "cheer-24",
+     "type": "cheer",
+     "x": 1040.066225165563,
+     "y": 652.6490066225166,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 64,
+     "name": "cheer-25",
+     "type": "cheer",
+     "x": 910.1324503311259,
+     "y": 906.5562913907286,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 65,
+     "name": "cheer-26",
+     "type": "cheer",
+     "x": 888.6754966887418,
+     "y": 939.9337748344371,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 66,
+     "name": "cheer-27",
+     "type": "cheer",
+     "x": 970.9271523178809,
+     "y": 893.4437086092717,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 67,
+     "name": "cheer-28",
+     "type": "cheer",
+     "x": 755.1655629139074,
+     "y": 1061.5231788079473,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 68,
+     "name": "cheer-29",
+     "type": "cheer",
+     "x": 791.523178807947,
+     "y": 1060.9271523178809,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 69,
+     "name": "cheer-30",
+     "type": "cheer",
+     "x": 1040.066225165563,
+     "y": 883.907284768212,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 70,
+     "name": "cheer-31",
+     "type": "cheer",
+     "x": 1155.6953642384105,
+     "y": 732.5165562913909,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 71,
+     "name": "cheer-32",
+     "type": "cheer",
+     "x": 1156.291390728477,
+     "y": 672.317880794702,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 72,
+     "name": "cheer-33",
+     "type": "cheer",
+     "x": 628.2119205298014,
+     "y": 1205.1655629139073,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 73,
+     "name": "cheer-34",
+     "type": "cheer",
+     "x": 937.5496688741722,
+     "y": 1036.4900662251657,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 74,
+     "name": "cheer-35",
+     "type": "cheer",
+     "x": 1098.476821192053,
+     "y": 899.4039735099338,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 75,
+     "name": "cheer-36",
+     "type": "cheer",
+     "x": 1104.4370860927152,
+     "y": 869.6026490066225,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 84,
+   "name": "band",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 77,
+     "name": "bassist",
+     "type": "player",
+     "x": 659.8013245033113,
+     "y": 656.225165562914,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 78,
+     "name": "tuba-1",
+     "type": "band",
+     "x": 294.4370860927152,
+     "y": 509.0066225165563,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 44.701986754966924,
+       "y": -44.701986754966924
+      },
+      {
+       "x": 233.04635761589412,
+       "y": 143.64238410596028
+      },
+      {
+       "x": 188.3443708609272,
+       "y": 188.3443708609272
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "tuba"
+      }
+     ]
+    },
+    {
+     "id": 79,
+     "name": "trumpet",
+     "type": "band",
+     "x": 315.89403973509934,
+     "y": 423.1788079470199,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 43.50993377483445,
+       "y": -43.50993377483445
+      },
+      {
+       "x": 216.35761589403978,
+       "y": 129.33774834437088
+      },
+      {
+       "x": 172.84768211920533,
+       "y": 172.8476821192054
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "trumpet"
+      }
+     ]
+    },
+    {
+     "id": 80,
+     "name": "tuba-2",
+     "type": "band",
+     "x": 324.23841059602654,
+     "y": 350.4635761589404,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 41.72185430463571,
+       "y": -41.72185430463571
+      },
+      {
+       "x": 196.68874172185434,
+       "y": 113.24503311258286
+      },
+      {
+       "x": 154.96688741721857,
+       "y": 154.96688741721857
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "tuba"
+      }
+     ]
+    },
+    {
+     "id": 81,
+     "name": "clarinet",
+     "type": "band",
+     "x": 401.7218543046357,
+     "y": 342.1192052980133,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 37.54966887417231,
+       "y": -37.54966887417231
+      },
+      {
+       "x": 199.6688741721856,
+       "y": 124.56953642384099
+      },
+      {
+       "x": 162.1192052980133,
+       "y": 162.1192052980133
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "clarinet"
+      }
+     ]
+    },
+    {
+     "id": 82,
+     "name": "singer-1",
+     "type": "band",
+     "x": 467.8807947019868,
+     "y": 354.63576158940396,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 37.549668874172085,
+       "y": -37.549668874172085
+      },
+      {
+       "x": 184.17218543046351,
+       "y": 109.07284768211935
+      },
+      {
+       "x": 146.62251655629143,
+       "y": 146.62251655629143
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "singer"
+      }
+     ]
+    },
+    {
+     "id": 83,
+     "name": "singer-2",
+     "type": "band",
+     "x": 518.5430463576159,
+     "y": 351.65562913907286,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 39.33774834437088,
+       "y": -39.33774834437088
+      },
+      {
+       "x": 191.9205298013245,
+       "y": 113.24503311258275
+      },
+      {
+       "x": 152.58278145695363,
+       "y": 152.58278145695363
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "role",
+       "type": "string",
+       "value": "singer"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 87,
+   "name": "dj-booth",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 85,
+     "name": "dj",
+     "type": "player",
+     "x": 473.24503311258275,
+     "y": 461.32450331125835,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    },
+    {
+     "id": 86,
+     "name": "booth",
+     "type": "overlay",
+     "x": 401.12582781456956,
+     "y": 564.4370860927153,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -4.768211920529893,
+       "y": -121.58940397350989
+      },
+      {
+       "x": 22.052980132450273,
+       "y": -153.17880794701983
+      },
+      {
+       "x": 32.18543046357621,
+       "y": -156.15894039735105
+      },
+      {
+       "x": 169.27152317880802,
+       "y": -174.03973509933775
+      },
+      {
+       "x": 252.71523178807945,
+       "y": -90.59602649006627
+      },
+      {
+       "x": 247.94701986754967,
+       "y": -52.45033112582769
+      },
+      {
+       "x": 131.7218543046357,
+       "y": -41.12582781456956
+      },
+      {
+       "x": 124.5695364238411,
+       "y": 70.92715231788088
+      },
+      {
+       "x": 81.05960264900659,
+       "y": 81.05960264900659
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "name": "lights",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 88,
+     "name": "head-1",
+     "type": "moving-head",
+     "x": 165.0993377483444,
+     "y": 399.93377483443714,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": -0.35
+      }
+     ]
+    },
+    {
+     "id": 89,
+     "name": "head-2",
+     "type": "moving-head",
+     "x": 165.69536423841063,
+     "y": 334.9668874172186,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": -0.2
+      }
+     ]
+    },
+    {
+     "id": 90,
+     "name": "head-3",
+     "type": "moving-head",
+     "x": 162.71523178807948,
+     "y": 278.34437086092714,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": -0.1
+      }
+     ]
+    },
+    {
+     "id": 91,
+     "name": "head-4",
+     "type": "moving-head",
+     "x": 162.11920529801318,
+     "y": 212.18543046357627,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": 0.15
+      }
+     ]
+    },
+    {
+     "id": 92,
+     "name": "head-5",
+     "type": "moving-head",
+     "x": 210.99337748344374,
+     "y": 163.31125827814571,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": -0.15
+      }
+     ]
+    },
+    {
+     "id": 93,
+     "name": "head-6",
+     "type": "moving-head",
+     "x": 279.5364238410597,
+     "y": 166.2913907284768,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": 0.1
+      }
+     ]
+    },
+    {
+     "id": 94,
+     "name": "head-7",
+     "type": "moving-head",
+     "x": 348.67549668874165,
+     "y": 163.90728476821198,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": 0.2
+      }
+     ]
+    },
+    {
+     "id": 95,
+     "name": "head-8",
+     "type": "moving-head",
+     "x": 411.25827814569533,
+     "y": 160.92715231788083,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "aim",
+       "type": "float",
+       "value": 0.35
+      }
+     ]
+    },
+    {
+     "id": 96,
+     "name": "screen-left",
+     "type": "screen",
+     "x": 157.94701986754967,
+     "y": 430.9271523178809,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 26.821192052980138,
+       "y": -222.3178807947021
+      },
+      {
+       "x": 166.29139072847687,
+       "y": -82.84768211920533
+      },
+      {
+       "x": 143.64238410596028,
+       "y": 137.68211920529802
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "电音节"
+      }
+     ]
+    },
+    {
+     "id": 97,
+     "name": "screen-right",
+     "type": "screen",
+     "x": 214.56953642384107,
+     "y": 174.0397350993378,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 231.25827814569536,
+       "y": -23.841059602649068
+      },
+      {
+       "x": 390.99337748344374,
+       "y": 138.27814569536417
+      },
+      {
+       "x": 164.50331125827822,
+       "y": 162.11920529801313
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "龙"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 101,
+   "name": "title",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 99,
+     "name": "title-banner",
+     "type": "title",
+     "x": 107.28476821192052,
+     "y": 274.1721854304636,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 176.42384105960278,
+       "y": -176.42384105960275
+      },
+      {
+       "x": 257.48344370860934,
+       "y": -95.36423841059616
+      },
+      {
+       "x": 81.05960264900662,
+       "y": 81.05960264900659
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "Dorffest"
+      }
+     ]
+    },
+    {
+     "id": 100,
+     "name": "title-screen",
+     "type": "title",
+     "x": 157.94701986754967,
+     "y": 430.9271523178809,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 26.821192052980138,
+       "y": -222.3178807947021
+      },
+      {
+       "x": 166.29139072847687,
+       "y": -82.84768211920533
+      },
+      {
+       "x": 143.64238410596028,
+       "y": 137.68211920529802
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "电音节"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 104,
+   "name": "setlist",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 102,
+     "name": "chalkboard",
+     "type": "setlist",
+     "x": 742.0529801324504,
+     "y": 717.0198675496689,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 11.920529801324506,
+       "y": -38.14569536423835
+      },
+      {
+       "x": 111.45695364238406,
+       "y": 55.43046357615901
+      },
+      {
+       "x": 100.72847682119198,
+       "y": 92.38410596026495
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      }
+     ]
+    },
+    {
+     "id": 103,
+     "name": "led-screen",
+     "type": "setlist",
+     "x": 214.56953642384107,
+     "y": 174.0397350993378,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 231.25827814569536,
+       "y": -23.841059602649068
+      },
+      {
+       "x": 390.99337748344374,
+       "y": 138.27814569536417
+      },
+      {
+       "x": 164.50331125827822,
+       "y": 162.11920529801313
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 113,
+   "name": "signs",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0,
+   "objects": [
+    {
+     "id": 105,
+     "name": "sign-left",
+     "type": "sign",
+     "x": 292.05298013245033,
+     "y": 768.8741721854306,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 6.556291390728461,
+       "y": -116.22516556291396
+      },
+      {
+       "x": 74.50331125827813,
+       "y": -72.1192052980133
+      },
+      {
+       "x": 61.39072847682121,
+       "y": 57.814569536423846
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "Bier & Wurst"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "wood"
+      }
+     ]
+    },
+    {
+     "id": 106,
+     "name": "sign-right",
+     "type": "sign",
+     "x": 693.17880794702,
+     "y": 308.1456953642384,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 109.07284768211912,
+       "y": -8.94039735099335
+      },
+      {
+       "x": 162.71523178807934,
+       "y": 47.08609271523193
+      },
+      {
+       "x": 53.642384105960105,
+       "y": 56.02649006622522
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "bavaria"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "Souvenirs"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "wood"
+      }
+     ]
+    },
+    {
+     "id": 107,
+     "name": "sign-left",
+     "type": "sign",
+     "x": 292.05298013245033,
+     "y": 768.8741721854306,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 6.556291390728461,
+       "y": -116.22516556291396
+      },
+      {
+       "x": 74.50331125827813,
+       "y": -72.1192052980133
+      },
+      {
+       "x": 61.39072847682121,
+       "y": 57.814569536423846
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "茶 & 酒"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "wood"
+      }
+     ]
+    },
+    {
+     "id": 108,
+     "name": "sign-right",
+     "type": "sign",
+     "x": 693.17880794702,
+     "y": 308.1456953642384,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 109.07284768211912,
+       "y": -8.94039735099335
+      },
+      {
+       "x": 162.71523178807934,
+       "y": 47.08609271523193
+      },
+      {
+       "x": 53.642384105960105,
+       "y": 56.02649006622522
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "纪念品"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "wood"
+      }
+     ]
+    },
+    {
+     "id": 109,
+     "name": "neon-tower",
+     "type": "sign",
+     "x": -119.20529801324506,
+     "y": 390.99337748344374,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 14.900662251655604,
+       "y": -14.900662251655604
+      },
+      {
+       "x": 154.3708609271523,
+       "y": 124.5695364238411
+      },
+      {
+       "x": 139.4701986754967,
+       "y": 139.4701986754967
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "电音节"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "neon-v"
+      }
+     ]
+    },
+    {
+     "id": 110,
+     "name": "neon-small",
+     "type": "sign",
+     "x": 41.72185430463577,
+     "y": 408.8741721854305,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 17.88079470198676,
+       "y": -17.88079470198676
+      },
+      {
+       "x": 121.58940397350995,
+       "y": 85.82781456953643
+      },
+      {
+       "x": 103.70860927152319,
+       "y": 103.70860927152313
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "龙"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "neon-v"
+      }
+     ]
+    },
+    {
+     "id": 111,
+     "name": "neon-high",
+     "type": "sign",
+     "x": 221.72185430463583,
+     "y": -92.98013245033121,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 20.8609271523178,
+       "y": -20.8609271523178
+      },
+      {
+       "x": 172.251655629139,
+       "y": 130.5298013245034
+      },
+      {
+       "x": 151.3907284768212,
+       "y": 151.3907284768212
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "电音节"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "neon-v"
+      }
+     ]
+    },
+    {
+     "id": 112,
+     "name": "neon-corner",
+     "type": "sign",
+     "x": 882.1192052980133,
+     "y": 331.3907284768212,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 29.801324503311207,
+       "y": -29.801324503311207
+      },
+      {
+       "x": 175.23178807947022,
+       "y": 115.6291390728478
+      },
+      {
+       "x": 145.430463576159,
+       "y": 145.430463576159
+      }
+     ],
+     "properties": [
+      {
+       "name": "theme",
+       "type": "string",
+       "value": "neon-china"
+      },
+      {
+       "name": "text",
+       "type": "string",
+       "value": "龙"
+      },
+      {
+       "name": "style",
+       "type": "string",
+       "value": "neon-v"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

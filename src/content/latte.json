@@ -1,0 +1,37 @@
+{
+  "menu": [
+    { "id": "gatsby", "name": "The Gatsby", "desc": "flat white, double ristretto" },
+    { "id": "daisy-oat", "name": "Daisy's Oat Latte", "desc": "oat latte with a hint of vanilla" },
+    { "id": "green-light", "name": "The Green Light", "desc": "matcha latte" },
+    { "id": "west-egg", "name": "West Egg Cortado", "desc": "cortado" },
+    { "id": "nick-creme", "name": "Nick's Café Crème", "desc": "café crème" },
+    { "id": "jordan-cap", "name": "Jordan's Cappuccino", "desc": "cappuccino, dry" },
+    { "id": "valley-mocha", "name": "Valley of Ashes Mocha", "desc": "dark mocha" }
+  ],
+  "patterns": [
+    { "id": "heart", "name": "Heart", "tips": 0, "difficulty": "easy" },
+    { "id": "tulip", "name": "Tulip", "tips": 40, "difficulty": "medium" },
+    { "id": "star", "name": "Star", "tips": 70, "difficulty": "easy" },
+    { "id": "rosetta", "name": "Rosetta", "tips": 120, "difficulty": "medium" },
+    { "id": "bear", "name": "Bear", "tips": 180, "difficulty": "medium" },
+    { "id": "swan", "name": "Swan", "tips": 250, "difficulty": "hard" },
+    { "id": "green-light", "name": "The Green Light", "tips": 330, "difficulty": "easy" },
+    { "id": "cat", "name": "Cat", "tips": 420, "difficulty": "medium" },
+    { "id": "daisy", "name": "Daisy", "tips": 520, "difficulty": "medium" },
+    { "id": "butterfly", "name": "Butterfly", "tips": 650, "difficulty": "hard" },
+    { "id": "gatsby-g", "name": "Gatsby G", "tips": 800, "difficulty": "hard" },
+    { "id": "wave", "name": "Ocean Wave", "tips": 950, "difficulty": "hard" },
+    { "id": "phoenix", "name": "Phoenix", "tips": 1150, "difficulty": "master" },
+    { "id": "dragon", "name": "Dragon", "tips": 1400, "difficulty": "master" },
+    { "id": "unicorn", "name": "Unicorn", "tips": 1700, "difficulty": "master" }
+  ],
+  "difficulty": {
+    "easy": { "label": "Easy", "window": 1.2, "tips": 1 },
+    "medium": { "label": "Medium", "window": 1, "tips": 1.5 },
+    "hard": { "label": "Hard", "window": 0.85, "tips": 2 },
+    "master": { "label": "Master", "window": 0.7, "tips": 3 }
+  },
+  "tips": { "perfect": 10, "good": 5, "messy": 1 },
+  "baristaMax": "medium",
+  "rush": { "everyMinMs": 240000, "everyMaxMs": 360000, "durationMs": 60000, "speed": 1.1 }
+}

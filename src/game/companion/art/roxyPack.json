@@ -1,0 +1,1022 @@
+{
+ "roxy": {
+  "texture": "roxy",
+  "frameSize": {
+   "w": 192,
+   "h": 240
+  },
+  "origin": {
+   "x": 0.5,
+   "y": 0.9875
+  },
+  "standHeight": 192,
+  "iso_facing": {
+   "S": "_s",
+   "SE": "_se",
+   "SW": "_se + flipX",
+   "E": "_e",
+   "W": "_e + flipX",
+   "N": "_n",
+   "NE": "_n",
+   "NW": "_n"
+  },
+  "counterLine": {
+   "y": 132,
+   "note": "behind-counter poses (serve, wipe_counter, machine): draw the counter's front face over Roxy from this frame row down (her feet are on the floor behind it); hands and cloth above it rest on the counter top"
+  },
+  "anims": [
+   {
+    "key": "roxy_idle_s",
+    "frames": [
+     {
+      "frame": "roxy_idle_s",
+      "duration": 1400
+     },
+     {
+      "frame": "roxy_idle_s_br",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_idle_s",
+      "duration": 1100
+     },
+     {
+      "frame": "roxy_idle_s_bl",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_idle_s",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_idle_s_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "standing, facing the viewer"
+   },
+   {
+    "key": "roxy_idle_se",
+    "frames": [
+     {
+      "frame": "roxy_pass_se_1",
+      "duration": 1400
+     },
+     {
+      "frame": "roxy_pass_se_1_br",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_pass_se_1",
+      "duration": 1100
+     },
+     {
+      "frame": "roxy_pass_se_1_bl",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_pass_se_1",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_pass_se_1_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "standing, three-quarter view (SE; flipX for SW)"
+   },
+   {
+    "key": "roxy_idle_e",
+    "frames": [
+     {
+      "frame": "roxy_pass_e_1",
+      "duration": 1500
+     },
+     {
+      "frame": "roxy_pass_e_1_br",
+      "duration": 800
+     }
+    ],
+    "repeat": -1,
+    "use": "standing, side view (E; flipX for W)"
+   },
+   {
+    "key": "roxy_idle_n",
+    "frames": [
+     {
+      "frame": "roxy_walk_n_1",
+      "duration": 1500
+     },
+     {
+      "frame": "roxy_walk_n_1_br",
+      "duration": 800
+     }
+    ],
+    "repeat": -1,
+    "use": "standing, back view (N, NE, NW)"
+   },
+   {
+    "key": "roxy_walk_s",
+    "frames": [
+     {
+      "frame": "roxy_walk_s_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_s_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_walk_s_2",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_s_2",
+      "duration": 125
+     }
+    ],
+    "repeat": -1,
+    "use": "walk towards the viewer"
+   },
+   {
+    "key": "roxy_walk_se",
+    "frames": [
+     {
+      "frame": "roxy_walk_se_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_se_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_walk_se_2",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_se_2",
+      "duration": 125
+     }
+    ],
+    "repeat": -1,
+    "use": "walk SE (flipX for SW)"
+   },
+   {
+    "key": "roxy_walk_e",
+    "frames": [
+     {
+      "frame": "roxy_walk_e_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_e_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_walk_e_2",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_e_2",
+      "duration": 125
+     }
+    ],
+    "repeat": -1,
+    "use": "walk E (flipX for W)"
+   },
+   {
+    "key": "roxy_walk_n",
+    "frames": [
+     {
+      "frame": "roxy_walk_n_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_n_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_walk_n_2",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_pass_n_2",
+      "duration": 125
+     }
+    ],
+    "repeat": -1,
+    "use": "walk away (N, NE, NW)"
+   },
+   {
+    "key": "roxy_run_s",
+    "frames": [
+     {
+      "frame": "roxy_walk_s_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_s_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_walk_s_2",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_s_2",
+      "duration": 77
+     }
+    ],
+    "repeat": -1,
+    "use": "hurry (same frames, faster)"
+   },
+   {
+    "key": "roxy_run_se",
+    "frames": [
+     {
+      "frame": "roxy_walk_se_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_se_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_walk_se_2",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_se_2",
+      "duration": 77
+     }
+    ],
+    "repeat": -1,
+    "use": "hurry SE"
+   },
+   {
+    "key": "roxy_run_e",
+    "frames": [
+     {
+      "frame": "roxy_walk_e_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_e_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_walk_e_2",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_e_2",
+      "duration": 77
+     }
+    ],
+    "repeat": -1,
+    "use": "hurry E"
+   },
+   {
+    "key": "roxy_run_n",
+    "frames": [
+     {
+      "frame": "roxy_walk_n_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_n_1",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_walk_n_2",
+      "duration": 77
+     },
+     {
+      "frame": "roxy_pass_n_2",
+      "duration": 77
+     }
+    ],
+    "repeat": -1,
+    "use": "hurry away"
+   },
+   {
+    "key": "roxy_stroll_se",
+    "frames": [
+     {
+      "frame": "roxy_stroll_se_1",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_stroll_pass_1",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_stroll_se_2",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_stroll_pass_2",
+      "duration": 167
+     }
+    ],
+    "repeat": -1,
+    "use": "happy, smiling walk (after a finished chapter)"
+   },
+   {
+    "key": "roxy_carry_idle_se",
+    "frames": [
+     {
+      "frame": "roxy_carry_se",
+      "duration": 1300
+     },
+     {
+      "frame": "roxy_carry_se_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "holding a tray"
+   },
+   {
+    "key": "roxy_carry_walk_se",
+    "frames": [
+     {
+      "frame": "roxy_carry_walk_1",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_carry_se",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_carry_walk_2",
+      "duration": 125
+     },
+     {
+      "frame": "roxy_carry_se",
+      "duration": 125
+     }
+    ],
+    "repeat": -1,
+    "use": "walking with a tray"
+   },
+   {
+    "key": "roxy_serve_se",
+    "frames": [
+     {
+      "frame": "roxy_serve_se",
+      "duration": 200
+     },
+     {
+      "frame": "roxy_serve_se_lean1",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_serve_se_lean2",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_serve_se_lean1",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_serve_se",
+      "duration": 400
+     }
+    ],
+    "repeat": 0,
+    "use": "hands a cup across the counter (behind-counter pose)"
+   },
+   {
+    "key": "roxy_serve_idle_se",
+    "frames": [
+     {
+      "frame": "roxy_serve_se",
+      "duration": 1300
+     },
+     {
+      "frame": "roxy_serve_se_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "holding a cup behind the counter"
+   },
+   {
+    "key": "roxy_take_order_se",
+    "frames": [
+     {
+      "frame": "roxy_think_se_1",
+      "duration": 600
+     },
+     {
+      "frame": "roxy_think_se_2",
+      "duration": 1200
+     },
+     {
+      "frame": "roxy_think_se_2_br",
+      "duration": 600
+     }
+    ],
+    "repeat": 0,
+    "use": "listening to an order"
+   },
+   {
+    "key": "roxy_think_se",
+    "frames": [
+     {
+      "frame": "roxy_think_se_2",
+      "duration": 1400
+     },
+     {
+      "frame": "roxy_think_se_2_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "hand on chin"
+   },
+   {
+    "key": "roxy_wipe_counter_se",
+    "frames": [
+     {
+      "frame": "roxy_wipe_counter_1",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_counter_2",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_counter_3",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_counter_2",
+      "duration": 167
+     }
+    ],
+    "repeat": -1,
+    "use": "polishing the counter (behind-counter pose)"
+   },
+   {
+    "key": "roxy_wipe_table_s",
+    "frames": [
+     {
+      "frame": "roxy_wipe_table_1",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_table_2",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_table_3",
+      "duration": 167
+     },
+     {
+      "frame": "roxy_wipe_table_2",
+      "duration": 167
+     }
+    ],
+    "repeat": -1,
+    "use": "wiping a table - the frames include their own table"
+   },
+   {
+    "key": "roxy_machine_n",
+    "frames": [
+     {
+      "frame": "roxy_reach_n",
+      "duration": 450
+     },
+     {
+      "frame": "roxy_reach_n_up",
+      "duration": 250
+     }
+    ],
+    "repeat": -1,
+    "use": "working the espresso machine / grinder / bean silo (back view); pair with fx_espresso or fx_steam"
+   },
+   {
+    "key": "roxy_sip_s",
+    "frames": [
+     {
+      "frame": "roxy_idle_s",
+      "duration": 500
+     },
+     {
+      "frame": "roxy_sip_1",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_sip_1_br",
+      "duration": 500
+     },
+     {
+      "frame": "roxy_sip_2",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_idle_s",
+      "duration": 300
+     }
+    ],
+    "repeat": 0,
+    "use": "sips a coffee and sighs; pair with fx_steam"
+   },
+   {
+    "key": "roxy_read_stand_se",
+    "frames": [
+     {
+      "frame": "roxy_read_1",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_read_2",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_read_3",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_read_4",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "opens the book, turns a page, reads, pauses"
+   },
+   {
+    "key": "roxy_read_hold_se",
+    "frames": [
+     {
+      "frame": "roxy_read_3",
+      "duration": 1800
+     },
+     {
+      "frame": "roxy_read_3_bl",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_read_3",
+      "duration": 1400
+     },
+     {
+      "frame": "roxy_read_3_br",
+      "duration": 600
+     }
+    ],
+    "repeat": -1,
+    "use": "standing and reading"
+   },
+   {
+    "key": "roxy_sit_read",
+    "frames": [
+     {
+      "frame": "roxy_sit_read",
+      "duration": 1600
+     },
+     {
+      "frame": "roxy_sit_read_br",
+      "duration": 800
+     },
+     {
+      "frame": "roxy_sit_read",
+      "duration": 1200
+     },
+     {
+      "frame": "roxy_sit_read_bl",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_sit_read",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_sit_read_br",
+      "duration": 800
+     }
+    ],
+    "repeat": -1,
+    "use": "reading on her break (reading panel)"
+   },
+   {
+    "key": "roxy_sit_turn_page",
+    "frames": [
+     {
+      "frame": "roxy_sit_read",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_sit_page_1",
+      "duration": 110
+     },
+     {
+      "frame": "roxy_sit_page_2",
+      "duration": 110
+     },
+     {
+      "frame": "roxy_sit_page_3",
+      "duration": 140
+     },
+     {
+      "frame": "roxy_sit_read",
+      "duration": 200
+     }
+    ],
+    "repeat": 0,
+    "use": "turns the page - play on every page turn"
+   },
+   {
+    "key": "roxy_sit_doze",
+    "frames": [
+     {
+      "frame": "roxy_sit_read_bl",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_sit_doze",
+      "duration": 900
+     }
+    ],
+    "repeat": -1,
+    "use": "dozing over the book; pair with fx_zzz"
+   },
+   {
+    "key": "roxy_happy_s",
+    "frames": [
+     {
+      "frame": "roxy_happy_s",
+      "duration": 100
+     },
+     {
+      "frame": "roxy_happy_s_up1",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_happy_s_up2",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_happy_s_up1",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_happy_s",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_happy_s_br",
+      "duration": 600
+     }
+    ],
+    "repeat": 0,
+    "use": "welcome / delighted (pair with fx_heart)"
+   },
+   {
+    "key": "roxy_celebrate_s",
+    "frames": [
+     {
+      "frame": "roxy_triumphant",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_triumphant_up1",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up3",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up4",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_triumphant_up3",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up1",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant",
+      "duration": 160
+     },
+     {
+      "frame": "roxy_triumphant",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_triumphant_up1",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up3",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up4",
+      "duration": 120
+     },
+     {
+      "frame": "roxy_triumphant_up3",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant_up1",
+      "duration": 70
+     },
+     {
+      "frame": "roxy_triumphant",
+      "duration": 160
+     }
+    ],
+    "repeat": 0,
+    "use": "chapter or book finished; pair with fx_confetti"
+   },
+   {
+    "key": "roxy_flustered_s",
+    "frames": [
+     {
+      "frame": "roxy_flustered",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered_l",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered_r",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered_l",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered_r",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_flustered",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_flustered_br",
+      "duration": 500
+     }
+    ],
+    "repeat": 0,
+    "use": "streak lost, page skipped"
+   },
+   {
+    "key": "roxy_sad_s",
+    "frames": [
+     {
+      "frame": "roxy_sad_s",
+      "duration": 600
+     },
+     {
+      "frame": "roxy_sad_s_l",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_sad_s",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_sad_s_r",
+      "duration": 80
+     },
+     {
+      "frame": "roxy_sad_s",
+      "duration": 600
+     },
+     {
+      "frame": "roxy_sad_s_br",
+      "duration": 600
+     }
+    ],
+    "repeat": -1,
+    "use": "Valley of Ashes, a neglected book"
+   },
+   {
+    "key": "roxy_anxious_s",
+    "frames": [
+     {
+      "frame": "roxy_anxious_s",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_anxious_s_l",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_anxious_s",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_anxious_s_r",
+      "duration": 90
+     },
+     {
+      "frame": "roxy_anxious_s",
+      "duration": 700
+     },
+     {
+      "frame": "roxy_anxious_s_br",
+      "duration": 600
+     }
+    ],
+    "repeat": -1,
+    "use": "rush hour (pair with fx_sweat)"
+   },
+   {
+    "key": "roxy_stern_se",
+    "frames": [
+     {
+      "frame": "roxy_stern_se",
+      "duration": 1400
+     },
+     {
+      "frame": "roxy_stern_se_br",
+      "duration": 700
+     }
+    ],
+    "repeat": -1,
+    "use": "arms crossed"
+   },
+   {
+    "key": "roxy_hair_swipe_s",
+    "frames": [
+     {
+      "frame": "roxy_hair_swipe",
+      "duration": 900
+     },
+     {
+      "frame": "roxy_hair_swipe_br",
+      "duration": 500
+     },
+     {
+      "frame": "roxy_hair_swipe",
+      "duration": 600
+     }
+    ],
+    "repeat": 0,
+    "use": "idle variant"
+   }
+  ]
+ },
+ "fx": [
+  {
+   "key": "fx_steam",
+   "frames": [
+    "fx_steam_0",
+    "fx_steam_1",
+    "fx_steam_2",
+    "fx_steam_3",
+    "fx_steam_4",
+    "fx_steam_5",
+    "fx_steam_6",
+    "fx_steam_7"
+   ],
+   "frameRate": 8,
+   "repeat": -1,
+   "use": "rising steam: hot drinks, the milk steamer, sipping"
+  },
+  {
+   "key": "fx_espresso",
+   "frames": [
+    "fx_espresso_0",
+    "fx_espresso_1",
+    "fx_espresso_2",
+    "fx_espresso_3",
+    "fx_espresso_4",
+    "fx_espresso_5",
+    "fx_espresso_6",
+    "fx_espresso_7"
+   ],
+   "frameRate": 8,
+   "repeat": 0,
+   "use": "espresso shot running into a cup (play at the machine)"
+  },
+  {
+   "key": "fx_latte",
+   "frames": [
+    "fx_latte_0",
+    "fx_latte_1",
+    "fx_latte_2",
+    "fx_latte_3",
+    "fx_latte_4",
+    "fx_latte_5",
+    "fx_latte_6",
+    "fx_latte_7"
+   ],
+   "frameRate": 6,
+   "repeat": 0,
+   "use": "latte art heart forming, seen from above"
+  },
+  {
+   "key": "fx_confetti",
+   "frames": [
+    "fx_confetti_0",
+    "fx_confetti_1",
+    "fx_confetti_2",
+    "fx_confetti_3",
+    "fx_confetti_4",
+    "fx_confetti_5",
+    "fx_confetti_6",
+    "fx_confetti_7",
+    "fx_confetti_8",
+    "fx_confetti_9"
+   ],
+   "frameRate": 12,
+   "repeat": 0,
+   "use": "confetti burst for a finished chapter or book"
+  },
+  {
+   "key": "fx_sparkle",
+   "frames": [
+    "fx_sparkle_0",
+    "fx_sparkle_1",
+    "fx_sparkle_2",
+    "fx_sparkle_3",
+    "fx_sparkle_4"
+   ],
+   "frameRate": 10,
+   "repeat": 0,
+   "use": "clean-sparkle on a wiped table or counter"
+  },
+  {
+   "key": "fx_zzz",
+   "frames": [
+    "fx_zzz_0",
+    "fx_zzz_1",
+    "fx_zzz_2",
+    "fx_zzz_3",
+    "fx_zzz_4",
+    "fx_zzz_5"
+   ],
+   "frameRate": 4,
+   "repeat": -1,
+   "use": "dozing over a book"
+  },
+  {
+   "key": "fx_notes",
+   "frames": [
+    "fx_notes_0",
+    "fx_notes_1",
+    "fx_notes_2",
+    "fx_notes_3",
+    "fx_notes_4",
+    "fx_notes_5"
+   ],
+   "frameRate": 4,
+   "repeat": -1,
+   "use": "humming along to the music"
+  },
+  {
+   "key": "fx_heart",
+   "frames": [
+    "fx_heart_0",
+    "fx_heart_1",
+    "fx_heart_2",
+    "fx_heart_3",
+    "fx_heart_4"
+   ],
+   "frameRate": 10,
+   "repeat": 0,
+   "use": "happy reaction"
+  },
+  {
+   "key": "fx_sweat",
+   "frames": [
+    "fx_sweat_0",
+    "fx_sweat_1",
+    "fx_sweat_2",
+    "fx_sweat_3",
+    "fx_sweat_4"
+   ],
+   "frameRate": 8,
+   "repeat": 0,
+   "use": "anxious / rush hour"
+  }
+ ]
+}

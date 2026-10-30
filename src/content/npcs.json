@@ -1,0 +1,28 @@
+{
+  "twinBanter": {
+    "joel": [
+      "Back from China? You smell like fog machine.",
+      "Did the crowd jump? Mine always jumps.",
+      "I saved you the last oat milk. Don't tell Jason.",
+      "Brother! Ten thousand fans or eleven?",
+      "Next time we play together: decks and bass. Deal?"
+    ],
+    "jonas": [
+      "Servus! How was the Dorffest, Lederhosen-man?",
+      "Did the tuba drown you out again?",
+      "Prost! You still have hay on your hat.",
+      "The polka at 124? Easy. For me, at least.",
+      "Next time I bring the decks and you bring the band."
+    ]
+  },
+  "twinReply": {
+    "joel": ["Ha! Tell you everything after the rush.", "They loved it. You'd have loved it.", "Wait till you hear the next drop."],
+    "jonas": ["Wunderbar. The brass band says hi.", "Three encores. I counted.", "My fingers still feel the E string."]
+  },
+  "jasonDoor": "Jason never takes a break!",
+  "throwdownJudges": [
+    { "regular": "writer", "line": "Three cups. Make me forget my deadline." },
+    { "regular": "odile", "line": "Show me a rosetta worthy of an aria." },
+    { "regular": "busker", "line": "Pour like it's a solo, Jason." }
+  ]
+}

@@ -1,0 +1,457 @@
+/* The Reading Room: the page is rendered by pdf.js at native resolution — never pixelated. */
+
+.reader-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.reader-titles {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.reader-titles h1 {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 34vw;
+}
+.reader-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.zoom-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  min-width: 36px;
+  text-align: center;
+}
+.mode-switch {
+  display: flex;
+  margin-left: 6px;
+  border: 1px solid rgba(227, 193, 111, 0.5);
+}
+.mode-switch button {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  background: transparent;
+  color: var(--ivory);
+  border: 0;
+  padding: 5px 7px;
+  cursor: pointer;
+}
+.mode-switch button.active {
+  background: var(--gold);
+  color: var(--navy);
+}
+/* On a desktop the extra tools sit in the toolbar; a phone folds them under "more". */
+.reader-extra {
+  display: contents;
+}
+@media (max-width: 1250px) {
+  .mode-switch,
+  .zoom-label {
+    display: none;
+  }
+}
+
+.reader .screen-body {
+  overflow: hidden;
+}
+.reader-body {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+}
+.reader-area {
+  min-width: 0;
+  overflow: auto;
+  display: flex;
+  justify-content: safe center;
+  align-items: safe center;
+  padding: 12px;
+  overscroll-behavior: contain;
+}
+.nav-edge {
+  background: transparent;
+  border: 0;
+  color: var(--gilt);
+  cursor: pointer;
+  opacity: 0.35;
+  display: grid;
+  place-items: center;
+}
+.nav-edge:hover:not(:disabled),
+.nav-edge:focus-visible {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, rgba(227, 193, 111, 0.08), transparent);
+}
+.nav-edge:disabled {
+  opacity: 0.1;
+  cursor: default;
+}
+
+.page-frame {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  margin: auto;
+  border: 1px solid var(--gold);
+  outline: 1px solid rgba(227, 193, 111, 0.55);
+  outline-offset: 3px;
+  background: var(--black);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+.page {
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+  flex-shrink: 0;
+  --scale-round-x: 1px;
+  --scale-round-y: 1px;
+}
+.page-canvas-host,
+.page-canvas-host canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.page-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #f4ecd8;
+}
+.page.enter-next {
+  animation: slideNext 0.18s ease-out;
+}
+.page.enter-prev {
+  animation: slidePrev 0.18s ease-out;
+}
+[data-mode='calm'] .page.enter-next,
+[data-mode='calm'] .page.enter-prev {
+  animation: fadePage 0.16s ease-out;
+}
+[data-mode='text'] .page {
+  animation: none !important;
+}
+@keyframes slideNext {
+  from {
+    transform: translateX(22px);
+    opacity: 0.35;
+  }
+}
+@keyframes slidePrev {
+  from {
+    transform: translateX(-22px);
+    opacity: 0.35;
+  }
+}
+@keyframes fadePage {
+  from {
+    opacity: 0.4;
+  }
+}
+.page-ribbon {
+  position: absolute;
+  top: 0;
+  right: 18px;
+  width: 14px;
+  height: 34px;
+  background: var(--gold);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+  z-index: 3;
+}
+
+/* Quote Pearl highlights sit between the canvas and the selectable text. */
+.hl-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.hl {
+  position: absolute;
+  background: rgba(227, 193, 111, 0.45);
+  mix-blend-mode: multiply;
+  border-radius: 2px;
+}
+
+/* Night mode ("Speakeasy"): warm dark pages. */
+.reader.night .page {
+  background: #16151a;
+}
+.reader.night .page-canvas-host canvas {
+  filter: invert(0.9) hue-rotate(180deg) sepia(0.18) brightness(0.95);
+}
+.reader.night .hl {
+  mix-blend-mode: screen;
+  background: rgba(227, 193, 111, 0.3);
+}
+
+.pearl-btn {
+  position: fixed;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--navy);
+  background: var(--gilt);
+  border: 1px solid var(--gold-dark);
+  padding: 6px 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.reader-panel {
+  position: absolute;
+  top: 8px;
+  left: 50px;
+  bottom: 8px;
+  width: min(400px, calc(100% - 100px));
+  z-index: 6;
+  display: flex;
+}
+.reader-panel > .deco-panel {
+  flex: 1;
+  overflow: auto;
+  margin: 0;
+}
+.search-form {
+  display: flex;
+  gap: 6px;
+}
+.search-form input {
+  flex: 1;
+  font-family: var(--font-prose);
+  font-size: 16px;
+  padding: 6px 8px;
+  background: var(--black);
+  color: var(--ivory);
+  border: 1px solid var(--gold);
+}
+
+/* Footer: gold progress line with chapter markers. */
+.progress-line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+.progress-track {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  background: rgba(242, 237, 228, 0.12);
+  border: 1px solid rgba(227, 193, 111, 0.5);
+  cursor: pointer;
+}
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+}
+.progress-marker {
+  position: absolute;
+  top: -4px;
+  width: 7px;
+  height: 14px;
+  margin-left: -3px;
+  background: var(--navy-3);
+  border: 1px solid var(--gold);
+  transform: rotate(45deg) scale(0.7);
+}
+.progress-marker.passed {
+  background: var(--gilt);
+}
+.page-jump {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.page-jump input {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  width: 4.5em;
+  text-align: center;
+  background: var(--black);
+  color: var(--gilt);
+  border: 1px solid var(--gold);
+  padding: 2px;
+}
+
+/* pdf.js text layer (minimal copy of pdf_viewer.css rules for TextLayer). */
+.textLayer {
+  position: absolute;
+  text-align: initial;
+  inset: 0;
+  overflow: clip;
+  opacity: 1;
+  line-height: 1;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+  caret-color: CanvasText;
+  z-index: 2;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+.textLayer :is(span, br) {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+}
+.textLayer > :not(.markedContent),
+.textLayer .markedContent span:not(.markedContent) {
+  z-index: 1;
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+}
+.textLayer .markedContent {
+  display: contents;
+}
+.textLayer ::selection {
+  background: rgba(57, 120, 255, 0.28);
+  color: transparent;
+}
+.textLayer br::selection {
+  background: transparent;
+}
+.textLayer .endOfContent {
+  display: block;
+  position: absolute;
+  inset: 100% 0 0;
+  z-index: 0;
+  cursor: default;
+  user-select: none;
+}
+.textLayer.selecting .endOfContent {
+  top: 0;
+}
+
+/* ---------- phone (portrait): keep in step with PHONE_QUERY in ui/usePhone.ts ---------- */
+
+@media (max-width: 760px) {
+  .reader-head {
+    gap: 2px;
+    /* The title column lines up at the start; stretched, the book's title gives way to the tools. */
+    align-self: stretch;
+  }
+  .reader-head > .icon-btn {
+    padding: 8px 6px;
+  }
+  .reader-titles {
+    flex: 1 1 auto;
+  }
+  .reader-titles h1 {
+    font-size: 15px;
+    max-width: none;
+  }
+  .reader-tools {
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+  .reader-tools .icon-btn {
+    padding: 8px 7px;
+  }
+  /* "More" opens a row under the header: zoom, night, reading mode. */
+  .reader-extra {
+    display: none;
+  }
+  .reader-extra.open {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 25;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--black);
+    border-bottom: 1px solid var(--gold);
+  }
+  .reader-extra .tool-sep {
+    display: none;
+  }
+  .reader-extra.open .zoom-label {
+    display: inline-block;
+  }
+  .reader-extra.open .mode-switch {
+    display: flex;
+  }
+  .mode-switch button {
+    padding: 9px 8px;
+  }
+
+  /* The page edge to edge: tap the outer thirds or swipe to turn it. */
+  .reader-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nav-edge {
+    display: none;
+  }
+  .reader-area {
+    padding: 2px;
+  }
+  .page-frame {
+    padding: 0;
+    gap: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  /* Panels are sheets over the bottom of the page. */
+  .reader-panel {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 72dvh;
+    z-index: 30;
+    box-shadow: 0 -14px 30px rgba(0, 0, 0, 0.55);
+  }
+  .reader-panel > .deco-panel {
+    background: var(--navy);
+    outline: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 16px calc(14px + var(--safe-r)) calc(16px + var(--safe-b)) calc(14px + var(--safe-l));
+    overscroll-behavior: contain;
+  }
+
+  .progress-line {
+    gap: 10px;
+  }
+  /* 16px keeps iOS from zooming in when the field takes focus. */
+  .page-jump input {
+    font-size: 16px;
+    width: 3.2em;
+    padding: 4px 2px;
+  }
+}

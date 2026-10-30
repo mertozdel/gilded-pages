@@ -1,0 +1,1617 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.10.2",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 64,
+ "height": 37,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "room",
+   "type": "string",
+   "value": "cafe"
+  },
+  {
+   "name": "kind",
+   "type": "string",
+   "value": "painted"
+  },
+  {
+   "name": "image",
+   "type": "string",
+   "value": "assets/rooms/cafe-machorn-guests.png"
+  },
+  {
+   "name": "imageWidth",
+   "type": "int",
+   "value": 1024
+  },
+  {
+   "name": "imageHeight",
+   "type": "int",
+   "value": 578
+  },
+  {
+   "name": "cropTop",
+   "type": "int",
+   "value": 0
+  },
+  {
+   "name": "figureScale",
+   "type": "float",
+   "value": 2.3
+  },
+  {
+   "name": "npcs",
+   "type": "bool",
+   "value": false
+  }
+ ],
+ "layers": [
+  {
+   "id": 1,
+   "name": "Painting",
+   "type": "imagelayer",
+   "image": "../../../public/assets/rooms/cafe-machorn-guests.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "Walk",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 1,
+     "name": "floor",
+     "type": "walk",
+     "x": 218,
+     "y": 436,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": -28,
+       "y": -12
+      },
+      {
+       "x": -28,
+       "y": -76
+      },
+      {
+       "x": 12,
+       "y": -103
+      },
+      {
+       "x": 152,
+       "y": -146
+      },
+      {
+       "x": 252,
+       "y": -192
+      },
+      {
+       "x": 282,
+       "y": -227
+      },
+      {
+       "x": 542,
+       "y": -96
+      },
+      {
+       "x": 582,
+       "y": -86
+      },
+      {
+       "x": 627,
+       "y": -72
+      },
+      {
+       "x": 652,
+       "y": -68
+      },
+      {
+       "x": 806,
+       "y": 4
+      },
+      {
+       "x": 806,
+       "y": 11
+      },
+      {
+       "x": 622,
+       "y": 97
+      },
+      {
+       "x": 542,
+       "y": 137
+      },
+      {
+       "x": 532,
+       "y": 142
+      },
+      {
+       "x": 422,
+       "y": 142
+      },
+      {
+       "x": 422,
+       "y": 69
+      },
+      {
+       "x": 342,
+       "y": 98
+      },
+      {
+       "x": 307,
+       "y": 114
+      },
+      {
+       "x": 282,
+       "y": 120
+      },
+      {
+       "x": 252,
+       "y": 114
+      },
+      {
+       "x": 222,
+       "y": 101
+      },
+      {
+       "x": 162,
+       "y": 73
+      },
+      {
+       "x": 82,
+       "y": 35
+      },
+      {
+       "x": 32,
+       "y": 13
+      }
+     ]
+    },
+    {
+     "id": 42,
+     "name": "front-step",
+     "type": "walk",
+     "x": 452,
+     "y": 530,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 36,
+       "y": -2
+      },
+      {
+       "x": 78,
+       "y": 18
+      },
+      {
+       "x": 88,
+       "y": 27
+      },
+      {
+       "x": 148,
+       "y": 0
+      },
+      {
+       "x": 194,
+       "y": -22
+      },
+      {
+       "x": 198,
+       "y": 48
+      },
+      {
+       "x": 53,
+       "y": 48
+      },
+      {
+       "x": 39,
+       "y": 34
+      },
+      {
+       "x": 0,
+       "y": 16
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Furniture",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 2,
+     "name": "counter",
+     "type": "furniture",
+     "x": 190,
+     "y": 424,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 28,
+       "y": 8
+      },
+      {
+       "x": 82,
+       "y": -12
+      },
+      {
+       "x": 110,
+       "y": -5
+      },
+      {
+       "x": 190,
+       "y": 39
+      },
+      {
+       "x": 250,
+       "y": 64
+      },
+      {
+       "x": 266,
+       "y": 72
+      },
+      {
+       "x": 288,
+       "y": 56
+      },
+      {
+       "x": 310,
+       "y": 26
+      },
+      {
+       "x": 326,
+       "y": 4
+      },
+      {
+       "x": 328,
+       "y": -24
+      },
+      {
+       "x": 310,
+       "y": -52
+      },
+      {
+       "x": 280,
+       "y": -72
+      },
+      {
+       "x": 250,
+       "y": -84
+      },
+      {
+       "x": 210,
+       "y": -94
+      },
+      {
+       "x": 170,
+       "y": -112
+      },
+      {
+       "x": 110,
+       "y": -124
+      },
+      {
+       "x": 40,
+       "y": -94
+      },
+      {
+       "x": 0,
+       "y": -69
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "name": "counter-end",
+     "type": "furniture",
+     "x": 458,
+     "y": 506,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 30,
+       "y": 0
+      },
+      {
+       "x": 48,
+       "y": -10
+      },
+      {
+       "x": 70,
+       "y": -42
+      },
+      {
+       "x": 87,
+       "y": -62
+      },
+      {
+       "x": 72,
+       "y": -81
+      },
+      {
+       "x": 60,
+       "y": -106
+      },
+      {
+       "x": 42,
+       "y": -94
+      },
+      {
+       "x": 20,
+       "y": -64
+      },
+      {
+       "x": 0,
+       "y": -54
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "pastry-case",
+     "type": "furniture",
+     "x": 486,
+     "y": 540,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": -28
+      },
+      {
+       "x": 20,
+       "y": -44
+      },
+      {
+       "x": 42,
+       "y": -76
+      },
+      {
+       "x": 59,
+       "y": -96
+      },
+      {
+       "x": 89,
+       "y": -116
+      },
+      {
+       "x": 150,
+       "y": -101
+      },
+      {
+       "x": 150,
+       "y": -72
+      },
+      {
+       "x": 154,
+       "y": -70
+      },
+      {
+       "x": 154,
+       "y": -39
+      },
+      {
+       "x": 69,
+       "y": -8
+      },
+      {
+       "x": 44,
+       "y": 8
+      },
+      {
+       "x": 2,
+       "y": -12
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "banquette",
+     "type": "furniture",
+     "x": 230,
+     "y": 333,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 270,
+       "y": -143
+      },
+      {
+       "x": 270,
+       "y": -101
+      },
+      {
+       "x": 240,
+       "y": -85
+      },
+      {
+       "x": 150,
+       "y": -41
+      },
+      {
+       "x": 70,
+       "y": -15
+      }
+     ],
+     "properties": [
+      {
+       "name": "occlude",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "table-banquette",
+     "type": "furniture",
+     "x": 380,
+     "y": 292,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 2,
+       "y": -30
+      },
+      {
+       "x": 40,
+       "y": -38
+      },
+      {
+       "x": 82,
+       "y": -22
+      },
+      {
+       "x": 88,
+       "y": 8
+      },
+      {
+       "x": 87,
+       "y": 36
+      },
+      {
+       "x": 56,
+       "y": 46
+      },
+      {
+       "x": 20,
+       "y": 38
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "table-laptop",
+     "type": "furniture",
+     "x": 470,
+     "y": 248,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 0,
+       "y": -20
+      },
+      {
+       "x": 60,
+       "y": -33
+      },
+      {
+       "x": 108,
+       "y": -12
+      },
+      {
+       "x": 108,
+       "y": 20
+      },
+      {
+       "x": 90,
+       "y": 52
+      },
+      {
+       "x": 52,
+       "y": 68
+      },
+      {
+       "x": 14,
+       "y": 66
+      },
+      {
+       "x": 6,
+       "y": 32
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "window-chairs",
+     "type": "furniture",
+     "x": 530,
+     "y": 215,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 15,
+       "y": -7
+      },
+      {
+       "x": 80,
+       "y": 23
+      },
+      {
+       "x": 82,
+       "y": 71
+      },
+      {
+       "x": 60,
+       "y": 75
+      },
+      {
+       "x": 48,
+       "y": 53
+      },
+      {
+       "x": 48,
+       "y": 21
+      }
+     ],
+     "properties": [
+      {
+       "name": "occlude",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "plant",
+     "type": "furniture",
+     "x": 610,
+     "y": 238,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 30,
+       "y": 12
+      },
+      {
+       "x": 50,
+       "y": 34
+      },
+      {
+       "x": 40,
+       "y": 60
+      },
+      {
+       "x": 2,
+       "y": 58
+      }
+     ],
+     "properties": [
+      {
+       "name": "occlude",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "window-sofa",
+     "type": "furniture",
+     "x": 562,
+     "y": 296,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 38,
+       "y": -12
+      },
+      {
+       "x": 88,
+       "y": -44
+      },
+      {
+       "x": 158,
+       "y": -20
+      },
+      {
+       "x": 210,
+       "y": 20
+      },
+      {
+       "x": 210,
+       "y": 54
+      },
+      {
+       "x": 182,
+       "y": 72
+      },
+      {
+       "x": 138,
+       "y": 60
+      },
+      {
+       "x": 88,
+       "y": 68
+      },
+      {
+       "x": 60,
+       "y": 72
+      },
+      {
+       "x": 3,
+       "y": 66
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "metal-table",
+     "type": "furniture",
+     "x": 484,
+     "y": 324,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 36,
+       "y": -4
+      },
+      {
+       "x": 56,
+       "y": 18
+      },
+      {
+       "x": 92,
+       "y": 20
+      },
+      {
+       "x": 130,
+       "y": 48
+      },
+      {
+       "x": 130,
+       "y": 88
+      },
+      {
+       "x": 84,
+       "y": 90
+      },
+      {
+       "x": 40,
+       "y": 78
+      },
+      {
+       "x": 2,
+       "y": 62
+      }
+     ],
+     "properties": [
+      {
+       "name": "foot",
+       "type": "int",
+       "value": 30
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "laptop-table",
+     "type": "furniture",
+     "x": 632,
+     "y": 400,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 12,
+       "y": 0
+      },
+      {
+       "x": 18,
+       "y": -28
+      },
+      {
+       "x": 58,
+       "y": -36
+      },
+      {
+       "x": 90,
+       "y": -22
+      },
+      {
+       "x": 128,
+       "y": -4
+      },
+      {
+       "x": 130,
+       "y": 56
+      },
+      {
+       "x": 84,
+       "y": 68
+      },
+      {
+       "x": 36,
+       "y": 60
+      },
+      {
+       "x": 13,
+       "y": 54
+      }
+     ],
+     "properties": [
+      {
+       "name": "foot",
+       "type": "int",
+       "value": 36
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "armchairs",
+     "type": "furniture",
+     "x": 671,
+     "y": 508,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 0,
+       "y": -45
+      },
+      {
+       "x": 29,
+       "y": -60
+      },
+      {
+       "x": 89,
+       "y": -66
+      },
+      {
+       "x": 129,
+       "y": -56
+      },
+      {
+       "x": 165,
+       "y": -38
+      },
+      {
+       "x": 165,
+       "y": 44
+      },
+      {
+       "x": 119,
+       "y": 58
+      },
+      {
+       "x": 74,
+       "y": 70
+      },
+      {
+       "x": 68,
+       "y": 53
+      },
+      {
+       "x": 68,
+       "y": 21
+      },
+      {
+       "x": 29,
+       "y": 11
+      }
+     ]
+    },
+    {
+     "id": 41,
+     "name": "armchair-front",
+     "type": "furniture",
+     "x": 640,
+     "y": 551,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 0,
+       "y": -54
+      },
+      {
+       "x": 60,
+       "y": -32
+      },
+      {
+       "x": 99,
+       "y": -22
+      },
+      {
+       "x": 99,
+       "y": 10
+      },
+      {
+       "x": 60,
+       "y": 27
+      }
+     ],
+     "properties": [
+      {
+       "name": "foot",
+       "type": "int",
+       "value": 20
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "bench",
+     "type": "furniture",
+     "x": 868,
+     "y": 352,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 152,
+       "y": 68
+      },
+      {
+       "x": 156,
+       "y": 98
+      },
+      {
+       "x": 144,
+       "y": 106
+      },
+      {
+       "x": 4,
+       "y": 38
+      }
+     ],
+     "properties": [
+      {
+       "name": "occlude",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "bench-tables",
+     "type": "furniture",
+     "x": 818,
+     "y": 384,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 27,
+       "y": -18
+      },
+      {
+       "x": 72,
+       "y": -2
+      },
+      {
+       "x": 82,
+       "y": 3
+      },
+      {
+       "x": 119,
+       "y": 18
+      },
+      {
+       "x": 127,
+       "y": 23
+      },
+      {
+       "x": 161,
+       "y": 37
+      },
+      {
+       "x": 161,
+       "y": 56
+      },
+      {
+       "x": 144,
+       "y": 108
+      },
+      {
+       "x": 107,
+       "y": 114
+      },
+      {
+       "x": 87,
+       "y": 108
+      },
+      {
+       "x": 62,
+       "y": 104
+      },
+      {
+       "x": 42,
+       "y": 88
+      },
+      {
+       "x": 18,
+       "y": 88
+      },
+      {
+       "x": 16,
+       "y": 36
+      },
+      {
+       "x": 0,
+       "y": 14
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Hotspots",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 16,
+     "name": "silo",
+     "type": "hotspot",
+     "x": 345,
+     "y": 298,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Coffee grinders"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Today's special · daily quests"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 332
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 462
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "banquette",
+     "type": "hotspot",
+     "x": 495,
+     "y": 205,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "The regulars"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Daily quests"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 476
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 322
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "mural",
+     "type": "hotspot",
+     "x": 350,
+     "y": 150,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "The mural"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Art Cards & museums"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 290
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 442
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "counter",
+     "type": "hotspot",
+     "x": 445,
+     "y": 345,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Espresso bar"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Morning Rush"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 405
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 494
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "sofa",
+     "type": "hotspot",
+     "x": 905,
+     "y": 375,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Reading bench"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Pick a book"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 826
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 410
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "door",
+     "type": "hotspot",
+     "x": 818,
+     "y": 268,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Glass door"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "Open the map"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 800
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 375
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Spots",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 22,
+     "name": "roxy-bar",
+     "type": "spot",
+     "x": 405,
+     "y": 494,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "hook",
+     "type": "spot",
+     "x": 470,
+     "y": 515,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "counter-top",
+     "type": "spot",
+     "x": 430,
+     "y": 402,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "roxy-sofa",
+     "type": "spot",
+     "x": 880,
+     "y": 392,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "name": "sofa-front",
+     "type": "spot",
+     "x": 826,
+     "y": 410,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "door",
+     "type": "spot",
+     "x": 800,
+     "y": 375,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "parcel",
+     "type": "spot",
+     "x": 772,
+     "y": 402,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      }
+     ]
+    },
+    {
+     "id": 33,
+     "name": "crew-joel",
+     "type": "spot",
+     "x": 252,
+     "y": 446,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 34,
+     "name": "crew-jonas",
+     "type": "spot",
+     "x": 306,
+     "y": 468,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    },
+    {
+     "id": 35,
+     "name": "crew-jason",
+     "type": "spot",
+     "x": 358,
+     "y": 484,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NE"
+      }
+     ]
+    },
+    {
+     "id": 36,
+     "name": "crew-tables",
+     "type": "spot",
+     "x": 620,
+     "y": 420,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Overlays",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": []
+  },
+  {
+   "id": 7,
+   "name": "Anchors",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 29,
+     "name": "continue",
+     "type": "anchor",
+     "x": 800,
+     "y": 6,
+     "width": 216,
+     "height": 48,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 30,
+     "name": "shelf-buttons",
+     "type": "anchor",
+     "x": 800,
+     "y": 58,
+     "width": 216,
+     "height": 30,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 31,
+     "name": "quiet-reads",
+     "type": "anchor",
+     "x": 800,
+     "y": 92,
+     "width": 216,
+     "height": 76,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 40,
+     "name": "twin-battle",
+     "type": "anchor",
+     "x": 904,
+     "y": 490,
+     "width": 84,
+     "height": 86,
+     "rotation": 0,
+     "visible": true
+    }
+   ]
+  }
+ ],
+ "tilesets": [],
+ "nextlayerid": 8,
+ "nextobjectid": 43
+}

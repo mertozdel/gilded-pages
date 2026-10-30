@@ -1,0 +1,145 @@
+[
+  {
+    "id": "roxy",
+    "name": "Roxy",
+    "role": "Barista & reader",
+    "texture": "roxy",
+    "rig": "roxy",
+    "npc": {
+      "home": "roxy-bar",
+      "routine": "barista"
+    },
+    "portrait": "icons/icon-192.png",
+    "blurb": "Reads your PDFs on her breaks and earns Gilt for every honest page.",
+    "features": {
+      "reading": true,
+      "wardrobe": true,
+      "museums": true,
+      "worldMap": true,
+      "morningRush": true,
+      "coffee": true
+    },
+    "currency": "gilt",
+    "break": {
+      "type": "reading"
+    },
+    "breakLabel": "Reading break",
+    "hotspots": {
+      "counter": {
+        "label": "Espresso bar",
+        "hint": "Make a coffee · Morning Rush"
+      }
+    }
+  },
+  {
+    "id": "jason",
+    "name": "Jason",
+    "role": "Latte art artist (Colombia)",
+    "texture": "jason",
+    "rig": "crew",
+    "npc": {
+      "home": "crew-jason",
+      "routine": "machine"
+    },
+    "portrait": "assets/sprites/jason/portraits/jason_portrait_main.png",
+    "blurb": "Hold to pull the shot, steam the milk and pour: three stages, one button, one perfect cup.",
+    "features": {
+      "latteArt": true,
+      "coffee": true
+    },
+    "currency": "tips",
+    "break": null,
+    "breakLabel": "Never takes a break",
+    "action": "Latte art",
+    "breakLine": "Jason never takes a break!",
+    "hotspots": {
+      "counter": {
+        "label": "Espresso machine",
+        "hint": "Latte art"
+      },
+      "mural": {
+        "label": "Jason's photo board",
+        "hint": "His best cups"
+      },
+      "door": {
+        "label": "Glass door",
+        "hint": "Jason never takes a break!"
+      }
+    }
+  },
+  {
+    "id": "joel",
+    "name": "Joel",
+    "role": "Barista & DJ",
+    "twin": "jonas",
+    "texture": "joel",
+    "rig": "crew",
+    "npc": {
+      "home": "crew-joel",
+      "routine": "chat"
+    },
+    "portrait": "assets/sprites/joel/portraits/joel_portrait_main.png",
+    "blurb": "Works the morning rush, then flies to China to DJ the 电音节 neon festival.",
+    "features": {
+      "morningRush": true,
+      "coffee": true
+    },
+    "currency": "fans",
+    "break": {
+      "type": "rhythm",
+      "mode": "dj",
+      "venue": "neon-china"
+    },
+    "breakLabel": "DJ in China",
+    "action": "Break: fly to China",
+    "hotspots": {
+      "door": {
+        "label": "Glass door",
+        "hint": "Break: fly to China"
+      },
+      "counter": {
+        "label": "Espresso bar",
+        "hint": "Make a coffee · Morning Rush"
+      }
+    }
+  },
+  {
+    "id": "jonas",
+    "name": "Jonas",
+    "role": "Barista & bassist",
+    "twin": "joel",
+    "texture": {
+      "cafe": "jonas",
+      "stage": "jonas_bass"
+    },
+    "rig": "crew",
+    "npc": {
+      "home": "crew-jonas",
+      "routine": "tables"
+    },
+    "portrait": "assets/sprites/jonas/portraits/jonas_portrait_main.png",
+    "blurb": "Works the morning rush, then takes the train to play bass with the brass band at the Dorffest.",
+    "features": {
+      "morningRush": true,
+      "coffee": true
+    },
+    "currency": "applause",
+    "break": {
+      "type": "rhythm",
+      "mode": "bass",
+      "venue": "bavaria"
+    },
+    "breakLabel": "Bass at the village fest",
+    "action": "Break: village fest",
+    "hotspots": {
+      "door": {
+        "label": "Glass door",
+        "hint": "Break: village fest"
+      },
+      "counter": {
+        "label": "Espresso bar",
+        "hint": "Make a coffee · Morning Rush"
+      }
+    }
+  }
+]

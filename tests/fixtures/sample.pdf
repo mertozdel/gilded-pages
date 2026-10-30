@@ -1,0 +1,64 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 213 >>
+stream
+BT /F1 24 Tf 72 700 Td (Chapter One) Tj ET
+BT /F1 14 Tf 72 660 Td (In my younger and more vulnerable years my father gave me some advice.) Tj ET
+BT /F1 14 Tf 72 620 Td (This is a test page for Gilded Pages.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 215 >>
+stream
+BT /F1 24 Tf 72 700 Td (Chapter One (cont.)) Tj ET
+BT /F1 14 Tf 72 660 Td (Whenever you feel like criticizing anyone, he told me, just remember.) Tj ET
+BT /F1 14 Tf 72 620 Td (A second page of honest reading.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 209 >>
+stream
+BT /F1 24 Tf 72 700 Td (Chapter Two) Tj ET
+BT /F1 14 Tf 72 660 Td (About half way between West Egg and New York the motor road joins the railroad.) Tj ET
+BT /F1 14 Tf 72 620 Td (The third and last page.) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Title (The Sample Book) /Author (Test Author) >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000127 00000 n 
+0000000197 00000 n 
+0000000461 00000 n 
+0000000587 00000 n 
+0000000853 00000 n 
+0000000979 00000 n 
+0000001239 00000 n 
+0000001365 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R /Info 10 0 R >>
+startxref
+1434
+%%EOF

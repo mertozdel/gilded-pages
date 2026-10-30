@@ -1,0 +1,596 @@
+{
+ "texture": "jonas_bass",
+ "frameSize": {
+  "w": 192,
+  "h": 240
+ },
+ "origin": {
+  "x": 0.5,
+  "y": 0.9875
+ },
+ "standHeight": 196,
+ "iso_facing": {
+  "S": "_s",
+  "SE": "_s",
+  "SW": "_s",
+  "E": "_e",
+  "W": "_e + flipX",
+  "N": "_n",
+  "NE": "_n",
+  "NW": "_n"
+ },
+ "bass_on": [
+  "idle_s",
+  "walk_s",
+  "play_s",
+  "play_groove_s",
+  "play_slow_s",
+  "calm_s",
+  "talk_s",
+  "gesture_s",
+  "oops_s",
+  "flustered_s"
+ ],
+ "anims": [
+  {
+   "key": "jonas_bass_idle_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_idle_s",
+     "duration": 1500
+    },
+    {
+     "frame": "jonas_bass_idle_s_br",
+     "duration": 700
+    },
+    {
+     "frame": "jonas_bass_idle_s",
+     "duration": 1000
+    },
+    {
+     "frame": "jonas_bass_idle_s_bl",
+     "duration": 120
+    },
+    {
+     "frame": "jonas_bass_idle_s",
+     "duration": 700
+    },
+    {
+     "frame": "jonas_bass_idle_s_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "standing with the bass, facing the viewer"
+  },
+  {
+   "key": "jonas_bass_walk_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_walk_s_1",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_s_2",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_s_3",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_s_4",
+     "duration": 125
+    }
+   ],
+   "repeat": -1,
+   "use": "walking toward the viewer with the bass"
+  },
+  {
+   "key": "jonas_bass_play_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_play_1",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_2",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_3",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_4",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_5",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_10",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_11",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_12",
+     "duration": 110
+    }
+   ],
+   "repeat": -1,
+   "use": "playing the bass: the 12-step cycle as drawn (frames 1-5, 10-12)"
+  },
+  {
+   "key": "jonas_bass_play_groove_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_play_1",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_2",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_3",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_4",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_5",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_10_dip",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_11",
+     "duration": 110
+    },
+    {
+     "frame": "jonas_bass_play_12",
+     "duration": 110
+    }
+   ],
+   "repeat": -1,
+   "use": "playing with a small dip on the down-stroke (livelier)"
+  },
+  {
+   "key": "jonas_bass_play_slow_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_play_1",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_2",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_3",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_4",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_5",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_10",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_11",
+     "duration": 180
+    },
+    {
+     "frame": "jonas_bass_play_12",
+     "duration": 180
+    }
+   ],
+   "repeat": -1,
+   "use": "slow ballad tempo"
+  },
+  {
+   "key": "jonas_bass_calm_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_calm",
+     "duration": 1400
+    },
+    {
+     "frame": "jonas_bass_calm_br",
+     "duration": 700
+    },
+    {
+     "frame": "jonas_bass_calm_bl",
+     "duration": 120
+    },
+    {
+     "frame": "jonas_bass_calm",
+     "duration": 900
+    },
+    {
+     "frame": "jonas_bass_calm_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "relaxed, bass hanging, while chatting"
+  },
+  {
+   "key": "jonas_bass_talk_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_calm",
+     "duration": 450
+    },
+    {
+     "frame": "jonas_bass_gesture",
+     "duration": 900
+    },
+    {
+     "frame": "jonas_bass_calm_br",
+     "duration": 400
+    },
+    {
+     "frame": "jonas_bass_gesture_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "talking"
+  },
+  {
+   "key": "jonas_bass_gesture_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_gesture",
+     "duration": 1200
+    },
+    {
+     "frame": "jonas_bass_gesture_br",
+     "duration": 600
+    }
+   ],
+   "repeat": 0,
+   "use": "\"check it out!\""
+  },
+  {
+   "key": "jonas_bass_oops_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_vocal",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal_l",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal_r",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal_l",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal_r",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_vocal",
+     "duration": 900
+    },
+    {
+     "frame": "jonas_bass_vocal_br",
+     "duration": 600
+    }
+   ],
+   "repeat": 0,
+   "use": "\"uh-oh!\" (wrong note)"
+  },
+  {
+   "key": "jonas_bass_flustered_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_flustered",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered_l",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered_r",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered_l",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered_r",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_flustered",
+     "duration": 800
+    },
+    {
+     "frame": "jonas_bass_flustered_br",
+     "duration": 600
+    }
+   ],
+   "repeat": 0,
+   "use": "flustered"
+  },
+  {
+   "key": "jonas_bass_walk_free_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_free_s_1",
+     "duration": 170
+    },
+    {
+     "frame": "jonas_bass_free_s_2",
+     "duration": 170
+    }
+   ],
+   "repeat": -1,
+   "use": "walking toward the viewer, no bass"
+  },
+  {
+   "key": "jonas_bass_idle_e",
+   "frames": [
+    {
+     "frame": "jonas_bass_idle_e",
+     "duration": 1500
+    },
+    {
+     "frame": "jonas_bass_idle_e_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "standing in profile (flipX for west)"
+  },
+  {
+   "key": "jonas_bass_walk_e",
+   "frames": [
+    {
+     "frame": "jonas_bass_walk_e_1",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_e_2",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_e_1",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_e_2",
+     "duration": 125
+    }
+   ],
+   "repeat": -1,
+   "use": "walking in profile (flipX for west)"
+  },
+  {
+   "key": "jonas_bass_idle_n",
+   "frames": [
+    {
+     "frame": "jonas_bass_idle_n",
+     "duration": 1500
+    },
+    {
+     "frame": "jonas_bass_idle_n_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "standing, back to the viewer"
+  },
+  {
+   "key": "jonas_bass_walk_n",
+   "frames": [
+    {
+     "frame": "jonas_bass_walk_n_1",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_n_2",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_n_3",
+     "duration": 125
+    },
+    {
+     "frame": "jonas_bass_walk_n_4",
+     "duration": 125
+    }
+   ],
+   "repeat": -1,
+   "use": "walking away"
+  },
+  {
+   "key": "jonas_bass_run_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_run_s_1",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_s_2",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_s_3",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_s_4",
+     "duration": 85
+    }
+   ],
+   "repeat": -1,
+   "use": "running toward the viewer"
+  },
+  {
+   "key": "jonas_bass_run_e",
+   "frames": [
+    {
+     "frame": "jonas_bass_run_e_1",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_e_2",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_e_3",
+     "duration": 85
+    },
+    {
+     "frame": "jonas_bass_run_e_4",
+     "duration": 85
+    }
+   ],
+   "repeat": -1,
+   "use": "running in profile (flipX for west)"
+  },
+  {
+   "key": "jonas_bass_celebrate_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_celebrate",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_celebrate_up3",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up9",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up12",
+     "duration": 120
+    },
+    {
+     "frame": "jonas_bass_celebrate_up9",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up3",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate",
+     "duration": 160
+    },
+    {
+     "frame": "jonas_bass_celebrate",
+     "duration": 80
+    },
+    {
+     "frame": "jonas_bass_celebrate_up3",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up9",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up12",
+     "duration": 120
+    },
+    {
+     "frame": "jonas_bass_celebrate_up9",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate_up3",
+     "duration": 70
+    },
+    {
+     "frame": "jonas_bass_celebrate",
+     "duration": 160
+    }
+   ],
+   "repeat": 0,
+   "use": "fists in the air (end of a song, a book finished)"
+  },
+  {
+   "key": "jonas_bass_confused_s",
+   "frames": [
+    {
+     "frame": "jonas_bass_confused",
+     "duration": 1300
+    },
+    {
+     "frame": "jonas_bass_confused_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "scratching his head"
+  },
+  {
+   "key": "jonas_bass_sit_floor",
+   "frames": [
+    {
+     "frame": "jonas_bass_sit_floor",
+     "duration": 1600
+    },
+    {
+     "frame": "jonas_bass_sit_floor_br",
+     "duration": 800
+    }
+   ],
+   "repeat": -1,
+   "use": "chilling on the floor"
+  }
+ ]
+}

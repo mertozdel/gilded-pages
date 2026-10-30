@@ -1,0 +1,480 @@
+/* The rhythm breaks: settings keys and calibration, the venues, travel, the dev tools. */
+
+/* ---------- settings: keys, calibration ---------- */
+
+.key-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.deco-btn.active {
+  background: var(--gold);
+  color: var(--navy);
+}
+.mode-card.small {
+  padding: 6px 12px;
+}
+.calibration {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+.calibration-pad {
+  width: 220px;
+  height: 120px;
+  font-family: var(--font-title);
+  font-size: 28px;
+  color: var(--gilt);
+  background: radial-gradient(circle, #3b2418, #1a100a);
+  border: 3px solid var(--gold);
+  border-radius: 16px;
+  cursor: pointer;
+  touch-action: none;
+  display: grid;
+  place-content: center;
+}
+
+/* ---------- the venues ---------- */
+
+.venue-screen {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.venue-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  background: var(--bar);
+  border-bottom: 3px double var(--gold);
+}
+.venue-bar h1 {
+  font-size: 22px;
+  font-family: var(--font-title), 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+}
+.venue-neon-china .venue-bar {
+  border-bottom-color: #ff6fd8;
+}
+.venue-sub {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-right: auto;
+}
+.venue-title-card {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 26px 48px;
+  background: rgba(11, 11, 15, 0.82);
+  border: 3px double var(--gold);
+  z-index: 6;
+  animation: latte-in 0.5s ease-out;
+}
+.venue-title-card strong {
+  font-family: var(--font-title), 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 400;
+  font-size: 72px;
+  color: var(--gold);
+  line-height: 1.1;
+}
+.venue-neon-china .venue-title-card {
+  border-color: #ff6fd8;
+  box-shadow: 0 0 40px rgba(255, 111, 216, 0.45);
+}
+.venue-neon-china .venue-title-card strong {
+  color: #ffd1f4;
+  text-shadow: 0 0 18px #ff6fd8;
+}
+.venue-panel {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 110px);
+  overflow: auto;
+  padding: 16px 18px;
+  display: grid;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+.venue-panel h2 {
+  font-size: 24px;
+}
+.venue-select.chalk {
+  left: auto;
+  right: 4vw;
+  top: 56%;
+  transform: translateY(-50%);
+  background: #1f2a26;
+  border: 8px solid #6b4a2b;
+  font-family: 'Segoe Script', 'Brush Script MT', var(--font-prose);
+}
+.venue-select.chalk h2 {
+  color: #f2ede4;
+  font-family: 'Segoe Script', 'Brush Script MT', var(--font-title);
+}
+.venue-select.led {
+  transform: none;
+  background-color: #07061a;
+  border: 2px solid #ff6fd8;
+  box-shadow: 0 0 30px rgba(255, 111, 216, 0.4), inset 0 0 0 1px rgba(86, 180, 233, 0.4);
+  background-image: radial-gradient(rgba(120, 90, 200, 0.25) 1px, transparent 1.4px);
+  background-size: 6px 6px;
+}
+.venue-select.led h2 {
+  color: #ffd1f4;
+  text-shadow: 0 0 10px #ff6fd8;
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', var(--font-title);
+}
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+.song-list button,
+.diff-row button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(242, 237, 228, 0.25);
+  padding: 6px 10px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.song-list button.on,
+.diff-row button.on {
+  border-color: var(--gold);
+  background: rgba(227, 193, 111, 0.18);
+}
+.venue-select.led .song-list button.on,
+.venue-select.led .diff-row button.on {
+  border-color: #ff6fd8;
+  background: rgba(255, 111, 216, 0.18);
+}
+.song-best {
+  color: var(--gilt);
+  letter-spacing: 1px;
+}
+.diff-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.diff-row button {
+  justify-content: center;
+  text-transform: capitalize;
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+.venue-play {
+  position: absolute;
+  inset: 48px 0 0 0;
+  z-index: 4;
+  display: grid;
+  /* The highway left of the stage, so the player on stage stays in view. */
+  grid-template-columns: min(520px, 40vw) 1fr auto;
+  padding-left: 3vw;
+  pointer-events: none;
+}
+.venue-play.hidden {
+  visibility: hidden;
+}
+.venue-highway {
+  grid-column: 1;
+  position: relative;
+  pointer-events: auto;
+  touch-action: none;
+}
+.venue-highway canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.venue-hud {
+  grid-column: 3;
+  align-self: start;
+  width: 240px;
+  margin: 18px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+  min-width: 190px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  background: rgba(11, 11, 15, 0.72);
+  border: 1px solid rgba(227, 193, 111, 0.5);
+  pointer-events: auto;
+}
+.venue-score {
+  font-family: var(--font-title);
+  font-size: 30px;
+  color: var(--gilt);
+}
+.venue-meter {
+  position: relative;
+  height: 18px;
+  border: 1px solid rgba(242, 237, 228, 0.4);
+}
+.venue-meter span {
+  position: relative;
+  z-index: 1;
+  padding-left: 4px;
+  font-size: 10px;
+  line-height: 16px;
+}
+.venue-meter i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, #3ddc97, #f0e442);
+  opacity: 0.75;
+}
+.venue-meter i.low {
+  background: #c9374f;
+}
+.venue-meter.star i {
+  background: linear-gradient(90deg, #56b4e9, #ff6fd8);
+}
+.venue-meter.star.active {
+  box-shadow: 0 0 12px rgba(255, 111, 216, 0.8);
+}
+.venue-progress {
+  height: 4px;
+  background: rgba(242, 237, 228, 0.2);
+}
+.venue-progress i {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+}
+.venue-count {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 7;
+  font-family: var(--font-title);
+  font-size: 120px;
+  color: var(--gilt);
+  text-shadow: 0 4px 0 var(--navy);
+  pointer-events: none;
+}
+.venue-stars {
+  font-size: 34px;
+  color: var(--gilt);
+  letter-spacing: 4px;
+}
+.venue-results .fc {
+  color: var(--green);
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+.venue-earned {
+  font-family: var(--font-title);
+  font-size: 20px;
+  color: var(--gilt);
+}
+@media (max-width: 760px) {
+  .venue-play {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    padding-left: 0;
+  }
+  .venue-highway {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .venue-hud {
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    margin: 6px;
+    grid-template-columns: repeat(3, auto);
+    font-size: 10px;
+  }
+  .venue-select.chalk,
+  .venue-select.led {
+    left: 12px !important;
+    right: 12px;
+    top: 60px !important;
+    width: auto;
+    transform: none;
+  }
+}
+
+/* ---------- travel ---------- */
+
+.travel {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #0b0b0f;
+}
+.travel canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.travel-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  font-family: var(--font-title);
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+.travel-caption small {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+/* ---------- dev tools ---------- */
+
+.dev-screen {
+  height: 100dvh;
+  overflow: auto;
+  padding: 16px 20px 40px;
+  background: var(--navy);
+}
+.dev-screen h1 {
+  font-size: 26px;
+}
+.dev-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 8px 0;
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+.dev-controls input,
+.dev-controls select {
+  font-size: 12px;
+  background: var(--navy-2);
+  color: var(--ivory);
+  border: 1px solid rgba(227, 193, 111, 0.5);
+  padding: 3px 6px;
+  max-width: 160px;
+}
+.dev-table {
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 10px;
+}
+.dev-table th,
+.dev-table td {
+  border: 1px solid rgba(227, 193, 111, 0.25);
+  padding: 4px 8px;
+}
+.dev-table td.ok {
+  color: var(--green);
+}
+.dev-table td.bad {
+  color: var(--rose);
+}
+.dev-highway {
+  width: 420px;
+  height: 300px;
+  display: block;
+  margin: 8px 0;
+  background: #0b0b0f;
+}
+.dev-errors {
+  color: var(--rose);
+  font-size: 12px;
+}
+.chart-grid {
+  display: grid;
+  gap: 1px;
+  max-height: 60dvh;
+  overflow: auto;
+  width: max-content;
+}
+.chart-row {
+  display: grid;
+  grid-template-columns: 64px repeat(var(--lanes), 34px);
+  gap: 1px;
+}
+.chart-row.bar {
+  border-top: 1px solid var(--gold);
+}
+.chart-row.now {
+  background: rgba(57, 255, 142, 0.25);
+}
+.chart-time {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  color: var(--gilt);
+}
+.chart-cell {
+  height: 14px;
+  border: 0;
+  background: rgba(242, 237, 228, 0.07);
+  cursor: pointer;
+  padding: 0;
+}
+.chart-cell.head {
+  background: var(--gold);
+}
+.chart-cell.head.hold,
+.chart-cell.head.slide,
+.chart-cell.head.scratch {
+  background: #56b4e9;
+}
+.chart-cell.tail {
+  background: rgba(86, 180, 233, 0.45);
+}
+
+.song-list button.locked {
+  opacity: 0.55;
+}
+
+/* A fade from black between places (select, venues, a new character). */
+.route-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: #0b0b0f;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms ease-out;
+}
+.route-fade.dark {
+  opacity: 1;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-fade {
+    transition-duration: 150ms;
+  }
+}

@@ -1,0 +1,7 @@
+[
+  { "id": "daily-read-15", "kind": "daily", "title": "Read 15 pages", "goal": { "metric": "pagesToday", "count": 15 }, "reward": { "gilt": 10 } },
+  { "id": "daily-highlight-1", "kind": "daily", "title": "Highlight one line", "goal": { "metric": "highlightsToday", "count": 1 }, "reward": { "gilt": 5 } },
+  { "id": "daily-visit-gallery", "kind": "daily", "title": "Visit the gallery", "goal": { "metric": "visit:gilded-age-gallery", "count": 1 }, "reward": { "gilt": 5 } },
+  { "id": "book-chapter-3", "kind": "book", "title": "Reach chapter 3 to hear the band at the speakeasy", "goal": { "metric": "chapterReached", "count": 3 }, "reward": { "gilt": 20 } },
+  { "id": "collect-blouses", "kind": "collection", "title": "Own all seven tops", "goal": { "metric": "blousesOwned", "count": 7 }, "reward": { "gilt": 100 } }
+]

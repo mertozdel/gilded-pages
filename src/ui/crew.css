@@ -1,0 +1,668 @@
+/* The crew: character select, the crew HUD, Jason's latte art, the Twin Battle board. */
+
+/* ---------- character select ---------- */
+
+.select-screen {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.select-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 8px 16px;
+  background: var(--bar);
+  border-bottom: 3px double var(--gold);
+}
+.select-header h1 {
+  font-size: 24px;
+}
+.select-body {
+  position: relative;
+  min-height: 0;
+}
+.select-stage {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.select-stage.text-only {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px 16px;
+}
+.lineup-hit {
+  position: absolute;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+.lineup-hit:hover,
+.lineup-hit.focused {
+  border-color: rgba(227, 193, 111, 0.55);
+  box-shadow: 0 0 24px rgba(227, 193, 111, 0.25) inset;
+}
+.lineup-name {
+  position: absolute;
+  left: 50%;
+  bottom: -26px;
+  transform: translateX(-50%);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gilt);
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+.lineup-hit.focused .lineup-name {
+  background: var(--gold);
+  color: var(--navy);
+}
+.select-text-pick {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 150px;
+  padding: 12px;
+  background: var(--panel);
+  border: 1px solid rgba(227, 193, 111, 0.4);
+  color: var(--ivory);
+  cursor: pointer;
+}
+.select-text-pick.focused {
+  border-color: var(--gold);
+}
+.select-card-wrap {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: min(400px, calc(100% - 32px));
+  z-index: 3;
+}
+.select-card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+.select-portrait {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  background: rgba(242, 237, 228, 0.06);
+  border: 1px solid rgba(227, 193, 111, 0.45);
+}
+.select-role {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--gilt);
+  margin: 0;
+}
+.select-twin {
+  font-style: italic;
+  color: var(--amber);
+  margin: 2px 0;
+}
+@media (max-width: 760px) {
+  /* No tab bar on this screen. */
+  .screen.select-screen {
+    padding-bottom: 0;
+  }
+  .select-header {
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
+  }
+  /* The line-up stands above the card, not behind it: the café fits into the space left. */
+  .select-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .select-stage {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    min-height: 0;
+    overflow-x: clip;
+  }
+  .select-card-wrap {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin: 0 calc(12px + env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) calc(12px + env(safe-area-inset-left, 0px));
+    /* As tall as the longest card, so picking another barista never rescales the café above. */
+    min-height: 310px;
+    display: flex;
+    flex-direction: column;
+  }
+  .select-card-wrap > .deco-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+  .select-card-wrap .deco-btn.big {
+    margin-top: auto;
+    align-self: stretch;
+    justify-content: center;
+  }
+  /* Names over their heads: under their feet they would run into each other and the card. */
+  .lineup-name {
+    bottom: auto;
+    top: -6px;
+    transform: translate(-50%, -100%);
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+  .select-card {
+    grid-template-columns: 64px 1fr;
+  }
+  .select-portrait {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* ---------- the crew's HUD ---------- */
+
+.hud-currency-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+.hud-action {
+  border-color: rgba(227, 193, 111, 0.6);
+  color: var(--gilt);
+}
+
+/* ---------- Twin Battle chalkboard ---------- */
+
+.twin-board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  background: #1f2a26;
+  border: 2px solid #6b4a2b;
+  border-radius: 4px;
+  font-family: 'Segoe Script', 'Brush Script MT', var(--font-prose);
+  color: #f2ede4;
+  font-size: 11px;
+  line-height: 1.15;
+  text-align: center;
+  overflow: hidden;
+}
+.twin-board-title {
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(242, 237, 228, 0.5);
+}
+.twin-board-row {
+  display: grid;
+}
+.twin-board-row.lead {
+  color: #f6e3a1;
+}
+.twin-vs {
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+/* ---------- latte art ---------- */
+
+.latte-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 40px;
+  width: min(640px, 46vw);
+  max-height: calc(100dvh - 110px);
+  overflow: auto;
+  z-index: 6;
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  box-shadow: inset 0 0 0 3px var(--navy), inset 0 0 0 4px rgba(227, 193, 111, 0.35), 0 12px 40px rgba(0, 0, 0, 0.5);
+  padding: 12px 14px 14px;
+  animation: latte-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+.latte-panel.idle {
+  opacity: 0.92;
+}
+@keyframes latte-in {
+  from {
+    transform: translate(40px, 60px);
+    opacity: 0;
+  }
+}
+.latte-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 8px;
+}
+.latte-head strong {
+  font-family: var(--font-title);
+  color: var(--gold);
+  font-weight: 400;
+  font-size: 18px;
+}
+.latte-head-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.latte-rush {
+  color: var(--rose);
+  font-family: var(--font-ui);
+}
+.latte-stages {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  margin: 8px 0;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.latte-stages li {
+  flex: 1;
+  border: 1px solid rgba(227, 193, 111, 0.3);
+  padding: 4px 6px;
+  color: rgba(242, 237, 228, 0.7);
+}
+.latte-stages li.on {
+  border-color: var(--gold);
+  color: var(--gilt);
+}
+.latte-stages li.perfect em {
+  color: var(--green);
+}
+.latte-stages li.good em {
+  color: var(--gilt);
+}
+.latte-stages li.miss em {
+  color: var(--rose);
+}
+.latte-stages em {
+  font-style: normal;
+}
+.latte-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+  padding-right: 150px;
+  min-height: 170px;
+}
+.latte-cup-wrap {
+  position: relative;
+  width: min(320px, 30vw);
+  aspect-ratio: 1;
+}
+.latte-cup {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: pointer;
+}
+.latte-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-title);
+  font-size: 30px;
+  color: var(--gilt);
+  text-shadow: 0 2px 0 var(--navy), 0 0 18px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  animation: latte-flash 0.65s ease-out;
+}
+.latte-flash.perfect {
+  color: var(--green);
+}
+.latte-flash.miss {
+  color: var(--rose);
+}
+@keyframes latte-flash {
+  from {
+    transform: translate(-50%, -30%) scale(0.7);
+    opacity: 0;
+  }
+}
+.latte-sparkles::before,
+.latte-sparkles::after {
+  content: '✦';
+  position: absolute;
+  color: #fff4c8;
+  font-size: 26px;
+  animation: latte-twinkle 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.latte-sparkles::before {
+  left: 14%;
+  top: 10%;
+}
+.latte-sparkles::after {
+  right: 12%;
+  bottom: 16%;
+  animation-delay: 0.6s;
+}
+@keyframes latte-twinkle {
+  50% {
+    opacity: 0.2;
+    transform: scale(0.6) rotate(20deg);
+  }
+}
+.latte-gauge-wrap {
+  min-width: 0;
+}
+.latte-bar {
+  position: relative;
+  height: 30px;
+  background: rgba(242, 237, 228, 0.1);
+  border: 1px solid rgba(227, 193, 111, 0.5);
+  overflow: hidden;
+}
+.latte-band,
+.latte-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.latte-band.good {
+  background: rgba(227, 193, 111, 0.25);
+}
+.latte-band.perfect {
+  background: rgba(227, 193, 111, 0.6);
+}
+.latte-fill {
+  left: 0;
+  background: linear-gradient(90deg, #6b3f22, #c88a4a);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+.latte-bar-label {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-ui);
+}
+.latte-dial {
+  max-width: 260px;
+}
+.latte-meter {
+  position: relative;
+  height: 12px;
+  border: 1px solid rgba(227, 193, 111, 0.4);
+  font-family: var(--font-ui);
+  font-size: 9px;
+  padding-left: 4px;
+  line-height: 10px;
+}
+.latte-meter span {
+  position: absolute;
+  left: 40px;
+  top: 2px;
+  bottom: 2px;
+  max-width: calc(100% - 44px);
+  background: #fff6e6;
+}
+.latte-result {
+  display: grid;
+  gap: 4px;
+}
+.latte-result strong {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 22px;
+}
+.latte-result.perfect strong {
+  color: var(--green);
+}
+.latte-result.good strong {
+  color: var(--gilt);
+}
+.latte-result.messy strong {
+  color: var(--amber);
+}
+.latte-hold {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  background: radial-gradient(circle at 35% 30%, #4a3122, #2a1a12 70%);
+  color: var(--gilt);
+  font-family: var(--font-title);
+  font-size: 24px;
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  box-shadow: 0 6px 0 #1a100a, 0 10px 24px rgba(0, 0, 0, 0.5);
+  transition: transform 0.06s ease-out, box-shadow 0.06s ease-out;
+}
+.latte-hold small {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.latte-hold.held {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 #1a100a, 0 4px 12px rgba(0, 0, 0, 0.5);
+  background: radial-gradient(circle at 35% 30%, #6b4a2b, #3b2418 70%);
+}
+.latte-hold:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+@media (max-width: 760px) {
+  .latte-panel {
+    left: 8px;
+    right: 8px;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+  }
+  .latte-body {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-bottom: 150px;
+    justify-items: center;
+  }
+  .latte-cup-wrap {
+    width: min(260px, 70vw);
+  }
+}
+
+.photo-board {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+.photo-board li {
+  display: grid;
+  gap: 2px;
+  background: #f2ede4;
+  color: #241811;
+  padding: 8px 8px 10px;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.photo-board li:nth-child(2n) {
+  transform: rotate(1.5deg);
+}
+.photo-board img {
+  width: 100%;
+  height: auto;
+}
+
+/* Pattern picker and difficulty badge (latte art). */
+.latte-pick select {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  background: var(--navy-2);
+  color: var(--ivory);
+  border: 1px solid rgba(227, 193, 111, 0.5);
+  padding: 4px 6px;
+  max-width: 210px;
+}
+.latte-diff {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.latte-diff.easy {
+  color: #b7f5a0;
+}
+.latte-diff.medium {
+  color: var(--gilt);
+}
+.latte-diff.hard {
+  color: var(--amber);
+}
+.latte-diff.master {
+  color: #ff9be6;
+  text-shadow: 0 0 6px rgba(255, 111, 216, 0.6);
+}
+
+.bar-coffee {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(227, 193, 111, 0.3);
+}
+
+/* The coffee being made, over the cup. */
+.latte-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Choosing the latte art. */
+.art-picker {
+  /* Over the cup panel (same right/bottom edge), taller than it so more cups show. */
+  position: fixed;
+  right: 16px;
+  bottom: 40px;
+  width: min(640px, 46vw);
+  /* As tall as its cups need (8 for most baristas, 16 for Jason), scrolling past this. */
+  max-height: min(660px, calc(100dvh - 110px));
+  z-index: 7;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  animation: latte-in 0.25s ease-out;
+}
+.art-picker-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: 8px;
+}
+.art-picker-head strong {
+  font-family: var(--font-title);
+  font-weight: 400;
+  color: var(--gold);
+  font-size: 20px;
+}
+.art-picker-head .small {
+  grid-column: 1;
+}
+.art-picker-head .icon-btn {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+}
+.latte-art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  overflow: auto;
+  align-content: start;
+  padding: 2px;
+}
+.latte-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 8px 4px 6px;
+  background: rgba(242, 237, 228, 0.04);
+  border: 1px solid rgba(227, 193, 111, 0.3);
+  color: var(--ivory);
+  cursor: pointer;
+  font: inherit;
+}
+.latte-card img {
+  width: 84px;
+  height: 84px;
+}
+.latte-card strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.latte-card small {
+  font-family: var(--font-ui);
+  font-size: 9px;
+}
+.latte-card:hover:not(:disabled),
+.latte-card:focus-visible {
+  border-color: var(--gold);
+  background: rgba(227, 193, 111, 0.12);
+}
+.latte-card.on {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green) inset;
+}
+.latte-card.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.latte-card.locked img {
+  filter: grayscale(1);
+}
+.latte-art-q {
+  position: absolute;
+  top: 34px;
+  font-family: var(--font-title);
+  font-size: 30px;
+  color: #fff8ec;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 760px) {
+  .art-picker {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+}

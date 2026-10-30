@@ -1,0 +1,122 @@
+[
+  {
+    "id": "standard-tshirt",
+    "name": "Standard T-Shirt",
+    "details": "Red-and-white stripes, crew neck, short sleeves",
+    "shines": "Days off around the city",
+    "price": 0,
+    "colors": {
+      "base": "#F4E2DA",
+      "shade": "#D9B8B0",
+      "light": "#FFF4EE",
+      "trim": "#C2504F"
+    },
+    "collar": "crew",
+    "sleeve": "short",
+    "cuff": "plain",
+    "detail": "stripes"
+  },
+  {
+    "id": "cream-peter-pan",
+    "name": "Cream Peter Pan",
+    "details": "Peter Pan collar, olive leaf embroidery, elbow puff sleeves",
+    "shines": "Café Machorn",
+    "price": 0,
+    "colors": {
+      "base": "#E4D4BA",
+      "shade": "#C2AA90",
+      "light": "#F4E8D4",
+      "trim": "#7A6A4E"
+    },
+    "collar": "peterPan",
+    "sleeve": "elbowPuff",
+    "cuff": "plain",
+    "detail": "embroidery"
+  },
+  {
+    "id": "ivory-jabot",
+    "name": "Ivory Jabot",
+    "details": "Ruffled jabot, lace cuffs, pearl buttons",
+    "shines": "Everywhere",
+    "price": 0,
+    "colors": {
+      "base": "#F2EDE4",
+      "shade": "#D3C7B5",
+      "light": "#FFFFFF",
+      "trim": "#E3C16F"
+    },
+    "collar": "jabot",
+    "sleeve": "puff",
+    "cuff": "lace",
+    "detail": "pearlButtons"
+  },
+  {
+    "id": "dusty-rose-puff",
+    "name": "Dusty Rose Puff",
+    "details": "Puff sleeves, sweetheart ruffle, rose-pink",
+    "shines": "Sculpture garden, spring scenery",
+    "price": 40,
+    "colors": {
+      "base": "#CC8590",
+      "shade": "#A4606C",
+      "light": "#E8AEB6",
+      "trim": "#F2EDE4"
+    },
+    "collar": "sweetheart",
+    "sleeve": "bigPuff",
+    "cuff": "plain",
+    "detail": "none"
+  },
+  {
+    "id": "emerald-bow",
+    "name": "Emerald Bow",
+    "details": "Silk pussy-bow, gathered sleeves",
+    "shines": "Library, reading room",
+    "price": 60,
+    "colors": {
+      "base": "#2E8B6A",
+      "shade": "#1C6249",
+      "light": "#5FB491",
+      "trim": "#F6E3A1"
+    },
+    "collar": "bow",
+    "sleeve": "gathered",
+    "cuff": "plain",
+    "detail": "none"
+  },
+  {
+    "id": "midnight-satin",
+    "name": "Midnight Satin",
+    "details": "Navy satin, gold buttons, ruffle placket",
+    "shines": "Speakeasy",
+    "price": 80,
+    "colors": {
+      "base": "#24315A",
+      "shade": "#151D38",
+      "light": "#4A5C94",
+      "trim": "#E3C16F"
+    },
+    "collar": "placket",
+    "sleeve": "puff",
+    "cuff": "plain",
+    "detail": "goldButtons"
+  },
+  {
+    "id": "met-vermeer-blue",
+    "name": "Vermeer Blue",
+    "details": "Pale linen, ultramarine silk bow",
+    "shines": "The Met",
+    "price": 0,
+    "earnedAt": "the-met",
+    "colors": {
+      "base": "#D5DEEC",
+      "shade": "#9FAECB",
+      "light": "#EEF3FA",
+      "trim": "#3D5A9A"
+    },
+    "collar": "bow",
+    "sleeve": "puff",
+    "cuff": "lace",
+    "detail": "none"
+  }
+]
