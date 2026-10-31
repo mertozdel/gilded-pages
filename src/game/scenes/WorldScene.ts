@@ -1,8 +1,11 @@
 import Phaser from 'phaser';
+import { nowPlaying, onMusicChange } from '../../audio/music';
 import { bus, type SceneId, type StageRect } from '../../bus/events';
 import type { CharacterId } from '../../content/characters';
-import { paintingOf, roomKind, ROOM_MAPS, propsOf, type RoomId } from '../../content/rooms';
+import { isWeekend, regularNow } from '../../content/regular';
+import { paintingOf, roomKind, ROOM_MAPS, propsOf, type HotspotDef, type RoomId } from '../../content/rooms';
 import { useStore } from '../../store';
+import { Chatter } from '../crew/Chatter';
 import { CrewLife } from '../crew/CrewLife';
 import { Lineup } from '../crew/Lineup';
 import { PixelBursts } from '../fx/confetti';
@@ -10,8 +13,9 @@ import { CafeLife } from '../iso/CafeLife';
 import { dayTimeOf, refreshCafeWalls, registerCafeArt, seasonOf } from '../iso/cafeArt';
 import { IsoRoom } from '../iso/IsoRoom';
 import { IsoRoxy } from '../iso/IsoRoxy';
-import { PaintedRoom } from '../iso/PaintedRoom';
+import { overlayImages, overlayTextureKey, PaintedRoom } from '../iso/PaintedRoom';
 import type { Room } from '../iso/Room';
+import { RegularNpc } from '../npc/RegularNpc';
 import { cssToGame, gameToCss, setPixelMode } from '../pixelScale';
 import { ensureNpcTextures } from '../textures';
 
@@ -24,6 +28,10 @@ import { ensureNpcTextures } from '../textures';
  * The crew: whoever is playing gets the clicks and hotspot walks — Roxy through CafeLife as
  * always, or a crew member through CrewLife, while Roxy keeps her barista loop as an NPC.
  * The select screen's room is the same café, dimmed, with the four standing in a line.
+ *
+ * Mert, the regular (RegularNpc), sits at his table in the café whoever plays: talking to him
+ * (the `matt` hotspot) and bringing him a refill (`matt-refill`, while his mug is empty) are
+ * walks like any hotspot's, with his reactions at the end.
  */
 export class WorldScene extends Phaser.Scene {
   private roxy!: IsoRoxy;
@@ -34,7 +42,11 @@ export class WorldScene extends Phaser.Scene {
   private artReady = false;
   private life: CafeLife | null = null;
   private crew: CrewLife | null = null;
+  /** The baristas' speech bubbles: idle chatter and reactions. */
+  private chatter: Chatter | null = null;
   private lineup: Lineup | null = null;
+  /** Mert, the café regular (not on the select screen). */
+  private regular: RegularNpc | null = null;
   /** Who the crew routine was built for. */
   private crewFor: CharacterId | null = null;
   private rect: StageRect | null = null;
@@ -90,9 +102,17 @@ export class WorldScene extends Phaser.Scene {
         const h = this.room?.hotspots.find((s) => s.id === id);
         if (!h || !this.life) return bus.emit('companion:arrived', { tag });
         this.userPanAt = -Infinity;
-        if (this.crew?.playerIsCrew) this.crew.goToHotspot(h, () => bus.emit('companion:arrived', { tag }));
-        else this.life.goToHotspot(h, () => bus.emit('companion:arrived', { tag }));
+        const arrived = () => {
+          if (id === 'door') this.regular?.notice('door');
+          if (id === 'matt' && this.regular) bus.emit('npc:matt:talk', { mood: this.regular.talk().mood });
+          bus.emit('companion:arrived', { tag });
+        };
+        if (id === 'matt-refill') return this.refillRegular(h, () => bus.emit('companion:arrived', { tag }));
+        if (this.crew?.playerIsCrew) this.crew.goToHotspot(h, arrived);
+        else this.life.goToHotspot(h, arrived);
       }),
+      // Jason served Mert's usual: he sips at once and says what he thinks of the cup.
+      bus.on('npc:matt:usual', ({ grade }) => this.regular?.serveUsual(grade)),
       // Screens without a room (museums for now) don't wait for a walk.
       bus.on('companion:goto', ({ tag }) => bus.emit('companion:arrived', { tag })),
       bus.on('outfit:change', ({ blouseId }) => {
@@ -134,6 +154,15 @@ export class WorldScene extends Phaser.Scene {
         if (s.character !== prev.character && this.room && this.life && this.crewFor !== s.character) this.buildCrew(this.room, null);
       }),
     ];
+    // A new record or track: Mert glances up.
+    let track = nowPlaying()?.id ?? null;
+    unsubs.push(
+      onMusicChange(() => {
+        const now = nowPlaying()?.id ?? null;
+        if (now && now !== track) this.regular?.notice('music');
+        track = now;
+      }),
+    );
     // The café windows follow the clock and the season.
     const clock = this.time.addEvent({
       delay: 30_000,
@@ -155,10 +184,14 @@ export class WorldScene extends Phaser.Scene {
   private showRoom(id: RoomId | null, rect: StageRect | null): void {
     this.rect = rect;
     if (!id || !rect) {
+      this.regular?.destroy();
+      this.regular = null;
+      this.chatter?.destroy();
       this.life?.destroy();
       this.crew?.destroy();
       this.lineup?.destroy();
       this.room?.destroy();
+      this.chatter = null;
       this.life = null;
       this.crew = null;
       this.lineup = null;
@@ -170,16 +203,19 @@ export class WorldScene extends Phaser.Scene {
       return;
     }
     const painted = roomKind(id) === 'painted';
-    // A painted room needs its painting loaded first (once).
+    // A painted room needs its painting and its painted-out patches loaded first (once).
     if (painted) {
       const key = `painting-${paintingOf(id)}`;
-      if (!this.textures.exists(key)) {
+      const patches = overlayImages(id).filter((src) => !this.textures.exists(overlayTextureKey(src)));
+      if (!this.textures.exists(key) || patches.length) {
         if (this.loading === id) return;
         this.loading = id;
-        this.load.image(key, `${import.meta.env.BASE_URL}${String(propsOf(ROOM_MAPS[id]).image)}`);
+        const base = import.meta.env.BASE_URL;
+        if (!this.textures.exists(key)) this.load.image(key, `${base}${String(propsOf(ROOM_MAPS[id]).image)}`);
+        for (const src of patches) this.load.image(overlayTextureKey(src), `${base}${src}`);
         this.load.once(Phaser.Loader.Events.COMPLETE, () => {
           this.loading = null;
-          this.textures.get(key).setFilter(Phaser.Textures.FilterMode.LINEAR);
+          for (const k of [key, ...patches.map(overlayTextureKey)]) if (this.textures.exists(k)) this.textures.get(k).setFilter(Phaser.Textures.FilterMode.LINEAR);
           if (this.rect) this.showRoom(id, this.rect);
         });
         this.load.start();
@@ -191,10 +227,14 @@ export class WorldScene extends Phaser.Scene {
     setPixelMode(painted ? 'native' : 'grid');
     const fresh = this.room?.id !== id;
     if (this.room?.id !== id) {
+      this.regular?.destroy();
+      this.regular = null;
+      this.chatter?.destroy();
       this.life?.destroy();
       this.crew?.destroy();
       this.lineup?.destroy();
       this.room?.destroy();
+      this.chatter = null;
       this.life = null;
       this.crew = null;
       this.lineup = null;
@@ -212,6 +252,7 @@ export class WorldScene extends Phaser.Scene {
         this.lineup = new Lineup(this, this.room);
       } else {
         this.life = new CafeLife(this, this.room, this.roxy, this.bursts);
+        this.life.onDoorbell = () => this.regular?.notice('door');
         const player = useStore.getState().character;
         const back = this.scenePrev === 'venue' ? (bus.last('break:end')?.character ?? null) : null;
         if (player !== 'roxy') this.life.startAtBar();
@@ -220,6 +261,9 @@ export class WorldScene extends Phaser.Scene {
         else this.life.enterFromDoor();
         this.firstRoom = false;
         this.buildCrew(this.room, back);
+        this.buildRegular(this.room);
+        // Back from a gig, in through the door: the bell.
+        if (back) this.time.delayedCall(700, () => this.regular?.notice('door'));
       }
     }
     const a = cssToGame(rect.x, rect.y);
@@ -235,9 +279,54 @@ export class WorldScene extends Phaser.Scene {
   /** The crew in the café, built around whoever is playing. */
   private buildCrew(room: Room, returning: CharacterId | null): void {
     this.crew?.destroy();
+    this.chatter?.destroy();
     const player = useStore.getState().character;
     this.crewFor = player;
-    this.crew = new CrewLife(this, room, this.bursts, player, returning);
+    const crew = new CrewLife(this, room, this.bursts, player, returning);
+    this.crew = crew;
+    const roxy = this.life?.voice(player !== 'roxy');
+    this.chatter = new Chatter(() => (roxy ? [roxy, ...crew.voices()] : crew.voices()), { returning });
+  }
+
+  /** Mert at his table (at the weekend, on the window sofa), if the room has a place for him. */
+  private buildRegular(room: Room): void {
+    this.regular?.destroy(false);
+    const spot = RegularNpc.spotIn(room, isWeekend(regularNow()));
+    const regular = spot ? new RegularNpc(this, room, spot, () => this.room && this.emitHotspots(this.room)) : null;
+    this.regular = regular;
+    if (import.meta.env.DEV) {
+      // For the end-to-end tests: where he is, what he's doing, and an empty mug on demand.
+      (window as unknown as { __matt?: unknown }).__matt = regular && {
+        state: () => ({ ready: regular.ready, spot: regular.spot.name, u: regular.u, v: regular.v, state: regular.state, empty: regular.empty, bubble: regular.waitingBubble, sips: regular.sipsTaken }),
+        drain: () => regular.drainForTest(),
+      };
+    }
+  }
+
+  /**
+   * A refill for Mert: the player's barista brings it. Roxy carries a cup from the bar and
+   * serves it; Joel and Jonas walk over with a gesture; Jason's comes from his latte art (the
+   * screen opens his shift with Mert's usual first), so here he only walks to the machine.
+   */
+  private refillRegular(h: HotspotDef, done: () => void): void {
+    const regular = this.regular;
+    const player = useStore.getState().character;
+    const crew = this.crew;
+    if (!regular || !this.life || !this.room) return done();
+    if (player === 'roxy') {
+      if (!this.life.serveRegular(h, () => (regular.refill('roxy'), done()))) done();
+      return;
+    }
+    if (!crew?.player) return done();
+    if (player === 'jason') {
+      const counter = this.room.hotspots.find((s) => s.id === 'counter');
+      return counter ? crew.goToHotspot(counter, done) : done();
+    }
+    const walker = crew.player;
+    crew.goToHotspot(h, () => {
+      const give = () => (regular.refill(player), done());
+      if (!walker.perform('gesture_s', give)) give();
+    });
   }
 
   /** Where the player stands (a panned view follows them). */
@@ -272,7 +361,7 @@ export class WorldScene extends Phaser.Scene {
           return { id: h.id, x: Math.round(c.x), y: Math.round(c.y) };
         })
       : [];
-    const sig = `${room?.id ?? ''}|${spots.map((s) => `${s.x},${s.y}`).join(';')}`;
+    const sig = `${room?.id ?? ''}|${spots.map((s) => `${s.id},${s.x},${s.y}`).join(';')}`;
     if (sig === this.hotspotSig) return;
     this.hotspotSig = sig;
     bus.emit('room:hotspots', { room: room?.id ?? null, spots });
@@ -282,14 +371,17 @@ export class WorldScene extends Phaser.Scene {
     const dt = Math.min(delta, 100);
     this.life?.update(dt);
     this.crew?.update(dt);
+    this.chatter?.update(dt);
     // A room wider than its view keeps the player in its middle stretch while they walk (unless the player is looking around).
     if (this.room instanceof PaintedRoom && this.playerMoving() && this.time.now - this.userPanAt > 1500 && this.room.follow(this.playerU(), 0.3, 0.7, dt)) {
       this.emitHotspots(this.room);
       this.emitAnchors(this.room);
     }
     this.roxy.update(dt);
+    this.regular?.update(dt, this.crew?.playerIsCrew ? (this.crew.player ?? null) : this.roxy);
     this.lineup?.update();
-    if (this.room) this.room.sortDepth(this.lineup ? [] : [this.roxy, ...(this.life?.actors() ?? []), ...(this.crew?.actors() ?? [])]);
+    if (this.room)
+      this.room.sortDepth(this.lineup ? [] : [this.roxy, ...(this.life?.actors() ?? []), ...(this.crew?.actors() ?? []), ...(this.regular ? [this.regular] : [])]);
     this.bursts.update(dt);
   }
 }

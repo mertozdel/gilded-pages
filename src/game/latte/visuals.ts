@@ -71,3 +71,12 @@ export function visualFor(e1: number, e2: number, e3: number, grade: CupGrade): 
 
 /** A clean cup (no errors) — the guide and the live preview start from it. */
 export const CLEAN: LatteVisual = visualFor(0, 0, 0, 'good');
+
+/**
+ * The real pour draws each shape as it came out (render's `poured`), so the pour's error no
+ * longer sizes the whole pattern, leaves its end off or melts it into a blob; a step that ran
+ * over spills on the saucer.
+ */
+export function pouredVisual(v: LatteVisual, overflow: boolean): LatteVisual {
+  return { ...v, scale: 1, unfinished: 0, blob: 0, spill: overflow ? Math.max(v.spill, 0.5) : 0 };
+}

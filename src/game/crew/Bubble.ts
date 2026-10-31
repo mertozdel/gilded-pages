@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 
+/** Bubbles and effects draw over the whole room. */
+export const DEPTH_OVER = 8000;
+
 /**
  * A speech bubble over someone's head: rounded card, a tail, crisp text. `scale` follows the
  * speaker's sprite so it reads the same at every room size.
@@ -34,6 +37,14 @@ export class Bubble {
     this.container.setVisible(true).setAlpha(0);
     this.scene.tweens.add({ targets: this.container, alpha: 1, duration: 140 });
     this.timer = this.scene.time.delayedCall(ms, () => this.scene.tweens.add({ targets: this.container, alpha: 0, duration: 260, onComplete: () => this.container.setVisible(false) }));
+  }
+
+  /** Gone at once (the speaker left the room). */
+  hide(): void {
+    this.timer?.remove();
+    this.timer = null;
+    this.scene.tweens.killTweensOf(this.container);
+    this.container.setVisible(false);
   }
 
   get visible(): boolean {

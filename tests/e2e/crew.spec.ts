@@ -47,14 +47,40 @@ test.describe('character select', () => {
   });
 });
 
-/** Waits for the stage, holds Space for the planned time, lets go. */
-async function holdStage(page: Page, kind: 'perfect' | 'early'): Promise<void> {
+interface LatteState {
+  phase: string;
+  stage: number;
+  step: number;
+}
+
+/**
+ * Plays one stage as planned: a hold of Space, or every move of a real pour — holds for the
+ * pushes and pulls, a tap on each beat of a wiggle.
+ */
+async function playStage(page: Page, kind: 'perfect' | 'early'): Promise<void> {
+  const now = () => inApp<LatteState>(page, 'return window.__latte.state()');
   await expect.poll(() => inApp<string>(page, 'return window.__latte?.state().phase'), { timeout: 30_000 }).toBe('stage');
-  const plan = await inApp<{ perfect: number; early: number }>(page, 'return window.__latte.plan()');
-  await page.keyboard.down('Space');
-  await page.waitForTimeout(Math.max(50, (kind === 'perfect' ? plan.perfect : plan.early) - 12));
-  await page.keyboard.up('Space');
-  await expect.poll(() => inApp<string>(page, 'return window.__latte.state().phase')).not.toBe('stage');
+  const { stage } = await now();
+  for (;;) {
+    const s = await now();
+    if (s.phase !== 'stage' || s.stage !== stage) return;
+    const plan = await inApp<{ kind: 'hold' | 'tap'; perfect: number; early: number }>(page, 'return window.__latte.plan()');
+    const wait = kind === 'perfect' ? plan.perfect : plan.early;
+    if (plan.kind === 'tap') {
+      await page.waitForTimeout(Math.max(0, wait - 15));
+      await page.keyboard.press('Space');
+    } else {
+      await page.keyboard.down('Space');
+      await page.waitForTimeout(Math.max(50, wait - 12));
+      await page.keyboard.up('Space');
+    }
+    await expect
+      .poll(async () => {
+        const n = await now();
+        return n.phase !== 'stage' || n.stage !== stage || n.step !== s.step;
+      })
+      .toBe(true);
+  }
 }
 
 test('Jason serves three orders with scripted holds', async ({ page }) => {
@@ -64,14 +90,14 @@ test('Jason serves three orders with scripted holds', async ({ page }) => {
   await page.locator('.hud-action').click();
   const panel = page.getByTestId('latte-panel');
   await expect(panel).toBeVisible({ timeout: 15_000 });
-  // The art picker opens with the shift: pour what the customers ask for.
+  // The art picker opens with the shift: the Heart for every cup (tips ×1, whatever the customers ask).
   await expect(page.getByTestId('art-picker')).toBeVisible();
-  await page.keyboard.press('Escape');
+  await page.getByTestId('art-heart').click();
   await expect(page.getByTestId('art-picker')).toHaveCount(0);
 
   const plans: ('perfect' | 'early')[] = ['perfect', 'early', 'perfect'];
   for (const [i, kind] of plans.entries()) {
-    for (let s = 0; s < 3; s++) await holdStage(page, kind);
+    for (let s = 0; s < 3; s++) await playStage(page, kind);
     const result = panel.locator('.latte-result');
     await expect(result).toBeVisible({ timeout: 10_000 });
     await expect(result).toContainText(kind === 'perfect' ? 'Perfect cup!' : 'Messy');
@@ -86,5 +112,23 @@ test('Jason serves three orders with scripted holds', async ({ page }) => {
   expect(jason.bests.cup).toBeGreaterThanOrEqual(90);
   const roxyGilt = await inApp<number>(page, "const { db } = window.__app; return (await db.player.get('me'))?.gilt ?? 0;");
   expect(roxyGilt).toBe(0);
+  expect(errors).toEqual([]);
+});
+
+test('a rosetta is poured with the wiggle: a tap on every beat', async ({ page }) => {
+  const errors = watchErrors(page);
+  await pickCharacter(page, 'jason');
+  await page.locator('.hud-action').click();
+  await expect(page.getByTestId('art-picker')).toBeVisible({ timeout: 15_000 });
+  await page.getByTestId('art-rosetta').click();
+  for (let s = 0; s < 2; s++) await playStage(page, 'perfect');
+  // The pour: the wiggle (eight leaves on the beat), the little heart, the pull-through.
+  await expect.poll(() => inApp<string>(page, 'return window.__latte.state().stage')).toBe(3);
+  await expect(page.getByTestId('latte-moves')).toContainText('Wiggle ×8');
+  expect(await inApp<string[]>(page, 'return window.__latte.state().moves')).toEqual(['tap', 'push', 'pull']);
+  await playStage(page, 'perfect');
+  const result = page.getByTestId('latte-panel').locator('.latte-result');
+  await expect(result).toBeVisible({ timeout: 10_000 });
+  await expect(result).not.toContainText('Messy');
   expect(errors).toEqual([]);
 });

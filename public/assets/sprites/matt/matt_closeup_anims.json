@@ -1,0 +1,152 @@
+{
+ "texture": "matt_closeup",
+ "frameSize": {
+  "w": 160,
+  "h": 160
+ },
+ "anims": [
+  {
+   "key": "matt_cu_idle",
+   "frames": [
+    {
+     "frame": "matt_cu_idle_5",
+     "duration": 220
+    },
+    {
+     "frame": "matt_cu_idle_6",
+     "duration": 220
+    },
+    {
+     "frame": "matt_cu_idle_7",
+     "duration": 220
+    },
+    {
+     "frame": "matt_cu_idle_8",
+     "duration": 220
+    },
+    {
+     "frame": "matt_cu_idle_7",
+     "duration": 220
+    },
+    {
+     "frame": "matt_cu_idle_6",
+     "duration": 220
+    }
+   ],
+   "repeat": -1,
+   "use": "close-up: idle micro-movements"
+  },
+  {
+   "key": "matt_cu_idle_face",
+   "frames": [
+    {
+     "frame": "matt_cu_idle_1",
+     "duration": 240
+    },
+    {
+     "frame": "matt_cu_idle_2",
+     "duration": 240
+    },
+    {
+     "frame": "matt_cu_idle_3",
+     "duration": 240
+    },
+    {
+     "frame": "matt_cu_idle_4",
+     "duration": 240
+    },
+    {
+     "frame": "matt_cu_idle_3",
+     "duration": 240
+    },
+    {
+     "frame": "matt_cu_idle_2",
+     "duration": 240
+    }
+   ],
+   "repeat": -1,
+   "use": "close-up, face only"
+  },
+  {
+   "key": "matt_cu_look",
+   "frames": [
+    {
+     "frame": "matt_cu_look_5",
+     "duration": 600
+    },
+    {
+     "frame": "matt_cu_look_6",
+     "duration": 500
+    },
+    {
+     "frame": "matt_cu_look_7",
+     "duration": 700
+    },
+    {
+     "frame": "matt_cu_look_8",
+     "duration": 500
+    },
+    {
+     "frame": "matt_cu_look_9",
+     "duration": 600
+    },
+    {
+     "frame": "matt_cu_look_10",
+     "duration": 500
+    },
+    {
+     "frame": "matt_cu_look_11",
+     "duration": 600
+    }
+   ],
+   "repeat": -1,
+   "use": "close-up: looking around"
+  },
+  {
+   "key": "matt_cu_sip",
+   "frames": [
+    {
+     "frame": "matt_cu_sip_1",
+     "duration": 700
+    },
+    {
+     "frame": "matt_cu_sip_2",
+     "duration": 1100
+    },
+    {
+     "frame": "matt_cu_sip_1",
+     "duration": 500
+    }
+   ],
+   "repeat": 0,
+   "use": "close-up: a sip"
+  },
+  {
+   "key": "matt_cu_micro",
+   "frames": [
+    {
+     "frame": "matt_cu_micro_1",
+     "duration": 300
+    },
+    {
+     "frame": "matt_cu_micro_2",
+     "duration": 300
+    },
+    {
+     "frame": "matt_cu_micro_3",
+     "duration": 300
+    },
+    {
+     "frame": "matt_cu_micro_2",
+     "duration": 300
+    }
+   ],
+   "repeat": -1,
+   "use": "close-up: body micro-movements"
+  }
+ ],
+ "origin": {
+  "x": 0.5,
+  "y": 1.0
+ }
+}

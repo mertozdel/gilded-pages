@@ -29,14 +29,22 @@ import {
   artistPatterns,
   baristaPatterns,
   BARISTA_MAX,
+  BEAT_MS,
+  LEAD_BEATS,
+  PULL,
+  PUSH,
+  TAP_GOOD_MS,
+  combineSteps,
+  gradeTap,
   type CupGrade,
+  type PourMove,
   type PatternDifficulty,
   type StageNo,
   type StageResult,
 } from '../../../game/latte/model';
-import { patternDef } from '../../../game/latte/patterns';
-import { CUP_SIZE, renderCup } from '../../../game/latte/render';
-import { visualFor } from '../../../game/latte/visuals';
+import { patternDef, type Prim } from '../../../game/latte/patterns';
+import { CUP_SIZE, renderCup, type Poured } from '../../../game/latte/render';
+import { pouredVisual, visualFor } from '../../../game/latte/visuals';
 import { localDate } from '../../../rules/dates';
 import { EVERYTHING_OPEN } from '../../../rules/unlocks';
 import { useStore } from '../../../store';
@@ -56,6 +64,43 @@ interface Order {
 }
 
 type Phase = 'greeting' | 'stage' | 'feedback' | 'result' | 'verdict';
+
+/** The real pour in progress (easy and medium patterns): move by move, each shape as it came out. */
+interface PourRun {
+  script: PourMove[];
+  prims: Prim[];
+  /** Where each shape is (its middle, in crema radii): the stream lands there, a beat's ring closes on it. */
+  spots: { x: number; y: number }[];
+  move: number;
+  /** The move's first shape. */
+  first: number;
+  steps: StageResult[];
+  /** Each move's steps, for its chip. */
+  moveSteps: StageResult[][];
+  poured: Poured[];
+  /** A tap move's beats (performance.now() ms), the next one to tap, and the gap between them. */
+  beats: number[];
+  beat: number;
+  beatMs: number;
+  tapAt?: number;
+  done: boolean;
+}
+
+const MOVE_TEXT: Record<PourMove['kind'], { hint: string; button: string; small: string }> = {
+  push: { hint: 'Hold to pour; let go when this layer fills its outline.', button: 'Push', small: 'hold Space' },
+  pull: { hint: 'Hold to pull through; let go at the end of the line.', button: 'Pull', small: 'hold Space' },
+  tap: { hint: 'Tap as each ring closes on its spot: one tap a beat.', button: 'Tap', small: 'tap Space' },
+};
+
+function spotOf(p: Prim): { x: number; y: number } {
+  if (p.k === 'dot') return { x: p.x, y: p.y };
+  return { x: p.pts.reduce((a, q) => a + q[0], 0) / p.pts.length, y: p.pts.reduce((a, q) => a + q[1], 0) / p.pts.length };
+}
+
+/** A pushed shape grows to `g` of its outline; a pulled line runs `g` of its length. */
+function pouredShape(kind: PourMove['kind'], g: number): Poured {
+  return kind === 'pull' ? { scale: 1, shift: 0, length: Math.min(1.25, Math.max(0.01, g)) } : { scale: Math.min(1.3, Math.max(0.02, g)), shift: 0, length: 1 };
+}
 
 const STAGE_LABEL: Record<StageNo, { name: string; button: string }> = {
   1: { name: 'Pull the shot', button: 'Pull' },
@@ -113,6 +158,11 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   pickingRef.current = picking;
   const fxCanvas = useRef<HTMLCanvasElement>(null);
   const holdingRef = useRef(false);
+  const run = useRef<PourRun | null>(null);
+  const beatRaf = useRef(0);
+  /** Re-renders the move chips as the real pour goes on. */
+  const [, setPourTick] = useState(0);
+  const [stepFlash, setStepFlash] = useState<{ grade: StageResult['grade']; key: number } | null>(null);
 
   const queue = useRef<Order[]>([]);
   const cupCanvas = useRef<HTMLCanvasElement>(null);
@@ -136,9 +186,15 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   const pourOf = (o: Order | null) => patternDef(o?.pattern ?? 'heart').curve;
   /** The pour's windows narrow (or widen) with the pattern's difficulty. */
   const patternScale = (o: Order | null) => PATTERN_DIFFICULTY[patternInfo(o?.pattern ?? 'heart').difficulty].window;
+  /** The real pour's move under way (null: a one-hold stage). */
+  const moveNow = () => {
+    const r = run.current;
+    return state.current.stage === 3 && r && !r.done ? r.script[r.move] : null;
+  };
   const curveNow = () => {
     const st = state.current;
-    const c = curveFor(st.stage, pourOf(st.order));
+    const m = moveNow();
+    const c = m ? (m.kind === 'pull' ? PULL : PUSH) : curveFor(st.stage, pourOf(st.order));
     return { curve: c, speed: speed() * (st.stage === 3 && slowPour ? 0.7 : 1) };
   };
 
@@ -177,6 +233,8 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
     setStage(1);
     setLast(null);
     fill.current = 0;
+    run.current = null;
+    cancelAnimationFrame(beatRaf.current);
     seed.current = Math.floor(Math.random() * 1e9);
     setPhase('greeting');
     bus.emit('latte:begin', { id: next.id, drink: next.drink.id });
@@ -216,6 +274,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
       timers.current.forEach((t) => window.clearTimeout(t));
       timers.current = [];
       cancelAnimationFrame(raf.current);
+      cancelAnimationFrame(beatRaf.current);
       // The queue goes home with the shift (and a remount starts a fresh one).
       queue.current = [];
       bus.emit('latte:shiftEnd', {});
@@ -238,6 +297,13 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
         renderCup(cv, { pattern: null, visual: visualFor(f > 0 ? e1 : -1, 0, 0, 'good'), crema: Math.min(1, f * 1.5), seed: seed.current }, 2);
       } else if (st.stage === 2) {
         renderCup(cv, { pattern: null, visual: visualFor(e[0] ?? 0, 0, 0, 'good'), crema: 1, seed: seed.current }, 2);
+      } else if (run.current) {
+        // The real pour: what's poured so far, and the move being held growing.
+        const r = run.current;
+        const live = [...r.poured];
+        const m = r.script[r.move];
+        if (holdingRef.current && m && m.kind !== 'tap') for (let i = 0; i < m.n; i++) live[r.first + i] = pouredShape(m.kind, f / (m.kind === 'pull' ? PULL : PUSH).target);
+        renderCup(cv, { pattern: pd, visual: visualFor(e[0] ?? 0, e[1] ?? 0, 0, 'good'), crema: 1, growth: 1, guide: true, poured: live, seed: seed.current }, 2);
       } else {
         const v = visualFor(e[0] ?? 0, e[1] ?? 0, 0, 'good');
         renderCup(cv, { pattern: pd, visual: { ...v, bubbleCount: Math.round(v.bubbleCount * Math.min(1, f / pd.curve.target)) }, crema: 1, growth: f / pd.curve.target, guide: true, seed: seed.current }, 2);
@@ -251,7 +317,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
     const g = gauge.current;
     const st = state.current;
     if (g.fill) g.fill.style.width = `${f * 100}%`;
-    if (g.label) g.label.textContent = `${st.stage === 1 ? 'Extraction' : 'Pattern'} ${Math.round(f * 100)}%`;
+    if (g.label) g.label.textContent = `${st.stage === 1 ? 'Extraction' : (moveNow()?.label ?? 'Pattern')} ${Math.round(f * 100)}%`;
     if (g.needle) {
       g.needle.setAttribute('x2', String(100 - 74 * Math.cos(f * Math.PI)));
       g.needle.setAttribute('y2', String(100 - 74 * Math.sin(f * Math.PI)));
@@ -263,6 +329,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   // A new stage (or cup, or pattern): the gauge and the cup from empty.
   useEffect(() => {
     if (phase !== 'stage' && phase !== 'greeting') return;
+    if (phase === 'stage' && stage === 3 && !run.current) startPour();
     showFill(0);
     draw(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -278,11 +345,14 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
       const quality = cupQuality(e1, e2, e3);
       const grade = cupGrade(quality, rs.map((r) => r.grade));
       const cv = cupCanvas.current!;
-      renderCup(cv, { pattern: patternDef(o.pattern), visual: visualFor(e1, e2, e3, grade), crema: 1, seed: seed.current }, 4);
+      // The real pour draws every shape as it came out.
+      const poured = run.current?.poured;
+      const visual = poured ? pouredVisual(visualFor(e1, e2, e3, grade), rs[2].overflow) : visualFor(e1, e2, e3, grade);
+      renderCup(cv, { pattern: patternDef(o.pattern), visual, crema: 1, seed: seed.current, poured }, 4);
       // The photo: the cup at 320×320, whatever the screen.
       const photo = document.createElement('canvas');
       photo.width = photo.height = CUP_SIZE;
-      renderCup(photo, { pattern: patternDef(o.pattern), visual: visualFor(e1, e2, e3, grade), crema: 1, seed: seed.current }, 4);
+      renderCup(photo, { pattern: patternDef(o.pattern), visual, crema: 1, seed: seed.current, poured }, 4);
       const image = photo.toDataURL('image/png');
       streak.current = grade === 'messy' ? 0 : streak.current + 1;
       const diff = PATTERN_DIFFICULTY[patternInfo(o.pattern).difficulty];
@@ -322,7 +392,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   const release = useCallback(
     (t: number) => {
       const st = state.current;
-      if (st.phase !== 'stage') return;
+      if (st.phase !== 'stage' || !holdingRef.current) return;
       cancelAnimationFrame(raf.current);
       setHolding(false);
       holdingRef.current = false;
@@ -331,21 +401,107 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
       const f = fillAt(curve, t - pressAt.current, sp);
       const r = gradeRelease(f, curve.target, difficulty, st.stage === 3 ? patternScale(st.order) : 1);
       showFill(r.fill);
+      const m = moveNow();
+      if (m && run.current) {
+        // A push or a pull of the real pour: that layer is done; on to the next move.
+        const p = run.current;
+        for (let i = 0; i < m.n; i++) p.poured[p.first + i] = pouredShape(m.kind, r.fill / curve.target);
+        draw(r.fill);
+        pourStep(r);
+        return nextMove();
+      }
       draw(r.fill);
-      const rs = [...st.results, r];
-      setResults(rs);
-      bus.emit('latte:stage', { stage: st.stage, error: r.error, grade: r.grade });
-      setPhase('feedback');
-      later(() => {
-        if (st.stage < 3) {
-          setStage((st.stage + 1) as StageNo);
-          setPhase('stage');
-        } else void finishCup(rs);
-      }, FEEDBACK_MS);
+      endStage(r);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [difficulty, finishCup, slowPour, draw],
   );
+
+  /** A stage is done: its grade flashes, then the next stage (or the cup is served). */
+  const endStage = (r: StageResult) => {
+    const st = state.current;
+    const rs = [...st.results, r];
+    setResults(rs);
+    bus.emit('latte:stage', { stage: st.stage, error: r.error, grade: r.grade });
+    setPhase('feedback');
+    later(() => {
+      if (st.stage < 3) {
+        // The pour's moves are ready before the first press can come.
+        if (st.stage === 2) startPour();
+        setStage((st.stage + 1) as StageNo);
+        setPhase('stage');
+      } else void finishCup(rs);
+    }, FEEDBACK_MS);
+  };
+
+  // ---------- the real pour: push, tap on the beat, pull through ----------
+
+  /** The pour starts: the pattern's script, if it has one (easy and medium patterns). */
+  const startPour = () => {
+    cancelAnimationFrame(beatRaf.current);
+    const pd = patternDef(state.current.order?.pattern ?? 'heart');
+    if (!pd.script) {
+      run.current = null;
+      return;
+    }
+    const prims = pd.shapes();
+    run.current = { script: pd.script, prims, spots: prims.map(spotOf), move: 0, first: 0, steps: [], moveSteps: [], poured: [], beats: [], beat: 0, beatMs: 0, done: false };
+    startMove();
+    beatRaf.current = requestAnimationFrame(watchBeats);
+  };
+
+  const startMove = () => {
+    const r = run.current!;
+    const m = r.script[r.move];
+    r.moveSteps[r.move] = [];
+    setPourTick((n) => n + 1);
+    if (m.kind !== 'tap') return;
+    // The beats of the wiggle, after a lead-in for the first ring to close.
+    r.beatMs = BEAT_MS[patternInfo(state.current.order?.pattern ?? 'heart').difficulty] / curveNow().speed;
+    const now = performance.now();
+    r.beats = Array.from({ length: m.n }, (_, k) => now + (LEAD_BEATS + k) * r.beatMs);
+    r.beat = 0;
+  };
+
+  const nextMove = () => {
+    const r = run.current!;
+    r.first += r.script[r.move].n;
+    r.move++;
+    if (r.move < r.script.length) return startMove();
+    r.done = true;
+    cancelAnimationFrame(beatRaf.current);
+    setPourTick((n) => n + 1);
+    endStage(combineSteps(r.steps));
+  };
+
+  const pourStep = (res: StageResult) => {
+    const r = run.current!;
+    r.steps.push(res);
+    r.moveSteps[r.move].push(res);
+    setStepFlash({ grade: res.grade, key: r.steps.length });
+    setPourTick((n) => n + 1);
+  };
+
+  /** A beat tapped `dt` ms off (null: it went by): that leaf or drop lands, off to the side if off the beat. */
+  const tapStep = (dt: number | null) => {
+    const r = run.current!;
+    const res = gradeTap(dt, difficulty, patternScale(state.current.order));
+    r.poured[r.first + r.beat] = dt === null ? { scale: 0, shift: 0, length: 0 } : { scale: 1 - 0.3 * Math.abs(res.error), shift: 0.12 * res.error, length: 1 };
+    if (dt !== null) r.tapAt = performance.now();
+    r.beat++;
+    pourStep(res);
+    draw(0);
+    if (r.beat >= r.beats.length) nextMove();
+  };
+
+  /** Every frame of the pour: a beat gone by untapped is a miss. */
+  const watchBeats = () => {
+    const r = run.current;
+    if (!r || r.done) return;
+    const m = r.script[r.move];
+    if (m.kind === 'tap' && performance.now() > r.beats[r.beat] + TAP_GOOD_MS * WINDOW_SCALE[difficulty] * patternScale(state.current.order)) tapStep(null);
+    beatRaf.current = requestAnimationFrame(watchBeats);
+  };
 
   const next = () => {
     const st = state.current;
@@ -359,6 +515,15 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
       if (pickingRef.current) return;
       if (st.phase === 'result') return next();
       if (st.phase !== 'stage') return;
+      if (moveNow()?.kind === 'tap') {
+        // A tap of the wiggle, judged against the next beat (a tap long before it doesn't count).
+        const r = run.current!;
+        const dt = t - r.beats[r.beat];
+        if (dt < -2 * TAP_GOOD_MS * WINDOW_SCALE[difficulty] * patternScale(st.order)) return;
+        bus.emit('latte:hold', { stage: 3, holding: true });
+        bus.emit('latte:hold', { stage: 3, holding: false });
+        return tapStep(dt);
+      }
       pressAt.current = t;
       setHolding(true);
       holdingRef.current = true;
@@ -413,10 +578,23 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     const w = window as unknown as { __latte?: unknown };
     w.__latte = {
-      state: () => ({ phase: state.current.phase, stage: state.current.stage, order: state.current.order?.id ?? null, pattern: state.current.order?.pattern ?? null }),
+      state: () => ({
+        phase: state.current.phase,
+        stage: state.current.stage,
+        order: state.current.order?.id ?? null,
+        pattern: state.current.order?.pattern ?? null,
+        step: run.current?.steps.length ?? 0,
+        moves: run.current?.script.map((m) => m.kind) ?? null,
+      }),
       plan: () => {
+        // A tap: how long until its beat (Perfect), or a tap well before it.
+        if (moveNow()?.kind === 'tap') {
+          const r = run.current!;
+          const wait = r.beats[r.beat] - performance.now();
+          return { kind: 'tap', perfect: wait, early: wait - 1.2 * TAP_GOOD_MS };
+        }
         const { curve, speed: sp } = curveNow();
-        return { perfect: holdMsFor(curve, curve.target, sp), early: holdMsFor(curve, Math.max(0, curve.target - 0.3), sp), overflow: curve.durationMs / sp + 200 };
+        return { kind: 'hold', perfect: holdMsFor(curve, curve.target, sp), early: holdMsFor(curve, Math.max(0, curve.target - 0.3), sp), overflow: curve.durationMs / sp + 200 };
       },
     };
     return () => {
@@ -429,7 +607,11 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
     setChoice(c);
     setPicking(false);
     const st = state.current;
-    if (st.order && st.stage < 3 && st.phase !== 'result') setOrder(withChoice(st.order, c));
+    if (st.order && st.stage < 3 && st.phase !== 'result') {
+      setOrder(withChoice(st.order, c));
+      // A pour set up for the old pattern starts again with the new one.
+      run.current = null;
+    }
   };
 
   const startThrowdown = () => {
@@ -449,6 +631,33 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
   const availableRef = useRef(patterns);
   availableRef.current = patterns;
 
+  /** The real pour over the cup: where the stream lands, and the rings of the beats coming up. */
+  const pourFx = (t: number) => {
+    const r = run.current;
+    if (!r || r.done || state.current.stage !== 3) return {};
+    const m = r.script[r.move];
+    if (m.kind === 'tap') {
+      const lead = LEAD_BEATS * r.beatMs;
+      const rings = r.beats
+        .slice(r.beat, r.beat + 2)
+        .map((b, i) => ({ ...r.spots[r.first + r.beat + i], k: (b - t) / lead }))
+        .filter((q) => q.k <= 1)
+        .map((q) => ({ ...q, k: Math.max(0, q.k) }));
+      return { rings, tapAt: r.tapAt, land: r.spots[Math.max(r.first, r.first + r.beat - 1)] };
+    }
+    if (m.kind === 'pull') {
+      // Along the line, as far as it has run.
+      const p = r.prims[r.first];
+      const pts = p.k === 'dot' ? [[p.x, p.y]] : p.pts;
+      const g = Math.min(1, fill.current / PULL.target);
+      const a = pts[0];
+      const b = pts[pts.length - 1];
+      return { land: { x: a[0] + (b[0] - a[0]) * g, y: a[1] + (b[1] - a[1]) * g } };
+    }
+    const spots = r.spots.slice(r.first, r.first + m.n);
+    return { land: { x: spots.reduce((s, q) => s + q.x, 0) / spots.length, y: spots.reduce((s, q) => s + q.y, 0) / spots.length } };
+  };
+
   // The coffee being made, drawn over the cup every frame (its own canvas, no re-render).
   useEffect(() => {
     let id = 0;
@@ -465,7 +674,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       const st = state.current;
       const mode = st.phase === 'result' || st.phase === 'verdict' ? 'cup' : st.phase === 'stage' || st.phase === 'feedback' ? 'make' : 'none';
-      drawCupFx(c, w, t, { stage: st.stage, holding: holdingRef.current, fill: fill.current, mode, reduced });
+      drawCupFx(c, w, t, { stage: st.stage, holding: holdingRef.current, fill: fill.current, mode, reduced, ...pourFx(t) });
     };
     id = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(id);
@@ -475,7 +684,9 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
 
   const pourScale = stage === 3 ? patternScale(order) : 1;
   const w = WINDOW_SCALE[difficulty] * pourScale;
-  const curve = curveFor(stage, pourOf(order));
+  const pr = stage === 3 ? run.current : null;
+  const move = pr && !pr.done ? pr.script[pr.move] : null;
+  const curve = move ? (move.kind === 'pull' ? PULL : PUSH) : curveFor(stage, pourOf(order));
   const band = (half: number) => ({ left: `${(curve.target - half * w) * 100}%`, width: `${half * 2 * w * 100}%` });
   const rush = artist && performance.now() < rushUntil;
   const cur = CURRENCIES[character.currency];
@@ -529,11 +740,30 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
         ))}
       </ol>
 
+      {pr && (
+        <ol className="latte-moves" aria-label="The pour" data-testid="latte-moves">
+          {pr.script.map((m, i) => {
+            const done = pr.moveSteps[i]?.length === (m.kind === 'tap' ? m.n : 1);
+            return (
+              <li key={i} className={`${i === pr.move && !pr.done ? 'on' : ''} ${done ? combineSteps(pr.moveSteps[i]).grade : ''}`}>
+                {m.label}
+                {m.n > 1 && m.kind === 'tap' ? ` ×${m.n}` : ''}
+              </li>
+            );
+          })}
+        </ol>
+      )}
+
       <div className="latte-body">
         <div className="latte-cup-wrap">
           <canvas ref={cupCanvas} className="latte-cup" width={Math.round(CUP_SIZE * (window.devicePixelRatio || 1))} height={Math.round(CUP_SIZE * (window.devicePixelRatio || 1))} aria-label="The cup (touch and hold to pour)" />
           <canvas ref={fxCanvas} className="latte-fx" aria-hidden="true" />
           {phase === 'feedback' && lastResult && <div className={`latte-flash ${lastResult.grade}`}>{lastResult.overflow ? 'Overflow!' : GRADE_TEXT[lastResult.grade]}</div>}
+          {phase === 'stage' && pr && stepFlash && (
+            <div key={stepFlash.key} className={`latte-flash step ${stepFlash.grade}`}>
+              {GRADE_TEXT[stepFlash.grade]}
+            </div>
+          )}
           {last?.grade === 'perfect' && phase === 'result' && <div className="latte-sparkles" aria-hidden="true" />}
         </div>
 
@@ -590,6 +820,12 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
                       }} style={{ width: `${Math.min(100, f0 * 125)}%` }} />
                   </div>
                 </div>
+              ) : move?.kind === 'tap' ? (
+                <div className="latte-beats" aria-label={`${move.label}: ${pr!.beat} of ${move.n}`}>
+                  {Array.from({ length: move.n }, (_, k) => (
+                    <span key={k} className={`${pr!.moveSteps[pr!.move]?.[k]?.grade ?? ''} ${k === pr!.beat ? 'next' : ''}`} />
+                  ))}
+                </div>
               ) : (
                 <div className="latte-bar" aria-label={stage === 1 ? 'Extraction' : 'Pour'}>
                   <span className="latte-band good" style={band(GOOD_WINDOW)} />
@@ -600,14 +836,15 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
                   <span ref={(el) => {
                         gauge.current.label = el;
                       }} className="latte-bar-label small">
-                    {stage === 1 ? 'Extraction' : 'Pattern'} {Math.round(f0 * 100)}%
+                    {stage === 1 ? 'Extraction' : (move?.label ?? 'Pattern')} {Math.round(f0 * 100)}%
                   </span>
                 </div>
               )}
               <p className="small muted">
                 {stage === 1 && 'Hold to pull the shot; let go in the gold band (70–78%).'}
                 {stage === 2 && 'Hold to steam; let go at 60–65 °C.'}
-                {stage === 3 && `Hold to pour; let go when the ${info?.name ?? 'pattern'} meets its outline.${info && info.difficulty !== 'easy' ? ` ${diff!.label}: it rushes at the end.` : ''}`}
+                {stage === 3 && move && MOVE_TEXT[move.kind].hint}
+                {stage === 3 && !pr && `Hold to pour; let go when the ${info?.name ?? 'pattern'} meets its outline.${info && info.difficulty !== 'easy' ? ` ${diff!.label}: it rushes at the end.` : ''}`}
               </p>
             </>
           )}
@@ -663,11 +900,11 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
         ref={holdBtn}
         className={`latte-hold ${holding ? 'held' : ''}`}
         disabled={phase !== 'stage' && phase !== 'result'}
-        aria-label={phase === 'result' ? 'Next cup' : `Hold: ${STAGE_LABEL[stage].name}`}
+        aria-label={phase === 'result' ? 'Next cup' : move ? `${MOVE_TEXT[move.kind].button}: ${move.label}` : `Hold: ${STAGE_LABEL[stage].name}`}
         data-testid="latte-hold"
       >
-        {phase === 'result' ? 'Next' : STAGE_LABEL[stage].button}
-        <small>{phase === 'result' ? 'Space' : 'hold Space'}</small>
+        {phase === 'result' ? 'Next' : move ? MOVE_TEXT[move.kind].button : STAGE_LABEL[stage].button}
+        <small>{phase === 'result' ? 'Space' : move ? MOVE_TEXT[move.kind].small : 'hold Space'}</small>
       </button>
     </div>
   );

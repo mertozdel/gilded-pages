@@ -7,6 +7,7 @@
 import type { BlouseId } from '../content';
 import type { RoomId } from '../content/rooms';
 import type { CharacterId, VenueId } from '../content/characters';
+import type { RegularMood } from '../content/regular';
 
 export type SceneId = 'cafe' | 'reader' | 'map' | 'museum' | 'apartment' | 'ledger' | 'settings' | 'select' | 'venue' | 'dev';
 export type ReadingMode = 'gala' | 'calm' | 'text';
@@ -42,8 +43,12 @@ export interface BusEvents {
   'chapter:end': { title: string; page: number; bonusGilt: number };
   /** A screen became active. Roxy steps through a door; the backdrop changes around her. */
   'scene:enter': { scene: SceneId };
-  /** A screen's room view: which isometric room to show and where (CSS px). `null` = none. */
-  'room:layout': { room: RoomId | null; rect: StageRect | null };
+  /**
+   * A screen's room view: which isometric room to show and where (CSS px). `null` = none.
+   * `claim` says which screen reported it (src/ui/roomClaim.ts), so a screen leaving never
+   * clears the room the next screen just asked for.
+   */
+  'room:layout': { room: RoomId | null; rect: StageRect | null; claim?: number };
   /** Game → React: where each hotspot of the current room sits on screen (CSS px). */
   'room:hotspots': { room: RoomId | null; spots: { id: string; x: number; y: number }[] };
   /** Game → React: where a painted room wants the screen's own panels (CSS px rects). */
@@ -123,6 +128,18 @@ export interface BusEvents {
   'venue:anchors': { setlist: StageRect | null };
   /** Where the venue's rhythm game is: the stage animates to match. */
   'rhythm:state': { phase: 'select' | 'countdown' | 'playing' | 'paused' | 'results'; songId?: string; bpm?: number; style?: string };
+
+  // ---- Mert, the café regular (id `matt`) ----
+  /** Game → React: he takes a sip of his coffee. */
+  'npc:matt:sip': Record<string, never>;
+  /** Game → React: six sips and his mug is empty; his table is a refill hotspot until someone brings one. */
+  'npc:matt:empty': Record<string, never>;
+  /** Game → React: a fresh mug, brought to his table (`table`) or Jason's flat white (`latte`). */
+  'npc:matt:refilled': { by: CharacterId; via: 'table' | 'latte' };
+  /** Game → React: the player came over to talk; the dialogue opens in his mood. */
+  'npc:matt:talk': { mood: RegularMood };
+  /** React → game: Jason served "Mert's usual"; he sips at once and answers in a bubble. */
+  'npc:matt:usual': { grade: 'perfect' | 'good' | 'messy' };
 }
 
 type Handler<T> = (payload: T) => void;

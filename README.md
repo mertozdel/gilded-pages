@@ -224,7 +224,10 @@ The last pick is preselected; the HUD's ⇄ button saves and comes back here. De
 - **Coffee, any time** (`src/game/latte/`, `src/screens/cafe/latte/`) — every barista can make a cup at the
   counter whenever they want (Roxy, Joel and Jonas from the Espresso bar panel; Jason's counter opens his shift).
   A cup is three Hold stages (shot, milk, pour) on the button / Space / gamepad A / touch-and-hold, timed by event
-  timestamps; the next cup starts at once, no waiting for a customer. The cup is drawn in code at 4× from the
+  timestamps; the next cup starts at once, no waiting for a customer. Easy and medium patterns are poured for real,
+  move by move from the pattern's `script` (`patterns.ts`): push (hold, let go when the layer fills its outline — a
+  tulip is push, stop, push, stop…), tap (the wiggle: a tap as each ring closes, one leaf or drop a beat) and pull
+  (hold to draw the line through); hard and master patterns still pour in one hold. The cup is drawn in code at 4× from the
   stages' signed errors. Only Jason's cups pay (Tips); for the others the best cup is kept — Roxy's Gilt is untouched.
 - **Jason's latte art** — orders queue up in the panel (no extra people walk into the café); 15 patterns in four difficulties (easy → master:
   faster, steeper pours with tighter windows, tips ×1 / ×1.5 / ×2 / ×3), from the Heart through the Fitzgerald

@@ -218,6 +218,16 @@ export const RUSH_PAID_ROUNDS_PER_DAY = 3;
  * Morning Rush tips: at most 1 Gilt per 60-second round and three paid rounds a day —
  * below what the same minutes of reading earn, so reading stays the main path.
  */
+/** A tip in Gilt (Mert's thanks for a refill). */
+export async function addGilt(amount: number): Promise<PlayerRow> {
+  return db.transaction('rw', db.player, async () => {
+    const player = await loadPlayer();
+    const next = { ...player, gilt: player.gilt + amount };
+    await db.player.put(next);
+    return next;
+  });
+}
+
 export async function payRushTips(served: number, today: string): Promise<{ gilt: number; player: PlayerRow }> {
   return db.transaction('rw', db.player, async () => {
     const player = await loadPlayer();

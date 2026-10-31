@@ -1,0 +1,47 @@
+/* Talking to Mert, the café regular: his close-up beside his line. */
+.regular-dialogue {
+  display: grid;
+  grid-template-columns: 176px 1fr;
+  gap: 16px;
+  align-items: start;
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  border-left: 5px solid var(--gold);
+  padding: 14px 16px;
+  position: relative;
+}
+.regular-face {
+  width: 176px;
+  min-height: 176px;
+  display: grid;
+  place-items: end center;
+  background: rgba(242, 237, 228, 0.06);
+  border: 1px solid rgba(227, 193, 111, 0.4);
+}
+.regular-face img {
+  max-width: 100%;
+  max-height: 176px;
+  object-fit: contain;
+}
+.regular-words header {
+  padding-right: 32px;
+}
+.regular-line {
+  font-size: 18px;
+  line-height: 1.45;
+  margin: 10px 0 14px;
+}
+.regular-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+@media (max-width: 759px) {
+  .regular-dialogue {
+    grid-template-columns: 112px 1fr;
+  }
+  .regular-face {
+    width: 112px;
+    min-height: 112px;
+  }
+}

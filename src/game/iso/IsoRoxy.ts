@@ -1,9 +1,10 @@
 import type Phaser from 'phaser';
 import type { BlouseId } from '../../content';
 import type { Facing } from '../../content/rooms';
-import { lookForFacing, lookForHeading, roxyArt, type Look, type RoxyArt } from '../companion/art/roxyFrames';
+import { carryArt, lookForFacing, lookForHeading, roxyArt, ROXY_HEIGHT, type Look, type RoxyArt } from '../companion/art/roxyFrames';
 import { transition, type Reaction, type VEvent, type VState } from '../companion/roxyMachine';
 import { RoxySprite } from '../companion/RoxySprite';
+import { Bubble, DEPTH_OVER } from '../crew/Bubble';
 import type { Room } from './Room';
 import { BRISK_SPEED, IsoWalker, RUN_SPEED, WALK_SPEED } from './IsoWalker';
 
@@ -15,6 +16,7 @@ import { BRISK_SPEED, IsoWalker, RUN_SPEED, WALK_SPEED } from './IsoWalker';
  */
 export class IsoRoxy extends IsoWalker {
   readonly sprite: RoxySprite;
+  readonly bubble: Bubble;
   private state: VState = 'idle';
   private look: Look = { view: 'se', flip: false };
   private art: RoxyArt = roxyArt('idle', this.look);
@@ -24,11 +26,14 @@ export class IsoRoxy extends IsoWalker {
   private plays = 0;
   private reverse = false;
   private onAnimEnd: (() => void) | null = null;
+  /** Carrying a cup across the room (a refill for the regular): walking and standing hold it. */
+  private carrying = false;
 
   constructor(scene: Phaser.Scene, blouse: BlouseId) {
     super();
     this.sprite = new RoxySprite(scene, blouse);
     this.sprite.container.setVisible(false);
+    this.bubble = new Bubble(scene);
   }
 
   get currentState(): VState {
@@ -40,6 +45,7 @@ export class IsoRoxy extends IsoWalker {
     this.room = room;
     this.seat = null;
     this.sprite.container.setVisible(!!room);
+    this.bubble.hide();
     if (!room) return;
     this.sprite.setActorScale(room.actorScaleSmooth);
     this.place(u, v, facing);
@@ -90,8 +96,23 @@ export class IsoRoxy extends IsoWalker {
     this.state = next;
     this.reverse = false;
     this.onAnimEnd = null;
-    this.art = roxyArt(next, this.look);
+    this.art = this.artFor(next, this.look);
     this.restart();
+  }
+
+  private artFor(state: VState, look: Look): RoxyArt {
+    return (this.carrying && carryArt(state, look)) || roxyArt(state, look);
+  }
+
+  /** Picks up (or puts down) a cup to carry: her walk and stance change at once. */
+  setCarry(on: boolean): void {
+    if (this.carrying === on) return;
+    this.carrying = on;
+    const prev = this.art.anim;
+    this.art = this.artFor(this.state, this.look);
+    if (this.art.anim === prev) return;
+    if (this.state === 'walk' || this.state === 'run') this.index %= this.art.anim.steps.length;
+    else this.restart();
   }
 
   private restart(): void {
@@ -106,7 +127,7 @@ export class IsoRoxy extends IsoWalker {
     if (look.view === this.look.view && look.flip === this.look.flip) return;
     this.look = look;
     const prev = this.art.anim;
-    this.art = roxyArt(this.state, look);
+    this.art = this.artFor(this.state, look);
     if (this.art.anim === prev) return;
     // Turning mid-stride keeps the stride; anything else starts the new view's animation.
     if (this.state === 'walk' || this.state === 'run') this.index %= this.art.anim.steps.length;
@@ -163,6 +184,19 @@ export class IsoRoxy extends IsoWalker {
     this.sprite.setBlouse(id);
   }
 
+  /** Says something in a bubble over her head. */
+  say(text: string, ms = 2600): void {
+    this.bubble.say(text, ms);
+    this.placeBubble();
+  }
+
+  private placeBubble(): void {
+    if (!this.room || !this.bubble.visible) return;
+    const s = this.room.toScreen(this.u, this.v);
+    const k = this.sprite.container.scale;
+    this.bubble.place(s.x, s.y - (ROXY_HEIGHT + 9) * k, k, DEPTH_OVER + s.y);
+  }
+
   /** Free for the café routine: not walking, not mid-action. */
   isIdle(): boolean {
     return !this.moving && (this.state === 'idle' || this.state === 'wipeCounter');
@@ -209,5 +243,6 @@ export class IsoRoxy extends IsoWalker {
     this.sprite.setActorScale(this.room.actorScaleSmooth);
     // The sprite's origin is between her feet.
     this.sprite.container.setPosition(Math.round(s.x), Math.round(s.y));
+    this.placeBubble();
   }
 }

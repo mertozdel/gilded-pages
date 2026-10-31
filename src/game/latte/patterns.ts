@@ -4,7 +4,7 @@
  * master). Unlocked by Jason's tips, from the Heart through the Fitzgerald specials (The Green
  * Light, Daisy, Gatsby G) up to the master pours: Phoenix, Dragon and Unicorn.
  */
-import { PATTERNS, pourCurve, type GaugeCurve, type PatternDifficulty } from './model';
+import { PATTERNS, pourCurve, type GaugeCurve, type PatternDifficulty, type PourMove } from './model';
 
 export type Pt = [number, number];
 export type Tone = 'foam' | 'matcha' | 'crema';
@@ -23,7 +23,13 @@ export interface PatternDef {
   curve: GaugeCurve;
   /** Shapes in the order they are poured (an early release leaves the last ones out). */
   shapes: () => Prim[];
+  /** The real pour, move by move (easy and medium patterns); null: one hold pours it all. */
+  script: PourMove[] | null;
 }
+
+const push = (n = 1, label = 'Push'): PourMove => ({ kind: 'push', n, label });
+const tap = (n: number, label = 'Drops'): PourMove => ({ kind: 'tap', n, label });
+const pull = (n = 1, label = 'Pull through'): PourMove => ({ kind: 'pull', n, label });
 
 const TAU = Math.PI * 2;
 
@@ -113,8 +119,8 @@ function rosettaLeaves(cx: number, cy: number, scale: number, rot: number, count
   return out;
 }
 
-const DRAWINGS: Record<string, { power: number; durationMs: number; target: number; shapes: () => Prim[] }> = {
-  heart: { power: 2, durationMs: 2600, target: 0.8, shapes: () => [{ k: 'blob', pts: heartPts(0, 0.02, 1.15) }, cut(0, -0.42, 0, 0.5)] },
+const DRAWINGS: Record<string, { power: number; durationMs: number; target: number; shapes: () => Prim[]; script?: PourMove[] }> = {
+  heart: { power: 2, durationMs: 2600, target: 0.8, shapes: () => [{ k: 'blob', pts: heartPts(0, 0.02, 1.15) }, cut(0, -0.42, 0, 0.5)], script: [push(), pull()] },
   tulip: {
     power: 2.2,
     durationMs: 2800,
@@ -126,12 +132,16 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
       { k: 'blob', pts: heartPts(0, -0.36, 0.62) },
       cut(0, -0.62, 0, 0.66),
     ],
+    // Push, stop, push, stop: one layer each, then the pull-through.
+    script: [push(), push(), push(), push(), pull()],
   },
   rosetta: {
     power: 1.8,
     durationMs: 3000,
     target: 0.82,
     shapes: () => [...rosettaLeaves(0, 0, 1, 0, 8), { k: 'blob', pts: heartPts(0, -0.56, 0.28) }, cut(0, -0.7, 0, 0.74)],
+    // The wiggle, a leaf a beat; the little heart on top; the pull-through.
+    script: [tap(8, 'Wiggle'), push(), pull()],
   },
   swan: {
     power: 2.4,
@@ -148,6 +158,7 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
     durationMs: 2500,
     target: 0.76,
     shapes: () => [{ k: 'blob', pts: heartPts(0, 0, 1.1) }, cut(0, -0.4, 0, 0.42), { k: 'dot', x: 0, y: 0.5, r: 0.085, tone: 'matcha' }],
+    script: [push(), pull(), tap(1, 'Green light')],
   },
   daisy: {
     power: 1.6,
@@ -161,6 +172,8 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
       { k: 'dot', x: 0, y: 0, r: 0.15 },
       { k: 'dot', x: 0, y: 0, r: 0.07, tone: 'crema' },
     ],
+    // A drop for every petal, round the cup on the beat; then the middle.
+    script: [tap(8, 'Petals'), push(1, 'Middle'), tap(1, 'Eye')],
   },
   'gatsby-g': {
     power: 2.6,
@@ -189,6 +202,7 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
     durationMs: 2800,
     target: 0.8,
     shapes: () => [{ k: 'blob', pts: starPts(0, 0.04, 0.6, 0.26, 5) }, { k: 'dot', x: 0, y: 0.04, r: 0.07, tone: 'crema' }],
+    script: [push(), tap(1, 'Drop')],
   },
   bear: {
     power: 2.2,
@@ -205,6 +219,8 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
       { k: 'blob', pts: ellipsePts(0, 0.2, 0.17, 0.12, 0), tone: 'foam' },
       { k: 'dot', x: 0, y: 0.15, r: 0.05, tone: 'crema' },
     ],
+    // Ears, the face, then the eyes, muzzle and nose.
+    script: [tap(4, 'Ears'), push(1, 'Face'), tap(4, 'Eyes & nose')],
   },
   cat: {
     power: 2.2,
@@ -221,6 +237,8 @@ const DRAWINGS: Record<string, { power: number; durationMs: number; target: numb
         [-0.05, 0.05].map((dy): Prim => ({ k: 'stroke', pts: [[s * 0.1, 0.2 + dy], [s * 0.28, 0.17 + dy * 1.6], [s * 0.42, 0.14 + dy * 2.2]], w: 0.018, tone: 'crema' })),
       ),
     ],
+    // The ears, the face, eyes and nose, then the whiskers pulled out.
+    script: [push(2, 'Ears'), push(1, 'Face'), tap(3, 'Eyes & nose'), pull(4, 'Whiskers')],
   },
   butterfly: {
     power: 2.6,
@@ -336,7 +354,7 @@ export const PATTERN_DEFS: Record<string, PatternDef> = Object.fromEntries(
   PATTERNS.map((p) => {
     const d = DRAWINGS[p.id] ?? DRAWINGS.heart;
     const tier = TIER_CURVE[p.difficulty];
-    return [p.id, { id: p.id, name: p.name, difficulty: p.difficulty, curve: pourCurve(tier.power, tier.durationMs, d.target), shapes: d.shapes }];
+    return [p.id, { id: p.id, name: p.name, difficulty: p.difficulty, curve: pourCurve(tier.power, tier.durationMs, d.target), shapes: d.shapes, script: d.script ?? null }];
   }),
 );
 

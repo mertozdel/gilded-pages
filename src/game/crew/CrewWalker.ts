@@ -4,13 +4,11 @@ import type { Facing } from '../../content/rooms';
 import { ROOM_FIGURE_HEIGHT, ROXY_HEIGHT } from '../companion/art/roxyFrames';
 import { BRISK_SPEED, IsoWalker, RUN_SPEED, WALK_SPEED } from '../iso/IsoWalker';
 import type { Room } from '../iso/Room';
-import { Bubble } from './Bubble';
+import { Bubble, DEPTH_OVER } from './Bubble';
 import { animKey, crewDef } from './CrewPack';
 
 type View = 's' | 'e' | 'n';
 
-/** Bubbles and effects draw over the whole room. */
-const DEPTH_OVER = 8000;
 /** The crew's own paces (tiles/s) for the shared walk / brisk / run speeds: a little quicker than Roxy's. */
 const CREW_PACE = new Map<number, number>([
   [WALK_SPEED, 2.8],

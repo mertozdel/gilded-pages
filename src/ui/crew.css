@@ -131,26 +131,50 @@
     min-height: 0;
     overflow-x: clip;
   }
+  /*
+   * A compact card, one fixed height (the longest card's), so picking another barista never
+   * rescales the café above: the less the card takes, the taller the café, and a tall enough café
+   * is shown big and panned along (the line-up in its middle) rather than as a thin strip.
+   */
   .select-card-wrap {
     position: relative;
     inset: auto;
     width: auto;
-    margin: 0 calc(12px + env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) calc(12px + env(safe-area-inset-left, 0px));
-    /* As tall as the longest card, so picking another barista never rescales the café above. */
-    min-height: 310px;
+    margin: 0 calc(10px + env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) calc(10px + env(safe-area-inset-left, 0px));
+    height: 236px;
     display: flex;
     flex-direction: column;
   }
   .select-card-wrap > .deco-panel {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    padding: 14px 16px;
+    padding: 10px 12px 12px;
+  }
+  .select-card-wrap .deco-panel-title {
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+  .select-card {
+    gap: 10px;
+    margin-bottom: 8px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .select-card p {
+    margin: 2px 0;
+  }
+  .select-card .small {
+    font-size: 13px;
+    line-height: 1.3;
   }
   .select-card-wrap .deco-btn.big {
     margin-top: auto;
     align-self: stretch;
     justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   /* Names over their heads: under their feet they would run into each other and the card. */
   .lineup-name {
@@ -161,11 +185,38 @@
     padding: 1px 6px;
   }
   .select-card {
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 56px 1fr;
   }
   .select-portrait {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
+  }
+}
+/* A short phone (an SE): the blurb goes, so the café above still gets the big, panned view. */
+@media (max-width: 760px) and (max-height: 640px) {
+  .select-card-wrap {
+    height: 184px;
+  }
+  .select-blurb {
+    display: none;
+  }
+}
+/* A narrow phone: the title on one line, the start button's words on one line. */
+@media (max-width: 380px) {
+  .select-header h1 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .select-header .screen-subtitle {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .select-card-wrap .deco-btn.big {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
   }
 }
 
@@ -292,6 +343,87 @@
 }
 .latte-stages em {
   font-style: normal;
+}
+/* The real pour (easy and medium patterns): its moves, the beats of a wiggle, a flash per step. */
+.latte-moves {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0;
+  margin: -2px 0 8px;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.latte-moves li {
+  border: 1px dashed rgba(227, 193, 111, 0.3);
+  padding: 3px 6px;
+  color: rgba(242, 237, 228, 0.6);
+}
+.latte-moves li.on {
+  border-style: solid;
+  border-color: var(--gold);
+  color: var(--gilt);
+}
+.latte-moves li.perfect {
+  border-color: var(--green);
+  color: var(--green);
+}
+.latte-moves li.good {
+  color: var(--gilt);
+}
+.latte-moves li.miss {
+  border-color: var(--rose);
+  color: var(--rose);
+}
+.latte-beats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+}
+.latte-beats span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(227, 193, 111, 0.5);
+}
+.latte-beats span.next {
+  border-color: var(--gilt);
+  box-shadow: 0 0 0 3px rgba(227, 193, 111, 0.25);
+}
+.latte-beats span.perfect {
+  background: var(--green);
+  border-color: var(--green);
+}
+.latte-beats span.good {
+  background: var(--gilt);
+  border-color: var(--gilt);
+}
+.latte-beats span.miss {
+  background: var(--rose);
+  border-color: var(--rose);
+}
+.latte-flash.step {
+  top: 16%;
+  font-size: 20px;
+  animation: latte-step 0.6s ease-out forwards;
+}
+@keyframes latte-step {
+  from {
+    transform: translate(-50%, -20%) scale(0.8);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -70%);
+    opacity: 0;
+  }
 }
 .latte-body {
   display: grid;
@@ -475,21 +607,156 @@
   opacity: 0.4;
   cursor: default;
 }
+/*
+ * A phone held upright: the panel fills the space between the header and the tab bar. The cup
+ * and its gauge stack in the middle, and the Hold button is a wide bar along the bottom, in the
+ * layout (never over the gauge), where the thumb rests.
+ */
 @media (max-width: 760px) {
   .latte-panel {
     left: 8px;
     right: 8px;
+    top: calc(56px + env(safe-area-inset-top, 0px));
     bottom: calc(64px + env(safe-area-inset-bottom, 0px));
     width: auto;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 10px 12px 12px;
   }
+  /* The order's name across the top, its buttons on a row of their own, the close button in the corner. */
+  .latte-head {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .latte-head > div:first-child {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding-right: 40px;
+    line-height: 1.25;
+  }
+  .latte-head strong {
+    font-size: 16px;
+  }
+  .latte-head-actions {
+    flex: 1 1 100%;
+  }
+  .latte-head-actions .deco-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+  .latte-head-actions .icon-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+  .latte-stages {
+    margin: 6px 0;
+    font-size: 9px;
+  }
+  .latte-stages li {
+    padding: 3px 4px;
+  }
+  /* The cup takes whatever height the gauge (bar or milk dial) leaves, so all of it stays in view. */
   .latte-body {
-    grid-template-columns: 1fr;
-    padding-right: 0;
-    padding-bottom: 150px;
-    justify-items: center;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: safe center;
+    gap: 10px;
+    padding: 0;
+    overflow: hidden;
   }
   .latte-cup-wrap {
-    width: min(260px, 70vw);
+    flex: 1 1 0;
+    min-height: 80px;
+    max-height: 260px;
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
+  .latte-gauge-wrap {
+    flex: none;
+    width: 100%;
+  }
+  .latte-dial {
+    max-width: min(230px, 62vw, 30dvh);
+    margin: 0 auto;
+  }
+  .latte-gauge-wrap p.small {
+    margin: 6px 0 0;
+  }
+  .latte-hold {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    flex: none;
+    width: 100%;
+    height: 76px;
+    margin-top: 10px;
+    border-radius: 38px;
+    font-size: 26px;
+  }
+  .latte-hold.held {
+    transform: translateY(4px);
+  }
+}
+/* A short phone (an SE, or Safari's bars showing): the hint under the gauge makes room for the cup. */
+@media (max-width: 760px) and (max-height: 600px) {
+  .latte-gauge-wrap p.small {
+    display: none;
+  }
+}
+/* A phone on its side: cup on the left, gauge and Hold on the right, all of it in view. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .latte-panel {
+    top: 8px;
+    bottom: 8px;
+    max-height: none;
+    width: min(720px, calc(100vw - 32px));
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    column-gap: 14px;
+    overflow: hidden;
+  }
+  .latte-head,
+  .latte-stages,
+  .latte-moves {
+    grid-column: 1 / -1;
+  }
+  .latte-body {
+    display: contents;
+  }
+  .latte-cup-wrap {
+    grid-row: 3 / span 2;
+    width: min(240px, calc(100dvh - 150px));
+    align-self: center;
+  }
+  .latte-gauge-wrap {
+    align-self: center;
+    overflow: auto;
+    max-height: 100%;
+  }
+  .latte-hold {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 64px;
+    border-radius: 32px;
+  }
+}
+/* "hold Space" and "Space / Enter: next cup" mean nothing on a touch screen. */
+@media (hover: none) {
+  .latte-hold small,
+  .latte-result .muted {
+    display: none;
   }
 }
 
@@ -663,6 +930,8 @@
     left: 8px;
     right: 8px;
     width: auto;
+    top: calc(56px + env(safe-area-inset-top, 0px));
     bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    max-height: none;
   }
 }

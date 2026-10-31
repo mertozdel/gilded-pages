@@ -163,6 +163,17 @@ export function roxyArt(state: VState, look: Look): RoxyArt {
   return { anim: ROXY_ANIMS[art.views[view]!], flip: view !== 's' && look.flip, plays: art.plays, fx: art.fx?.[view] };
 }
 
+/**
+ * Carrying a cup to someone's table (the regular's refill): the pack draws it three-quarter
+ * front only, so it plays for every heading, mirrored when she goes west. Null for anything
+ * but walking, hurrying and standing.
+ */
+export function carryArt(state: VState, look: Look): RoxyArt | null {
+  const anim = state === 'walk' || state === 'run' ? 'carry_walk_se' : state === 'idle' ? 'carry_idle_se' : null;
+  if (!anim || !ROXY_ANIMS[anim]) return null;
+  return { anim: ROXY_ANIMS[anim], flip: look.flip };
+}
+
 /** Standing at a spot: SE/SW three-quarter front, NE/NW her back. */
 export function lookForFacing(f: Facing): Look {
   return { view: f === 'SE' || f === 'SW' ? 'se' : 'n', flip: f === 'SW' || f === 'NW' };

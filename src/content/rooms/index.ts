@@ -31,6 +31,9 @@ export interface TiledObject {
   width: number;
   height: number;
   point?: boolean;
+  /** false: kept in the map but off (Tiled's way of commenting an object out). */
+  visible?: boolean;
+  polygon?: { x: number; y: number }[];
   properties?: TiledProperty[];
 }
 
@@ -98,6 +101,8 @@ export interface HotspotDef {
   z: number;
   stand: { u: number; v: number };
   facing: Facing;
+  /** Only there while the room has this tag on (a regular's hotspot follows him: `matt_seat`, `matt_waiting`). */
+  with?: string;
 }
 
 export function roomHotspots(room: RoomId): HotspotDef[] {
@@ -115,6 +120,7 @@ export function roomHotspots(room: RoomId): HotspotDef[] {
         z: 0,
         stand: { u: Number(p.standX ?? o.x), v: Number(p.standY ?? o.y) },
         facing: (p.facing as Facing) ?? 'SE',
+        ...(p.with ? { with: String(p.with) } : {}),
       };
     });
   }

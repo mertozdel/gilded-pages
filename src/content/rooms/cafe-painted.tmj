@@ -49,6 +49,11 @@
    "name": "npcs",
    "type": "bool",
    "value": false
+  },
+  {
+   "name": "floorTile",
+   "type": "int",
+   "value": 52
   }
  ],
  "layers": [
@@ -544,6 +549,54 @@
        "x": 20,
        "y": 38
       }
+     ],
+     "properties": [
+      {
+       "name": "hideWith",
+       "type": "string",
+       "value": "matt_seat"
+      }
+     ]
+    },
+    {
+     "id": 43,
+     "name": "banquette-chair",
+     "type": "furniture",
+     "x": 438,
+     "y": 284,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 14,
+       "y": -10
+      },
+      {
+       "x": 28,
+       "y": -8
+      },
+      {
+       "x": 30,
+       "y": 16
+      },
+      {
+       "x": 29,
+       "y": 46
+      },
+      {
+       "x": 20,
+       "y": 56
+      },
+      {
+       "x": 0,
+       "y": 52
+      }
      ]
     },
     {
@@ -684,8 +737,8 @@
      ]
     },
     {
-     "id": 10,
-     "name": "window-sofa",
+     "id": 44,
+     "name": "window-armchair",
      "type": "furniture",
      "x": 562,
      "y": 296,
@@ -703,28 +756,16 @@
        "y": -12
       },
       {
-       "x": 88,
-       "y": -44
+       "x": 52,
+       "y": -6
       },
       {
-       "x": 158,
-       "y": -20
+       "x": 66,
+       "y": 16
       },
       {
-       "x": 210,
-       "y": 20
-      },
-      {
-       "x": 210,
-       "y": 54
-      },
-      {
-       "x": 182,
-       "y": 72
-      },
-      {
-       "x": 138,
-       "y": 60
+       "x": 86,
+       "y": 26
       },
       {
        "x": 88,
@@ -737,6 +778,70 @@
       {
        "x": 3,
        "y": 66
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "window-sofa",
+     "type": "furniture",
+     "x": 600,
+     "y": 284,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": 0,
+       "y": 0
+      },
+      {
+       "x": 50,
+       "y": -32
+      },
+      {
+       "x": 120,
+       "y": -8
+      },
+      {
+       "x": 172,
+       "y": 32
+      },
+      {
+       "x": 172,
+       "y": 66
+      },
+      {
+       "x": 144,
+       "y": 84
+      },
+      {
+       "x": 100,
+       "y": 72
+      },
+      {
+       "x": 50,
+       "y": 80
+      },
+      {
+       "x": 48,
+       "y": 38
+      },
+      {
+       "x": 28,
+       "y": 28
+      },
+      {
+       "x": 14,
+       "y": 6
+      }
+     ],
+     "properties": [
+      {
+       "name": "hideWith",
+       "type": "string",
+       "value": "matt_sofa"
       }
      ]
     },
@@ -1319,6 +1424,138 @@
        "value": "NE"
       }
      ]
+    },
+    {
+     "id": 46,
+     "name": "matt",
+     "type": "hotspot",
+     "x": 377,
+     "y": 226,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Mert"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "A regular · say hello"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 478
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 326
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      },
+      {
+       "name": "with",
+       "type": "string",
+       "value": "matt_seat"
+      }
+     ]
+    },
+    {
+     "id": 47,
+     "name": "matt",
+     "type": "hotspot",
+     "x": 650,
+     "y": 292,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Mert"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "A regular · say hello"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 700
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 376
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "NW"
+      },
+      {
+       "name": "with",
+       "type": "string",
+       "value": "matt_sofa"
+      }
+     ]
+    },
+    {
+     "id": 48,
+     "name": "matt-refill",
+     "type": "hotspot",
+     "x": 410,
+     "y": 262,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Mert's table"
+      },
+      {
+       "name": "hint",
+       "type": "string",
+       "value": "His mug is empty · bring a refill"
+      },
+      {
+       "name": "standX",
+       "type": "int",
+       "value": 478
+      },
+      {
+       "name": "standY",
+       "type": "int",
+       "value": 326
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SW"
+      },
+      {
+       "name": "with",
+       "type": "string",
+       "value": "matt_waiting"
+      }
+     ]
     }
    ]
   },
@@ -1544,6 +1781,174 @@
    ]
   },
   {
+   "id": 8,
+   "name": "Regulars",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 49,
+     "name": "matt_seat",
+     "type": "regular",
+     "x": 398,
+     "y": 300,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polygon": [
+      {
+       "x": -52,
+       "y": -19
+      },
+      {
+       "x": 0,
+       "y": -45
+      },
+      {
+       "x": 52,
+       "y": -19
+      },
+      {
+       "x": 0,
+       "y": 7
+      }
+     ],
+     "properties": [
+      {
+       "name": "npc",
+       "type": "string",
+       "value": "matt"
+      },
+      {
+       "name": "anim",
+       "type": "string",
+       "value": "sit"
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      },
+      {
+       "name": "blocks",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "footprintTiles",
+       "type": "int",
+       "value": 2
+      },
+      {
+       "name": "note",
+       "type": "string",
+       "value": "The left table on the banquette under the mural: his table set, chair, laptop and mug (matt_sit_*) over the painted table. The polygon is his 2x2-tile collision footprint."
+      }
+     ]
+    },
+    {
+     "id": 50,
+     "name": "matt_sofa",
+     "type": "regular",
+     "x": 668,
+     "y": 362,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "point": true,
+     "properties": [
+      {
+       "name": "npc",
+       "type": "string",
+       "value": "matt"
+      },
+      {
+       "name": "anim",
+       "type": "string",
+       "value": "chill"
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      },
+      {
+       "name": "note",
+       "type": "string",
+       "value": "Weekends (device clock Sat/Sun): matt_chill on the window sofa, which hides while he is there."
+      }
+     ]
+    },
+    {
+     "id": 51,
+     "name": "matt_seat_alt",
+     "type": "regular",
+     "x": 548,
+     "y": 412,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": false,
+     "polygon": [
+      {
+       "x": -51,
+       "y": -19
+      },
+      {
+       "x": 1,
+       "y": -45
+      },
+      {
+       "x": 53,
+       "y": -19
+      },
+      {
+       "x": 1,
+       "y": 7
+      }
+     ],
+     "properties": [
+      {
+       "name": "npc",
+       "type": "string",
+       "value": "matt"
+      },
+      {
+       "name": "anim",
+       "type": "string",
+       "value": "sit"
+      },
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "SE"
+      },
+      {
+       "name": "blocks",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "footprintTiles",
+       "type": "int",
+       "value": 2
+      },
+      {
+       "name": "note",
+       "type": "string",
+       "value": "Off (Tiled's way of commenting an object out): the two-top between the counter and the window lounge. Using it means painting that table and its two metal chairs out of the painting (scripts/paint-out.py), removing the metal-table furniture, swapping names with matt_seat and moving the matt / matt-refill hotspots (stand about 522,352 facing SE)."
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": 6,
    "name": "Overlays",
    "type": "objectgroup",
@@ -1552,7 +1957,41 @@
    "y": 0,
    "opacity": 1,
    "visible": true,
-   "objects": []
+   "objects": [
+    {
+     "id": 45,
+     "name": "window-sofa-gone",
+     "type": "overlay",
+     "x": 610,
+     "y": 255,
+     "width": 121,
+     "height": 108,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "kind",
+       "type": "string",
+       "value": "image"
+      },
+      {
+       "name": "src",
+       "type": "string",
+       "value": "assets/rooms/patches/cafe-window-sofa.png"
+      },
+      {
+       "name": "with",
+       "type": "string",
+       "value": "matt_sofa"
+      },
+      {
+       "name": "note",
+       "type": "string",
+       "value": "The window sofa and its guest, where Mert's own sofa doesn't cover them, while he lounges there at weekends (scripts/paint-out.py art/patches/cafe-window-sofa.json)"
+      }
+     ]
+    }
+   ]
   },
   {
    "id": 7,
@@ -1612,6 +2051,6 @@
   }
  ],
  "tilesets": [],
- "nextlayerid": 8,
- "nextobjectid": 43
+ "nextlayerid": 9,
+ "nextobjectid": 52
 }

@@ -7,6 +7,7 @@ import { useStats } from '../db/useStats';
 import { useStore } from '../store';
 import { DecoPanel } from '../ui/DecoPanel';
 import { isTypingTarget } from '../ui/keys';
+import { newRoomClaim, releaseRoom, reportRoom } from '../ui/roomClaim';
 
 type Spot = { id: CharacterId; x: number; y: number; w: number; h: number };
 
@@ -32,7 +33,7 @@ function CharacterCard({ c, onStart }: { c: CharacterDef; onStart: () => void })
         <div>
           <p className="select-role">{c.role}</p>
           {twin && <p className="select-twin">Twin of {twin.name}</p>}
-          <p className="small">{c.blurb}</p>
+          <p className="small select-blurb">{c.blurb}</p>
           <p className="small">
             <strong>Break:</strong> {c.breakLabel}
           </p>
@@ -75,9 +76,10 @@ export function CharacterSelectScreen() {
   chooseRef.current = choose;
 
   // The café behind the line-up: report where it goes, as a room view does.
+  const [claim] = useState(newRoomClaim);
   useLayoutEffect(() => {
     if (textOnly) {
-      bus.emit('room:layout', { room: null, rect: null });
+      reportRoom(claim, null, null);
       return;
     }
     const el = stage.current;
@@ -88,15 +90,16 @@ export function CharacterSelectScreen() {
       const sig = `${r.left}|${r.top}|${r.width}|${r.height}`;
       if (sig === last) return;
       last = sig;
-      bus.emit('room:layout', { room: 'cafe-select', rect: { x: r.left, y: r.top, width: r.width, height: r.height } });
+      reportRoom(claim, 'cafe-select', { x: r.left, y: r.top, width: r.width, height: r.height });
     };
     report();
     const ro = new ResizeObserver(report);
     ro.observe(el);
     ro.observe(document.documentElement);
     return () => ro.disconnect();
-  }, [textOnly, pixel]);
-  useEffect(() => () => bus.emit('room:layout', { room: null, rect: null }), []);
+  }, [claim, textOnly, pixel]);
+  // Leaving takes the café away, unless the next screen (the café itself) has already asked for it.
+  useEffect(() => () => releaseRoom(claim, 'cafe-select'), [claim]);
   useEffect(() => bus.on('lineup:layout', (e) => setSpots(e.spots)), []);
   useEffect(() => bus.emit('lineup:focus', { id: focus }), [focus]);
 

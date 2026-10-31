@@ -1,0 +1,207 @@
+{
+  "lines": {
+    "jason": {
+      "idle": {
+        "happy": ["¡Qué chimba de día!", "This crema? Pure Colombia, parce.", "Hoy estoy feliz. No sé por qué.", "Música, café y buena gente. ¡Listo!", "A tintico? Nobody? More for me."],
+        "proud": ["Twelve-layer tulip. Before breakfast.", "My abuela would cry at this crema.", "Colombian beans. Obviously.", "Soy artista, no barista."],
+        "cheeky": ["Joel, that rosetta looks like a potato.", "Dominoes after close? I'm undefeated.", "Jonas, ¿otra vez con la polka?", "Roxy, the book can wait. ¡Clientes!"],
+        "tired": ["Break? No conozco esa palabra.", "Ay, mis pies…", "Five espressos in. I can hear colours."],
+        "dreamy": ["Huele a Medellín por la mañana…", "Someday: my own café in Cartagena.", "Un tinto en la finca del abuelo…"],
+        "grumpy": ["¿Quién dejó la jarra sucia? ¿Ah?", "Decaf? In MY café? No, señor.", "Who put pineapple on the staff pizza?"],
+        "stressed": ["¡Uy, la leche!", "The grinder is making the noise again."],
+        "confused": ["Oat, soy, almond… ¿y la de vaca?", "Why are there lederhosen in the fridge?"]
+      },
+      "perfect": {
+        "proud": ["¡Eso! That's how it's done.", "¡Qué belleza!", "Perfecto. Like a painting."],
+        "happy": ["¡Qué chimba, parce!", "¡Ay, qué crema tan linda!", "Hermoso. I want a photo."]
+      },
+      "messy": {
+        "cheeky": ["Bueno… modern art, ¿no?", "Tranquilo. Nobody saw. I saw."],
+        "confused": ["¿Eso es un corazón? ¿O una papa?"],
+        "sad": ["Ay, no… pobrecito café."]
+      },
+      "rushStart": {
+        "happy": ["¡Hágale, hágale! Let's go!", "¡Vamos, equipo!"],
+        "stressed": ["¡Uy! Here they come…"]
+      },
+      "rushGood": {
+        "happy": ["¡Eso!", "¡De una!", "¡Bien, bien!"]
+      },
+      "rushOops": {
+        "stressed": ["¡Juepucha!", "¡Uy, no!"],
+        "cheeky": ["Wrong cup, parce. Wrong cup."]
+      },
+      "rushEnd": {
+        "tired": ["Uf… now a tintico for me."],
+        "proud": ["Nobody does it like us. ¡Nadie!"]
+      },
+      "welcomeBack": {
+        "happy": ["¡Llegó la estrella!", "Welcome back, superstar. Apron on."],
+        "cheeky": ["Back already? I didn't miss you. Mentira."]
+      }
+    },
+    "joel": {
+      "idle": {
+        "happy": ["Läuft bei mir!", "Wie geil ist das denn?", "This espresso has a sick bassline."],
+        "proud": ["Best drop of my life. Ask anyone.", "Ten thousand fans. Jonas had twelve cows."],
+        "cheeky": ["Jonas, Lederhosen are not a uniform.", "Jason, one day I beat you at dominoes.", "Roxy, read me something. With bass."],
+        "tired": ["Jetlag. Mein Kopf ist noch in China.", "Kaffee. Sofort. Bitte.", "I slept on the plane. Ten minutes."],
+        "dreamy": ["The steam wand has a groove…", "Ich höre den Drop schon…"],
+        "grumpy": ["Wer hat meine Kopfhörer?", "Schon wieder keine Hafermilch!"],
+        "stressed": ["Ach du Schande!", "Mist, Mist, Mist!"],
+        "confused": ["Hä? Who ordered a 'flat white lite'?", "Warte mal… which one is decaf?"]
+      },
+      "perfect": {
+        "happy": ["Krass! Wie schön!", "Geil! That cup is a banger!", "Volle Punktzahl!"],
+        "proud": ["That's a ten-out-of-ten drop."]
+      },
+      "messy": {
+        "cheeky": ["Remix version. Very experimental.", "Hm. Abstrakte Kunst."],
+        "confused": ["Hä? Was ist das?"],
+        "sad": ["Autsch."]
+      },
+      "rushStart": {
+        "happy": ["Na los! Here comes the drop!", "Let's go! Volle Energie!"],
+        "stressed": ["Oh nein, the whole queue!"]
+      },
+      "rushGood": {
+        "happy": ["Jawoll!", "Sauber!", "On beat!"]
+      },
+      "rushOops": {
+        "stressed": ["Mist!", "Off-beat! Off-beat!"],
+        "cheeky": ["Wrong track, wrong track!"]
+      },
+      "rushEnd": {
+        "tired": ["Feierabend? Bitte?"],
+        "proud": ["Applaus, Applaus! We crushed it."]
+      }
+    },
+    "jonas": {
+      "idle": {
+        "happy": ["Mei, is des schee heut.", "Servus beinand!", "A good coffee, a good groove. Passt."],
+        "proud": ["Four strings. That's all you need.", "The brass band calls me Bass-Gott."],
+        "cheeky": ["Joel, your music is just grinder noise.", "Older twin. Four minutes. Respect.", "Jason, Pause machen ist erlaubt, ja?"],
+        "tired": ["Ich brauch a Brezn.", "Nach dem Fest… so müde."],
+        "dreamy": ["Ach, die Berge…", "Oompah in my head all day."],
+        "grumpy": ["Wer hat meine Brezn gegessen?", "Polka is not old people music!"],
+        "stressed": ["Herrschaftszeiten!"],
+        "confused": ["Hä? Was hast du gesagt?", "Does Jason ever sit down?"]
+      },
+      "perfect": {
+        "happy": ["Wunderbar!", "Sauber, sauber!", "Des is a Kunstwerk!"],
+        "proud": ["Prost! To the perfect cup!"]
+      },
+      "messy": {
+        "cheeky": ["Passt scho… more or less.", "Very rustic. Like the village."],
+        "confused": ["Is des a Brezn?"],
+        "sad": ["Oje…"]
+      },
+      "rushStart": {
+        "happy": ["Auf geht's!", "O'zapft is! Let's go!"],
+        "stressed": ["So many people. Like the beer tent."]
+      },
+      "rushGood": {
+        "happy": ["Passt!", "Sauber!", "Jawohl!"]
+      },
+      "rushOops": {
+        "stressed": ["Oje, oje!", "Herrschaftszeiten!"],
+        "cheeky": ["Wrong note, wrong note."]
+      },
+      "rushEnd": {
+        "tired": ["Endlich. Now a Weißbier."],
+        "proud": ["Like a good polka: fast and tight."]
+      }
+    },
+    "roxy": {
+      "idle": {
+        "happy": ["Oh là là, what a lovely day.", "Ça sent bon, le café!", "Voilà! Counter spotless."],
+        "proud": ["Spotless counter. Magnifique.", "Another honest page tonight."],
+        "cheeky": ["Jason, chéri, sit down. Just once.", "Joel, ta musique… c'est fort!", "Jonas, those lederhosen… très chic."],
+        "tired": ["Je suis crevée…", "Un café pour la barista, s'il vous plaît."],
+        "dreamy": ["Paris in the rain… ah.", "Chapter twelve is calling my name.", "Une page de plus… just one more."],
+        "grumpy": ["Bof. Mondays.", "Who dog-eared my book? Quelle horreur."],
+        "stressed": ["Zut alors!", "Mince, the milk!"],
+        "confused": ["Pardon? A pumpkin what?", "Hein? Who moved my bookmark?"]
+      },
+      "perfect": {
+        "happy": ["Magnifique!", "Oh, c'est parfait!", "Très joli!"],
+        "proud": ["Chef's kiss. Mwah!"]
+      },
+      "messy": {
+        "cheeky": ["Très… artistique.", "Abstract. Like Picasso."],
+        "sad": ["Oh là là… non."],
+        "confused": ["Euh… a cloud?"]
+      },
+      "rushStart": {
+        "happy": ["Allez, on y va!", "Bon courage, tout le monde!"],
+        "stressed": ["Mon Dieu, the queue!"]
+      },
+      "rushGood": {
+        "happy": ["Voilà!", "Et hop!", "Parfait!"]
+      },
+      "rushOops": {
+        "stressed": ["Zut!", "Mince!"],
+        "cheeky": ["Oups! Pas grave."]
+      },
+      "rushEnd": {
+        "tired": ["Ouf! Time for a book."],
+        "proud": ["Bravo, l'équipe!"]
+      },
+      "welcomeBack": {
+        "happy": ["Te revoilà! Coffee's on me.", "Bienvenue! How was the show?"],
+        "cheeky": ["Ah, the rock star returns!"]
+      }
+    }
+  },
+  "exchanges": [
+    [
+      { "who": "joel", "mood": "cheeky", "text": "Bruder, admit it: techno beats polka." },
+      { "who": "jonas", "mood": "grumpy", "text": "Niemals. Never." }
+    ],
+    [
+      { "who": "jonas", "mood": "cheeky", "text": "Four minutes older. Respect your elders." },
+      { "who": "joel", "mood": "cheeky", "text": "Ja, ja, Opa." }
+    ],
+    [
+      { "who": "joel", "mood": "grumpy", "text": "Hast du meine Kopfhörer?" },
+      { "who": "jonas", "mood": "cheeky", "text": "Nein. … Vielleicht." }
+    ],
+    [
+      { "who": "jason", "mood": "tired", "text": "Roxy, ¿un tintico?" },
+      { "who": "roxy", "mood": "happy", "text": "Toujours! Always." }
+    ],
+    [
+      { "who": "roxy", "mood": "cheeky", "text": "Jason, a break. Five minutes." },
+      { "who": "jason", "mood": "proud", "text": "¿Break? Never heard of it." }
+    ],
+    [
+      { "who": "joel", "mood": "happy", "text": "Jason, your rosetta is a banger." },
+      { "who": "jason", "mood": "proud", "text": "Gracias, parce. I know." }
+    ],
+    [
+      { "who": "jonas", "mood": "confused", "text": "Jason, do you ever sleep?" },
+      { "who": "jason", "mood": "cheeky", "text": "Sleep is for decaf people." }
+    ],
+    [
+      { "who": "roxy", "mood": "grumpy", "text": "Joel, the music. Moins fort!" },
+      { "who": "joel", "mood": "cheeky", "text": "But the drop, Roxy! The drop!" }
+    ],
+    [
+      { "who": "roxy", "mood": "dreamy", "text": "Jonas, play me something gentle." },
+      { "who": "jonas", "mood": "happy", "text": "A Walzer for the lady." }
+    ],
+    [
+      { "who": "jason", "mood": "confused", "text": "Jonas, ¿qué es una Brezn?" },
+      { "who": "jonas", "mood": "proud", "text": "A pretzel. The bread of heroes." }
+    ],
+    [
+      { "who": "joel", "mood": "happy", "text": "Roxy, what are you reading?" },
+      { "who": "roxy", "mood": "dreamy", "text": "A mystery. Pas de spoilers!" }
+    ],
+    [
+      { "who": "jason", "mood": "cheeky", "text": "¿Dominó after close?" },
+      { "who": "joel", "mood": "happy", "text": "Ich bin dabei!" },
+      { "who": "jonas", "mood": "grumpy", "text": "Only if I win this time." }
+    ]
+  ]
+}

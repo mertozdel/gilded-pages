@@ -4,6 +4,8 @@ import type { PixelScale } from '../store/uiSlice';
 /** The fixed internal resolution: 3× is exactly 1920×1080. */
 export const GAME_W = 640;
 export const GAME_H = 360;
+/** Painted rooms draw at most this many game px per CSS px (see computePixelScale). */
+export const MAX_NATIVE_RATIO = 2;
 
 /**
  * The largest whole number of *device* pixels per game pixel at which 640×360 fits the
@@ -13,8 +15,11 @@ export const GAME_H = 360;
  */
 export function computePixelScale(vw: number, vh: number, dpr: number, mode: PixelMode = 'grid'): PixelScale {
   if (mode === 'native') {
-    // Painted rooms: one game px per device px, so the painting keeps all its detail.
-    return { devicePxPerGamePx: 1, cssZoom: 1 / dpr, gameWidth: Math.ceil(vw * dpr), gameHeight: Math.ceil(vh * dpr), offsetX: 0, offsetY: 0 };
+    // Painted rooms: up to two game px per CSS px. The painting (1024 px wide) and the sprites
+    // are already scaled up past that on a phone, so a 3× screen loses no detail, and the canvas
+    // has less than half the pixels to fill every frame.
+    const r = Math.min(dpr, MAX_NATIVE_RATIO);
+    return { devicePxPerGamePx: dpr / r, cssZoom: 1 / r, gameWidth: Math.ceil(vw * r), gameHeight: Math.ceil(vh * r), offsetX: 0, offsetY: 0 };
   }
   const devicePxPerGamePx = Math.max(1, Math.floor(Math.min((vw * dpr) / GAME_W, (vh * dpr) / GAME_H)));
   const cssZoom = devicePxPerGamePx / dpr;

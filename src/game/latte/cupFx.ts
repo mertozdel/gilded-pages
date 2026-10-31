@@ -13,7 +13,16 @@ export interface CupFxState {
   /** 'cup': a finished (or waiting) cup, steaming. */
   mode: 'make' | 'cup' | 'none';
   reduced: boolean;
+  /** The real pour: where the stream lands, in units of the crema's radius from its middle. */
+  land?: { x: number; y: number };
+  /** When the last tap of a wiggle came (the stream flicks down for a moment). */
+  tapAt?: number;
+  /** Beats coming up: a ring closing on its spot, `k` 1 → 0 as the beat nears. */
+  rings?: { x: number; y: number; k: number }[];
 }
+
+/** How long a tap's stream shows. */
+const TAP_POUR_MS = 160;
 
 const TAU = Math.PI * 2;
 
@@ -35,10 +44,27 @@ export function drawCupFx(c: CanvasRenderingContext2D, w: number, t: number, s: 
     pitcher(c, w * 0.8, w * 0.22, w * 0.2, 0, s.holding ? s.fill : 0, t);
     if (s.holding) pitcherSteam(c, w * 0.8, w * 0.1, w, t, s.reduced);
   } else {
-    const tilt = s.holding ? -0.75 : 0;
+    const flick = s.tapAt !== undefined && t - s.tapAt < TAP_POUR_MS;
+    const tilt = s.holding || flick ? -0.75 : 0;
     pitcher(c, w * 0.8, w * 0.18, w * 0.2, tilt, 1, t);
-    if (s.holding) pour(c, w, cx, cy, crema, t, s.fill);
+    if (s.holding || flick) pour(c, w, cx, cy, crema, t, s.holding ? s.fill : 0.6, s.land);
+    for (const r of s.rings ?? []) beatRing(c, cx + r.x * crema, cy + r.y * crema, crema, r.k);
   }
+}
+
+/** A beat of the wiggle: the spot, and a ring closing on it — tap when it lands. */
+function beatRing(c: CanvasRenderingContext2D, x: number, y: number, crema: number, k: number): void {
+  const r0 = crema * 0.1;
+  c.lineWidth = 2;
+  c.strokeStyle = 'rgba(255,248,236,0.55)';
+  c.beginPath();
+  c.arc(x, y, r0, 0, TAU);
+  c.stroke();
+  c.lineWidth = 3;
+  c.strokeStyle = `rgba(227,193,111,${0.35 + 0.65 * (1 - k)})`;
+  c.beginPath();
+  c.arc(x, y, r0 * (1 + 2.5 * k), 0, TAU);
+  c.stroke();
 }
 
 /** The group head of the machine at the top: the shot comes from here. */
@@ -126,13 +152,13 @@ function pitcher(c: CanvasRenderingContext2D, x: number, y: number, size: number
   // Milk at the rim, swirling as it steams.
   c.fillStyle = '#FFF8EC';
   c.beginPath();
-  c.ellipse(0, -h / 2 + size * 0.06, top / 2 - 2, size * 0.06, 0, 0, TAU);
+  c.ellipse(0, -h / 2 + size * 0.06, Math.max(0, top / 2 - 2), size * 0.06, 0, 0, TAU);
   c.fill();
   if (foam > 0) {
     c.strokeStyle = 'rgba(200,180,150,0.8)';
     c.lineWidth = 1.2;
     c.beginPath();
-    c.ellipse(0, -h / 2 + size * 0.06, (top / 2 - 6) * (0.4 + 0.6 * foam), size * 0.03, 0, t * 0.012, t * 0.012 + 4);
+    c.ellipse(0, -h / 2 + size * 0.06, Math.max(0, (top / 2 - 6) * (0.4 + 0.6 * foam)), size * 0.03, 0, t * 0.012, t * 0.012 + 4);
     c.stroke();
   }
   c.restore();
@@ -157,11 +183,12 @@ function pitcherSteam(c: CanvasRenderingContext2D, x: number, y: number, w: numb
   }
 }
 
-function pour(c: CanvasRenderingContext2D, w: number, cx: number, cy: number, crema: number, t: number, fill: number): void {
-  // From the tilted pitcher's spout to the pour point, wiggling side to side (the latte-art wiggle).
+function pour(c: CanvasRenderingContext2D, w: number, cx: number, cy: number, crema: number, t: number, fill: number, land?: { x: number; y: number }): void {
+  // From the tilted pitcher's spout to the pour point, wiggling side to side (the latte-art
+  // wiggle) — or, in the real pour, straight to where this move lands.
   const spout = { x: w * 0.66, y: w * 0.1 };
-  const wiggle = Math.sin(t * 0.03) * crema * 0.12 * Math.min(1, fill * 1.6);
-  const at = { x: cx + wiggle, y: cy + crema * 0.25 - crema * 0.4 * fill };
+  const wiggle = land ? 0 : Math.sin(t * 0.03) * crema * 0.12 * Math.min(1, fill * 1.6);
+  const at = land ? { x: cx + land.x * crema, y: cy + land.y * crema } : { x: cx + wiggle, y: cy + crema * 0.25 - crema * 0.4 * fill };
   c.strokeStyle = '#FFF8EC';
   c.lineCap = 'round';
   c.lineWidth = w * 0.016;

@@ -300,7 +300,23 @@
   color: var(--gilt);
 }
 @media (max-width: 760px) {
+  /* One slim line for the bar (the play area starts under it): the name, the score, the buttons. */
+  .venue-bar {
+    gap: 8px;
+    padding: calc(4px + env(safe-area-inset-top, 0px)) 10px 4px;
+    min-height: 44px;
+  }
+  .venue-bar h1 {
+    font-size: 18px;
+    white-space: nowrap;
+    margin-right: auto;
+  }
+  .venue-sub,
+  .venue-bar .hud-label {
+    display: none;
+  }
   .venue-play {
+    inset: calc(48px + env(safe-area-inset-top, 0px)) 0 0 0;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     padding-left: 0;
@@ -309,19 +325,44 @@
     grid-column: 1;
     grid-row: 2;
   }
+  /* A slim strip: score, combo, accuracy; the two meters and the star button; the song's progress. */
   .venue-hud {
     grid-column: 1;
     grid-row: 1;
     width: auto;
-    margin: 6px;
-    grid-template-columns: repeat(3, auto);
+    min-width: 0;
+    margin: 4px 6px;
+    padding: 6px 8px;
+    grid-template-columns: auto 1fr 1fr;
+    align-items: center;
+    gap: 4px 8px;
+    font-size: 9px;
+  }
+  .venue-score {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .venue-hud > .venue-meter {
+    height: 14px;
+  }
+  .venue-hud > .venue-meter span {
+    font-size: 8px;
+    line-height: 12px;
+  }
+  .venue-hud > .deco-btn {
+    padding: 4px 8px;
     font-size: 10px;
+    min-height: 0;
+  }
+  .venue-hud > .venue-progress {
+    grid-column: 1 / -1;
   }
   .venue-select.chalk,
   .venue-select.led {
     left: 12px !important;
     right: 12px;
-    top: 60px !important;
+    top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    max-height: calc(100dvh - 72px);
     width: auto;
     transform: none;
   }

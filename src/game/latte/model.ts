@@ -92,6 +92,55 @@ export function gradeRelease(fill: number, target: number, difficulty: LatteDiff
   return { fill, error: clamp(d / (ERROR_SPAN * w), -1, 1), grade, overflow: false };
 }
 
+// ---------- the real pour (easy and medium patterns) ----------
+
+/**
+ * A pour move, pouring the pattern's next `n` shapes. push: hold to pour a blob, let go when it
+ * fills its outline (a tulip is push, stop, push, stop…). tap: the wiggle — one tap a beat, one
+ * leaf or drop a tap. pull: hold to draw the line through, let go at its end.
+ */
+export interface PourMove {
+  kind: 'push' | 'tap' | 'pull';
+  n: number;
+  /** What the panel calls it (Wiggle, Petals, Whiskers…). */
+  label: string;
+}
+
+/** A push: the blob blooms while held; its outline is at 80% of the gauge. */
+export const PUSH: GaugeCurve = { durationMs: 1500, ease: (x) => x ** 1.6, target: 0.8 };
+/** A pull: the stream runs along the line at a steady pace; its end is at 85%. */
+export const PULL: GaugeCurve = { durationMs: 1000, ease: (x) => x, target: 0.85 };
+
+/** A tap on the beat: Perfect within ±60 ms, Good within ±150 ms (× the windows' scale). */
+export const TAP_PERFECT_MS = 60;
+export const TAP_GOOD_MS = 150;
+/** The beat of the wiggle (ms) by pattern difficulty, and the beats of lead-in before the first tap. */
+export const BEAT_MS: Record<PatternDifficulty, number> = { easy: 560, medium: 480, hard: 420, master: 360 };
+export const LEAD_BEATS = 2;
+
+/** Grades a tap `dtMs` off its beat (null: the beat went by untapped). The Perfect edge is error 0.1, as for a release. */
+export function gradeTap(dtMs: number | null, difficulty: LatteDifficulty = 'normal', patternScale = 1): StageResult {
+  if (dtMs === null) return { fill: 0, error: -1, grade: 'miss', overflow: false };
+  const w = WINDOW_SCALE[difficulty] * patternScale;
+  const a = Math.abs(dtMs);
+  const grade: StageGrade = a <= TAP_PERFECT_MS * w + 1e-9 ? 'perfect' : a <= TAP_GOOD_MS * w + 1e-9 ? 'good' : 'miss';
+  return { fill: 0, error: clamp(dtMs / (TAP_PERFECT_MS * w * 10), -1, 1), grade, overflow: false };
+}
+
+/**
+ * The steps of a pour as one stage result: the error's RMS (signed by the mean, early or late).
+ * Perfect needs every step in and an RMS within the Perfect edge; Good, within the Good edge.
+ */
+export function combineSteps(steps: StageResult[]): StageResult {
+  if (!steps.length) return { fill: 0, error: -1, grade: 'miss', overflow: false };
+  const rms = Math.sqrt(steps.reduce((s, r) => s + r.error ** 2, 0) / steps.length);
+  const mean = steps.reduce((s, r) => s + r.error, 0) / steps.length;
+  const perfect = PERFECT_WINDOW / ERROR_SPAN;
+  const good = GOOD_WINDOW / ERROR_SPAN;
+  const grade: StageGrade = rms <= perfect + 1e-9 && steps.every((r) => r.grade !== 'miss') ? 'perfect' : rms <= good + 1e-9 ? 'good' : 'miss';
+  return { fill: steps.at(-1)!.fill, error: mean < 0 ? -rms : rms, grade, overflow: steps.some((r) => r.overflow) };
+}
+
 /** Q = 100 − (25|e1| + 30|e2| + 45|e3|), clamped to 0..100. */
 export function cupQuality(e1: number, e2: number, e3: number): number {
   return clamp(Math.round((100 - (25 * Math.abs(e1) + 30 * Math.abs(e2) + 45 * Math.abs(e3))) * 10) / 10, 0, 100);

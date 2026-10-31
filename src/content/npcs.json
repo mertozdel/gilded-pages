@@ -24,5 +24,49 @@
     { "regular": "writer", "line": "Three cups. Make me forget my deadline." },
     { "regular": "odile", "line": "Show me a rosetta worthy of an aria." },
     { "regular": "busker", "line": "Pour like it's a solo, Jason." }
-  ]
+  ],
+  "matt": {
+    "id": "matt",
+    "name": "Mert",
+    "role": "Regular",
+    "portraitBase": "matt",
+    "usual": { "drink": "flat white", "every": 6 },
+    "lines": {
+      "calm": [
+        { "text": "Same table every day. The light's best here around three.", "about": "room" },
+        { "text": "Roxy's reading behind the bar again. Whatever that book is, she's hooked.", "about": "room" },
+        { "text": "She just turned a page and sighed. Must be a good chapter.", "about": "room" },
+        { "text": "Is this the same playlist as yesterday? It's growing on me.", "about": "music" },
+        { "text": "Whoever picks the records in here has good taste.", "about": "music" },
+        "My code compiled on the first try. I don't trust it.",
+        "I came in for one coffee. That was four hours ago.",
+        "I've been refactoring the same function since Tuesday. Every time I rename a variable the whole thing looks wrong again, so I rename it back. That's progress, right?"
+      ],
+      "busy": [
+        "Can't talk, the build is red.",
+        "Two more tests and I'm free. More or less.",
+        "Typing faster doesn't make it compile faster. I'm checking anyway.",
+        "Sorry, I'm in the zone. Say hi again in ten minutes?",
+        { "text": "Deadline's at midnight. Totally fine. Totally.", "about": "deadline" }
+      ],
+      "stressed": [
+        "It's late. Why does the bug always show up when it's late?",
+        "My mug's been empty for ages. So is my brain.",
+        "Production is down and I'm in a café. Classic.",
+        { "text": "I missed the deadline. They said it's fine. It doesn't feel fine.", "about": "missed" },
+        "One more coffee and I'll fix everything. Probably."
+      ],
+      "thanks": [
+        "Oh, a refill! You're a lifesaver.",
+        "Exactly how I like it. Thank you!",
+        "Fresh coffee. My code thanks you too.",
+        "You read my mind. Or my empty mug."
+      ],
+      "latte": {
+        "perfect": ["Jason, that's a work of art. I almost don't want to drink it.", "A perfect flat white. Today is a good day."],
+        "good": ["Nice one, Jason. Just what I needed.", "Solid flat white. Back to work."],
+        "messy": ["A bit of a mess. So is my code, so we match.", "Abstract art? I'll take it. Thanks, Jason."]
+      }
+    }
+  }
 }

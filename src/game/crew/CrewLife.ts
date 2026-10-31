@@ -1,16 +1,31 @@
 import type Phaser from 'phaser';
 import { bus } from '../../bus/events';
 import { CHARACTERS, cafeTexture, characterById, type CharacterDef, type CharacterId } from '../../content/characters';
+import type { Mood } from '../../content/chatter';
 import npcs from '../../content/npcs.json';
 import type { HotspotDef } from '../../content/rooms';
 import type { PixelBursts } from '../fx/confetti';
 import { BRISK_SPEED, RUN_SPEED } from '../iso/IsoWalker';
 import type { Room, Sortable } from '../iso/Room';
+import type { Voice } from './Chatter';
 import { ensureCrewPack } from './CrewPack';
 import { CrewWalker } from './CrewWalker';
 
 const pick = <T>(xs: readonly T[]): T => xs[Math.floor(Math.random() * xs.length)];
 const between = (a: number, b: number) => a + Math.random() * (b - a);
+
+/** The gesture that goes with a line of chatter (a one-shot hands over to talking). */
+const MOOD_MOVES: Record<Mood, { anim: string; loop: boolean }> = {
+  happy: { anim: 'gesture_s', loop: false },
+  proud: { anim: 'celebrate_s', loop: false },
+  cheeky: { anim: 'talk_s', loop: true },
+  tired: { anim: 'calm_s', loop: true },
+  dreamy: { anim: 'calm_s', loop: true },
+  grumpy: { anim: 'flustered_s', loop: false },
+  stressed: { anim: 'flustered_s', loop: false },
+  confused: { anim: 'confused_s', loop: false },
+  sad: { anim: 'oops_s', loop: false },
+};
 
 interface Npc {
   def: CharacterDef;
@@ -208,10 +223,39 @@ export class CrewLife {
     const me = this.playerDef;
     const twin = me.twin ? this.npcs.find((n) => n.def.id === me.twin) : null;
     if (!twin) return;
-    const greet = (npcs.twinBanter as Record<string, string[]>)[twin.def.id];
+    // The banter is about the gig the player is back from.
+    const greet = (npcs.twinBanter as Record<string, string[]>)[me.id];
     const reply = (npcs.twinReply as Record<string, string[]>)[me.id];
     if (greet?.length) this.say(twin.def.id, pick(greet), 3200);
     if (reply?.length) this.scene.time.delayedCall(3300, () => !this.destroyed && this.player?.say(pick(reply), 2600));
+  }
+
+  /**
+   * The crew as voices in the café chatter. An NPC talks when standing free, with a gesture
+   * for the mood; on the move, the bubble alone. The player gets the bubble alone too (their
+   * moves are the cup's and the rush's).
+   */
+  voices(): Voice[] {
+    const out: Voice[] = this.npcs.map((n) => ({
+      id: n.def.id,
+      npc: true,
+      free: () => !n.w.moving && this.clock >= n.holdUntil && !n.w.bubble.visible,
+      say: (text, ms, mood) => this.chime(n, text, ms, mood),
+    }));
+    const p = this.player;
+    if (p) out.push({ id: p.id, npc: false, free: () => !p.bubble.visible, say: (text, ms) => p.say(text, ms) });
+    return out;
+  }
+
+  private chime(n: Npc, text: string, ms: number, mood: Mood): void {
+    const w = n.w;
+    w.say(text, ms);
+    if (w.moving) return;
+    n.holdUntil = this.clock + ms;
+    w.face('SE');
+    const move = MOOD_MOVES[mood];
+    if (move.loop) w.loop(move.anim);
+    else if (!w.perform(move.anim, () => this.clock < n.holdUntil && w.loop('talk_s'))) w.loop('talk_s');
   }
 
   private sparkleAtCounter(): void {

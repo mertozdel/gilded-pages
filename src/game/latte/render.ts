@@ -17,6 +17,19 @@ export interface CupScene {
   /** 0..1 how much crema is in the cup (the shot running); 0 is an empty cup. */
   crema: number;
   seed: number;
+  /** The real pour: each shape as it came out, in pour order; shapes past the list aren't poured. */
+  poured?: Poured[];
+}
+
+/**
+ * One shape of a real pour. `scale`: its size (1 = its outline; 0 = never poured), about its
+ * own middle; `shift`: nudged sideways (a tap off the beat); `length`: how far along a line
+ * was drawn (past 1 it overshoots).
+ */
+export interface Poured {
+  scale: number;
+  shift: number;
+  length: number;
 }
 
 /** Output size in CSS px. */
@@ -101,15 +114,45 @@ function shapePts(pts: Pt[], v: LatteVisual, scale: number, seed: number, blobby
   return out;
 }
 
-function drawPrims(c: CanvasRenderingContext2D, prims: Prim[], v: LatteVisual, scale: number, seed: number): void {
-  for (const p of prims) {
+/** A line cut `f` of the way along (past 1: the last stretch carried on). */
+function along(pts: Pt[], f: number): Pt[] {
+  const seg = pts.slice(1).map((p, i) => Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]));
+  let left = f * seg.reduce((a, b) => a + b, 0);
+  const out: Pt[] = [pts[0]];
+  for (let i = 0; i < seg.length; i++) {
+    const last = i === seg.length - 1;
+    if (left <= seg[i] || last) {
+      const k = seg[i] ? left / seg[i] : 0;
+      out.push([pts[i][0] + (pts[i + 1][0] - pts[i][0]) * k, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * k]);
+      return out;
+    }
+    out.push(pts[i + 1]);
+    left -= seg[i];
+  }
+  return out;
+}
+
+/** A shape's points as it was poured: sized about its middle, nudged sideways. */
+function asPoured(pts: Pt[], q: Poured | undefined): Pt[] {
+  if (!q) return pts;
+  const mx = pts.reduce((a, p) => a + p[0], 0) / pts.length;
+  const my = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+  return pts.map(([x, y]) => [mx + (x - mx) * q.scale + q.shift, my + (y - my) * q.scale]);
+}
+
+function drawPrims(c: CanvasRenderingContext2D, prims: Prim[], v: LatteVisual, scale: number, seed: number, poured?: Poured[]): void {
+  for (const [i, p] of prims.entries()) {
+    const q = poured?.[i];
+    if (q && (q.scale <= 0 || q.length <= 0)) continue;
     c.beginPath();
     if (p.k === 'blob') {
-      smooth(c, shapePts(p.pts, v, scale, seed, true), true);
+      smooth(c, shapePts(asPoured(p.pts, q), v, scale, seed, true), true);
       c.fillStyle = toneFill(c, p.tone, v);
       c.fill();
     } else if (p.k === 'stroke') {
-      let pts = shapePts(p.pts, v, scale, seed, false);
+      const drawn = q ? along(p.pts, q.length).map(([x, y]): Pt => [x + q.shift, y]) : p.pts;
+      if (drawn.length < 2) continue;
+      let pts = shapePts(drawn, v, scale, seed, false);
       if (p.cut && pts.length >= 3) {
         // A crooked cut-through bends sideways in the middle.
         const bend = (1 - v.cutStraight) * 0.22 * (seed % 2 ? 1 : -1);
@@ -122,8 +165,8 @@ function drawPrims(c: CanvasRenderingContext2D, prims: Prim[], v: LatteVisual, s
       c.strokeStyle = p.tone === 'crema' ? cremaColor(v, -6, 0.9) : toneFill(c, p.tone, v);
       c.stroke();
     } else {
-      const [[x, y]] = shapePts([[p.x, p.y]], v, scale, seed, false);
-      c.arc(x, y, p.r * scale, 0, Math.PI * 2);
+      const [[x, y]] = shapePts([[p.x + (q?.shift ?? 0), p.y]], v, scale, seed, false);
+      c.arc(x, y, p.r * scale * (q?.scale ?? 1), 0, Math.PI * 2);
       c.fillStyle = toneFill(c, p.tone, v);
       c.fill();
       if (p.tone === 'matcha') {
@@ -302,8 +345,9 @@ export function renderCup(out: HTMLCanvasElement, scene: CupScene, supersample =
     let keep = prims.length;
     if (live) keep = Math.max(1, Math.ceil(prims.length * Math.min(1, scene.growth! * 1.05)));
     else keep = Math.max(1, Math.ceil(prims.length * (1 - 0.7 * v.unfinished)));
+    if (scene.poured) keep = Math.min(prims.length, scene.poured.length);
     let shown = prims.slice(0, keep);
-    if (!live && v.unfinished > 0.45) shown = shown.filter((q) => !(q.k === 'stroke' && q.cut));
+    if (!scene.poured && !live && v.unfinished > 0.45) shown = shown.filter((q) => !(q.k === 'stroke' && q.cut));
     // Canvas blur lengths are canvas px, whatever the transform. Only the finished cup is blurred.
     if (!live) c.filter = `blur(${v.blur * supersample}px)`;
     // Overpoured: it all runs together into one round puddle first.
@@ -318,7 +362,7 @@ export function renderCup(out: HTMLCanvasElement, scene: CupScene, supersample =
       c.fillStyle = toneFill(c, 'foam', v);
       c.fill();
     }
-    drawPrims(c, shown, v, scale, scene.seed % 97);
+    drawPrims(c, shown, v, scale, scene.seed % 97, scene.poured);
     c.filter = 'none';
     // Scalded milk: stiff lumps of foam.
     for (let i = 0; i < Math.round(v.stiff * 22); i++) {

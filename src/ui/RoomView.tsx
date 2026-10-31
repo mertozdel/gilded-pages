@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 're
 import { bus } from '../bus/events';
 import { roomHotspots, type RoomId } from '../content/rooms';
 import { useStore } from '../store';
+import { newRoomClaim, releaseRoom, reportRoom } from './roomClaim';
 
 interface Props {
   room: RoomId;
@@ -35,15 +36,17 @@ export function RoomView({ room, onHotspot, hints, renderAnchor, hidden, labels,
   const [spots, setSpots] = useState<{ id: string; x: number; y: number }[]>([]);
   const [anchors, setAnchors] = useState<{ id: string; x: number; y: number; w: number; h: number }[]>([]);
   const [box, setBox] = useState({ left: 0, top: 0 });
+  // A hotspot can be in the map more than once (a regular's, at each of his places): one entry each.
   const defs = roomHotspots(room)
-    .filter((d) => !hidden?.includes(d.id))
+    .filter((d, i, all) => !hidden?.includes(d.id) && all.findIndex((x) => x.id === d.id) === i)
     .map((d) => ({ ...d, ...labels?.[d.id] }));
   const press = useRef<{ id: number; x: number; dragging: boolean } | null>(null);
   const dragged = useRef(false);
 
+  const [claim] = useState(newRoomClaim);
   useLayoutEffect(() => {
     if (textOnly) {
-      bus.emit('room:layout', { room: null, rect: null });
+      reportRoom(claim, null, null);
       return;
     }
     const el = ref.current;
@@ -55,16 +58,17 @@ export function RoomView({ room, onHotspot, hints, renderAnchor, hidden, labels,
       if (sig === last) return;
       last = sig;
       setBox({ left: r.left, top: r.top });
-      bus.emit('room:layout', { room, rect: { x: r.left, y: r.top, width: r.width, height: r.height } });
+      reportRoom(claim, room, { x: r.left, y: r.top, width: r.width, height: r.height });
     };
     report();
     const ro = new ResizeObserver(report);
     ro.observe(el);
     ro.observe(document.documentElement);
     return () => ro.disconnect();
-  }, [room, textOnly, pixel]);
-  // Only leaving the screen (or changing room) takes the room away — not a re-measure.
-  useEffect(() => () => bus.emit('room:layout', { room: null, rect: null }), [room]);
+  }, [claim, room, textOnly, pixel]);
+  // Only leaving the screen (or changing room) takes the room away — not a re-measure, and not
+  // when the next screen has already asked for its own.
+  useEffect(() => () => releaseRoom(claim, room), [claim, room]);
 
   useEffect(() => {
     const last = bus.last('room:hotspots');

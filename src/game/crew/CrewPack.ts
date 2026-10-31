@@ -1,15 +1,17 @@
 import Phaser from 'phaser';
 
 /**
- * The crew sprite packs (Joel, Jonas, Jason and Jonas the bassist): a Phaser atlas of 192×240
- * frames plus `<name>_anims.json`, whose animations carry a duration per frame and whose
- * origin (between the feet) every sprite uses. Packs load on first use and stay loaded.
+ * The character sprite packs (Joel, Jonas, Jason, Jonas the bassist, Mert the regular): a Phaser
+ * atlas (`<name>_sheet.png` + `.json`) plus `<name>_anims.json`, whose animations carry a duration
+ * per frame (never a frameRate) and whose origin every sprite uses. A pack's folder is its name,
+ * unless it shares one (Mert's `matt_closeup` lives in `matt/`). Packs load on first use and stay
+ * loaded.
  */
 export interface CrewAnimsDef {
   texture: string;
   frameSize: { w: number; h: number };
   origin: { x: number; y: number };
-  standHeight: number;
+  standHeight?: number;
   anims: { key: string; repeat: number; frames: { frame: string; duration: number }[]; use?: string }[];
   bass_on?: string[];
 }
@@ -31,15 +33,15 @@ function register(scene: Phaser.Scene, name: string): CrewAnimsDef {
   return def;
 }
 
-/** Loads a pack (once) and registers its animations. */
-export function ensureCrewPack(scene: Phaser.Scene, name: string): Promise<CrewAnimsDef> {
+/** Loads a pack (once) from `assets/sprites/<dir>/` and registers its animations. */
+export function ensureCrewPack(scene: Phaser.Scene, name: string, dir = name): Promise<CrewAnimsDef> {
   if (scene.textures.exists(name) && crewDef(scene, name)) return Promise.resolve(register(scene, name));
   let p = pending.get(name);
   if (p) return p;
   p = new Promise<CrewAnimsDef>((resolve, reject) => {
     const load = scene.load;
-    load.atlas(name, `${base()}/${name}/${name}_sheet.png`, `${base()}/${name}/${name}_sheet.json`);
-    load.json(`${name}_anims`, `${base()}/${name}/${name}_anims.json`);
+    load.atlas(name, `${base()}/${dir}/${name}_sheet.png`, `${base()}/${dir}/${name}_sheet.json`);
+    load.json(`${name}_anims`, `${base()}/${dir}/${name}_anims.json`);
     const check = () => {
       if (scene.textures.exists(name) && crewDef(scene, name)) {
         load.off(Phaser.Loader.Events.COMPLETE, check);

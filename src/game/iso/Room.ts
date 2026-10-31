@@ -17,11 +17,22 @@ export interface Spot {
   facing: Facing;
 }
 
+/**
+ * Where a regular NPC is placed (the map's Regulars layer): the floor point under their sprite,
+ * the way they face, the map's properties, and their collision footprint (if they bring one).
+ */
+export interface RegularSpot extends Spot {
+  props: Record<string, unknown>;
+  footprint: { x: number; y: number }[] | null;
+}
+
 /** Anything a room depth-sorts each frame: furniture, characters. */
 export interface Sortable {
   /** Where it stands on the floor (room units). */
   readonly u?: number;
   readonly v?: number;
+  /** Half its width on the floor (room units), for something wide like a table set: furniture checks all of it. */
+  readonly span?: number;
   foot(): Footprint;
   /** Tie-break when footprints overlap (a seated character vs. their seat): + draws later. */
   bias(): number;
@@ -44,7 +55,17 @@ export interface Room {
   readonly actorScale: number;
   /** The same before rounding, for sprites drawn smooth (Roxy's mockup art). */
   readonly actorScaleSmooth: number;
+  /** A floor tile's width in room units, when the room says (a painting has no grid of its own). */
+  readonly floorTile?: number;
   spot(name: string): Spot;
+  /** A regular's place (painted rooms; null when the map has none by that name). */
+  regularSpot?(name: string): RegularSpot | null;
+  /**
+   * Turns a tag on or off: map objects with `with: <tag>` (overlays, hotspots) show only while
+   * it is on, furniture with `hideWith: <tag>` hides, and a regular's footprint blocks feet
+   * while its spot's name is on.
+   */
+  setShown?(tag: string, on: boolean): void;
   toScreen(u: number, v: number, z?: number): Pt;
   toFloor(x: number, y: number): { u: number; v: number };
   inBounds(u: number, v: number): boolean;

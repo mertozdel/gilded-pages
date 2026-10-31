@@ -1,6 +1,9 @@
 import type Phaser from 'phaser';
 import { REGULARS } from '../../content';
+import type { Mood } from '../../content/chatter';
 import { WALK_INS } from '../companion/art/people';
+import type { Reaction } from '../companion/roxyMachine';
+import type { Voice } from '../crew/Chatter';
 import type { HotspotDef } from '../../content/rooms';
 import type { PixelBursts } from '../fx/confetti';
 import { dayTimeOf, seasonOf } from './cafeArt';
@@ -24,6 +27,18 @@ const SEATS = ['seat-a1', 'seat-a2', 'seat-b1', 'seat-b2', 'seat-arm1', 'seat-ar
 const MAX_CUSTOMERS = 3;
 /** What she does between stretches of work at the bar, turned to the room. */
 const BAR_BREAKS = ['sip', 'hairSwipe', 'think'] as const;
+/** What she does with a line of chatter, by its mood. */
+const MOOD_MOVES: Record<Mood, Reaction> = {
+  happy: 'wave',
+  proud: 'hairSwipe',
+  cheeky: 'hairSwipe',
+  tired: 'sip',
+  dreamy: 'think',
+  grumpy: 'flustered',
+  stressed: 'flustered',
+  confused: 'think',
+  sad: 'flustered',
+};
 
 const seatBox = (s: { u: number; v: number }) => ({ u0: s.u - 0.25, v0: s.v - 0.25, u1: s.u + 0.25, v1: s.v + 0.25 });
 
@@ -102,6 +117,7 @@ export class CafeLife {
     this.roxy.attach(this.room, d.u, d.v, 'SW');
     this.roxy.setApron(true);
     this.phase = 'idle';
+    this.scene.time.delayedCall(500, () => this.onDoorbell?.());
   }
 
   /** First thing in the morning: already behind the bar. */
@@ -147,6 +163,7 @@ export class CafeLife {
     const tok = ++this.token;
     this.phase = 'visit';
     this.visitTimer = 9000;
+    this.roxy.setCarry(false);
     this.roxy.stopLoop();
     this.roxy.standUp();
     const ok = this.roxy.walkTo(
@@ -163,12 +180,57 @@ export class CafeLife {
     if (!ok) onArrive();
   }
 
+  /**
+   * A refill for the regular's table (`h` is its hotspot): a cup from the bar, carried over
+   * (roxy_carry_walk_se), served (roxy_serve_se), then back to the bar. `onServed` when the
+   * cup is on his table. False (nothing happens) while she's on her break or in the rush.
+   */
+  serveRegular(h: HotspotDef, onServed: () => void): boolean {
+    if (this.phase === 'break' || this.phase === 'returning' || this.phase === 'rush') return false;
+    const tok = ++this.token;
+    const ok = () => tok === this.token;
+    const r = this.roxy;
+    this.phase = 'visit';
+    this.visitTimer = Infinity;
+    r.stopLoop();
+    r.standUp();
+    const back = () => {
+      if (!ok()) return;
+      this.phase = 'toBar';
+      r.goToSpot('roxy-bar', () => ok() && (this.phase = 'idle'));
+    };
+    const serve = () => {
+      if (!ok()) return;
+      r.setCarry(false);
+      r.face(h.facing);
+      const done = () => {
+        if (!ok()) return;
+        onServed();
+        back();
+      };
+      if (!r.perform('serve', done)) done();
+    };
+    const carry = () => {
+      if (!ok()) return;
+      r.setCarry(true);
+      if (!r.walkTo(h.stand.u, h.stand.v, serve)) serve();
+    };
+    const bar = this.room.spot('roxy-bar');
+    if (Math.hypot(r.u - bar.u, r.v - bar.v) > 40) r.goToSpot('roxy-bar', carry);
+    else carry();
+    return true;
+  }
+
+  /** The door bell: someone came in (or the player went out). */
+  onDoorbell: (() => void) | null = null;
+
   /** A click on the floor: she strolls there, then drifts back to the bar after a while. */
   walkTo(u: number, v: number): void {
     if (this.phase === 'break' || this.phase === 'rush') return;
     const tok = ++this.token;
     this.phase = 'visit';
     this.visitTimer = 8000;
+    this.roxy.setCarry(false);
     this.roxy.stopLoop();
     this.roxy.standUp();
     const p = this.room.nearestWalkable(u, v);
@@ -182,6 +244,7 @@ export class CafeLife {
     const tok = ++this.token;
     this.phase = 'break';
     const r = this.roxy;
+    r.setCarry(false);
     r.stopLoop();
     r.standUp();
     const toSofa = () => {
@@ -215,11 +278,34 @@ export class CafeLife {
     this.roxy.sit(s.u, s.v, s.facing, this.sofaSeat());
   }
 
+  // ---------- chatter ----------
+
+  /**
+   * Roxy as a voice in the café chatter. As an NPC she talks when she's free at the bar,
+   * turning to the room with a move that fits; as the player, the bubble alone.
+   */
+  voice(npc: boolean): Voice {
+    const atBar = () => this.phase === 'idle' && this.roxy.isIdle();
+    return {
+      id: 'roxy',
+      npc,
+      free: () => !this.roxy.bubble.visible && (npc ? atBar() : this.phase !== 'break' && this.phase !== 'returning'),
+      say: (text, ms, mood) => {
+        this.roxy.say(text, ms);
+        if (!npc || !atBar()) return;
+        this.roxy.stopLoop();
+        this.roxy.face('SE');
+        this.roxy.perform(MOOD_MOVES[mood]);
+      },
+    };
+  }
+
   // ---------- Morning Rush & deliveries ----------
 
   setRush(on: boolean): void {
     ++this.token;
     this.phase = on ? 'rush' : 'idle';
+    this.roxy.setCarry(false);
     if (on) {
       for (const c of this.customers) if (c.state !== 'seated') this.leave(c);
       this.roxy.stopLoop();
@@ -360,6 +446,7 @@ export class CafeLife {
     npc.place(d.u, d.v, 'SW');
     npc.img.setAlpha(0);
     this.scene.tweens.add({ targets: npc.img, alpha: 1, duration: 300 });
+    this.onDoorbell?.();
     const c: Customer = { npc, state: 'in', queue: -1, seat: null, timer: 0 };
     this.customers.push(c);
     this.joinQueue(c);

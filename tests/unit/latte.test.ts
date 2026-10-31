@@ -4,7 +4,11 @@ import {
   MILK,
   PATTERNS,
   PATTERN_DIFFICULTY,
+  PULL,
+  PUSH,
   baristaPatterns,
+  combineSteps,
+  gradeTap,
   cupGrade,
   cupQuality,
   fillAt,
@@ -77,7 +81,7 @@ describe('latte grading', () => {
   });
 
   it('inverts the gauge curves exactly (holdMsFor ∘ fillAt)', () => {
-    for (const c of [ESPRESSO, MILK, ...Object.values(PATTERN_DEFS).map((p) => p.curve)]) {
+    for (const c of [ESPRESSO, MILK, PUSH, PULL, ...Object.values(PATTERN_DEFS).map((p) => p.curve)]) {
       for (const speed of [1, 1.1, 0.7]) {
         const ms = holdMsFor(c, c.target, speed);
         expect(fillAt(c, ms, speed)).toBeCloseTo(c.target, 4);
@@ -166,5 +170,51 @@ describe('error → visual parameters', () => {
     expect(clean.gloss).toBe(1);
     expect(clean.sparkle).toBe(true);
     expect(visualFor(0, 0, 0, 'good').sparkle).toBe(false);
+  });
+});
+
+describe('the real pour (easy and medium patterns)', () => {
+  it('scripts every easy and medium pattern move by move, covering each shape once; hard and master pour in one hold', () => {
+    for (const p of PATTERNS) {
+      const d = PATTERN_DEFS[p.id];
+      if (p.difficulty === 'hard' || p.difficulty === 'master') {
+        expect(d.script).toBeNull();
+        continue;
+      }
+      expect(d.script, p.id).not.toBeNull();
+      expect(d.script!.reduce((n, m) => n + m.n, 0), p.id).toBe(d.shapes().length);
+    }
+    // A tulip is push, stop, push, stop…; a rosetta is the wiggle, a leaf a beat.
+    expect(PATTERN_DEFS.tulip.script!.map((m) => m.kind)).toEqual(['push', 'push', 'push', 'push', 'pull']);
+    expect(PATTERN_DEFS.rosetta.script![0]).toMatchObject({ kind: 'tap', n: 8, label: 'Wiggle' });
+  });
+
+  it('grades a tap on the beat: Perfect within ±60 ms, Good within ±150 ms, a missed beat as fully early', () => {
+    expect(gradeTap(0).grade).toBe('perfect');
+    expect(gradeTap(-60).grade).toBe('perfect');
+    expect(gradeTap(61).grade).toBe('good');
+    expect(gradeTap(-150).grade).toBe('good');
+    expect(gradeTap(151).grade).toBe('miss');
+    expect(gradeTap(null)).toEqual({ fill: 0, error: -1, grade: 'miss', overflow: false });
+    expect(gradeTap(80, 'easy').grade).toBe('perfect');
+    expect(gradeTap(50, 'hard').grade).toBe('good');
+    // The edge of Perfect is error 0.1, like a release on the edge of its window.
+    expect(gradeTap(60).error).toBeCloseTo(0.1);
+    expect(gradeTap(-30).error).toBeLessThan(0);
+  });
+
+  it('adds the steps up as one pour: every step on the Perfect edge still makes a 90 cup', () => {
+    const edge = gradeTap(60);
+    const pour = combineSteps([edge, gradeRelease(PUSH.target + 0.04, PUSH.target), edge]);
+    expect(pour.grade).toBe('perfect');
+    expect(cupQuality(pour.error, pour.error, pour.error)).toBe(90);
+  });
+
+  it('keeps one missed beat from a Perfect pour, and signs it early or late', () => {
+    const steps = [gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(0), gradeTap(200)];
+    expect(combineSteps(steps).grade).not.toBe('perfect');
+    expect(combineSteps(steps).error).toBeGreaterThan(0);
+    expect(combineSteps([gradeTap(-120), gradeTap(-100)]).error).toBeLessThan(0);
+    expect(combineSteps([]).grade).toBe('miss');
   });
 });

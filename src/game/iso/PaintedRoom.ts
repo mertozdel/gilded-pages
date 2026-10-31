@@ -1,11 +1,10 @@
 import Phaser from 'phaser';
 import { js as EasyStar } from 'easystarjs';
-import { ROOM_MAPS, objectLayer, propsOf, roomHotspots, type Facing, type HotspotDef, type RoomId, type TiledObject } from '../../content/rooms';
+import { ROOM_MAPS, objectLayer, propsOf, roomHotspots, type Facing, type HotspotDef, type RoomId } from '../../content/rooms';
 import type { Pt } from './iso';
-import type { Footprint, Room, Sortable, Spot } from './Room';
+import type { Footprint, RegularSpot, Room, Sortable, Spot } from './Room';
+import { bbox, buildWalkGrid, cellCentre, isOpen, lowestAt, nearestCell, polygonOf, type Blocker, type Poly, type WalkGrid } from './walkGrid';
 
-/** Path cells, in px of the painting. */
-const CELL = 6;
 /** Walk speed in px of the painting per tile, for a painting whose figures are 1× (the 45 px people). */
 const SPEED_PER_FIGURE_SCALE = 34 / 3.6;
 /** Half a character's width in px of the painting, for 1× figures. */
@@ -17,59 +16,40 @@ const PAN_BELOW = 0.75;
 /** Panning, at least this much of the painting's width stays in view. */
 const MIN_SHOWN = 0.3;
 
-type Poly = { x: number; y: number }[];
+/** The texture of an image overlay (a painted-out patch), loaded with the painting. */
+export const overlayTextureKey = (src: string) => `room-overlay:${src}`;
+
+/** The image overlays a painted room needs loaded (painted-out patches): their paths under public/. */
+export function overlayImages(id: RoomId): string[] {
+  return objectLayer(ROOM_MAPS[id], 'Overlays')
+    .map((o) => propsOf(o))
+    .filter((p) => p.kind === 'image' && p.src)
+    .map((p) => String(p.src));
+}
 
 /** A piece of furniture: what it blocks on the floor, and its cut-out of the painting. */
-interface Furniture {
-  poly: Poly;
+interface Furniture extends Blocker {
   box: { x: number; y: number; w: number; h: number };
-  /** Px above its lowest edge that feet can't enter; null blocks the whole shape. */
-  foot: number | null;
   /** Drawn over whoever stands behind it; null when nobody can (it stands against a wall). */
   img: Phaser.GameObjects.Image | null;
-}
-
-function polygonOf(o: TiledObject & { polygon?: { x: number; y: number }[] }): Poly {
-  return (o.polygon ?? []).map((p) => ({ x: o.x + p.x, y: o.y + p.y }));
-}
-
-function inside(poly: Poly, x: number, y: number): boolean {
-  let hit = false;
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-    const a = poly[i];
-    const b = poly[j];
-    if (a.y > y !== b.y > y && x < ((b.x - a.x) * (y - a.y)) / (b.y - a.y) + a.x) hit = !hit;
-  }
-  return hit;
-}
-
-/** The lowest point of a shape in column x — its front edge on the floor — or -Infinity outside it. */
-function lowestAt(poly: Poly, x: number): number {
-  let low = -Infinity;
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-    const a = poly[i];
-    const b = poly[j];
-    if (a.x > x !== b.x > x) low = Math.max(low, a.y + ((x - a.x) * (b.y - a.y)) / (b.x - a.x));
-  }
-  return low;
-}
-
-function bbox(poly: Poly): { x: number; y: number; w: number; h: number } {
-  const xs = poly.map((p) => p.x);
-  const ys = poly.map((p) => p.y);
-  const x = Math.floor(Math.min(...xs));
-  const y = Math.floor(Math.min(...ys));
-  return { x, y, w: Math.ceil(Math.max(...xs)) - x, h: Math.ceil(Math.max(...ys)) - y };
+  /** Hidden while this tag is on (the window sofa while Mert brings his own). */
+  hideWith: string | null;
 }
 
 /**
  * A room that is a painted illustration (the reference look): the painting, scaled smoothly
  * to fit, with Roxy walking on it inside the Walk polygons (EasyStar on a grid of the
- * painting's px), only on floor she can reach from the door. Furniture polygons trace each
- * piece's silhouette: feet can't enter the band `foot` px above its lowest edge (or any of
- * it, without `foot`), and its cut-out of the painting is drawn over whoever stands behind
- * that edge (unless `occlude` is false). Overlays repaint small details (signs); Anchors
- * mark where the screen puts its real UI panels. Units are px of the painting.
+ * painting's px, see walkGrid.ts), only on floor she can reach from the door. Furniture
+ * polygons trace each piece's silhouette: feet can't enter the band `foot` px above its lowest
+ * edge (or any of it, without `foot`), and its cut-out of the painting is drawn over whoever
+ * stands behind that edge (unless `occlude` is false). Overlays repaint small details (signs)
+ * or, as images, paint furniture out (patches made by scripts/paint-out.py); Anchors mark
+ * where the screen puts its real UI panels; Regulars place the regular NPCs. Units are px of
+ * the painting.
+ *
+ * Tags switch parts of the map on and off: an overlay or hotspot with `with: <tag>` is there
+ * only while the tag is on, furniture with `hideWith: <tag>` hides, and a regular's footprint
+ * blocks feet while its spot's name is on.
  *
  * A view much narrower than the painting (a phone held upright) shows it at the view's full
  * height instead of as a thin strip, and pans across it: dragged by the player, or easing
@@ -78,7 +58,6 @@ function bbox(poly: Poly): { x: number; y: number; w: number; h: number } {
 export class PaintedRoom implements Room {
   readonly kind = 'painted' as const;
   readonly id: RoomId;
-  readonly hotspots: HotspotDef[];
   readonly spots = new Map<string, Spot>();
   readonly speedScale: number;
   actorScale = 1;
@@ -86,16 +65,18 @@ export class PaintedRoom implements Room {
   readonly W: number;
   readonly H: number;
   readonly cropTop: number;
+  readonly floorTile: number | undefined;
   readonly anchors: { id: string; x: number; y: number; w: number; h: number }[] = [];
+  private readonly allHotspots: HotspotDef[];
+  private readonly regulars = new Map<string, RegularSpot>();
+  private readonly shown = new Set<string>();
   private readonly figureScale: number;
   private readonly painting: Phaser.GameObjects.Image;
   private readonly furniture: Furniture[] = [];
-  private readonly overlays: { img: Phaser.GameObjects.Image; x: number; y: number; ss: number }[] = [];
+  private readonly overlays: { img: Phaser.GameObjects.Image; x: number; y: number; ss: number; with: string | null }[] = [];
   private readonly walk: Poly[];
   private readonly finder = new EasyStar();
-  private grid: number[][] = [];
-  private gx = 0;
-  private gy = 0;
+  private nav: WalkGrid = { grid: [], gx: 0, gy: 0 };
   private scale = 1;
   private origin: Pt = { x: 0, y: 0 };
   /** The view it is fitted into (game px), and the painting's left edge from the view's (≤ 0 while panning). */
@@ -115,18 +96,26 @@ export class PaintedRoom implements Room {
     this.H = Number(p.imageHeight);
     this.cropTop = Number(p.cropTop ?? 0);
     this.figureScale = Number(p.figureScale ?? 1);
+    this.floorTile = p.floorTile ? Number(p.floorTile) : undefined;
     this.speedScale = SPEED_PER_FIGURE_SCALE * this.figureScale;
-    this.hotspots = roomHotspots(id);
+    this.allHotspots = roomHotspots(id);
     for (const o of objectLayer(map, 'Spots')) {
       const sp = propsOf(o);
       this.spots.set(o.name, { name: o.name, kind: o.type, u: o.x, v: o.y, facing: (sp.facing as Facing) ?? 'SE' });
+    }
+    for (const o of objectLayer(map, 'Regulars')) {
+      // An object switched off in the map is an alternative kept for later.
+      if (o.visible === false) continue;
+      const rp = propsOf(o);
+      const footprint = o.polygon?.length ? polygonOf(o) : null;
+      this.regulars.set(o.name, { name: o.name, kind: o.type, u: o.x, v: o.y, facing: (rp.facing as Facing) ?? 'SE', props: rp, footprint });
     }
     for (const o of objectLayer(map, 'Anchors')) this.anchors.push({ id: o.name, x: o.x, y: o.y, w: o.width, h: o.height });
 
     // The painting, minus its top strip (the mockup's own header).
     this.painting = scene.add.image(0, 0, textureKey).setOrigin(0, 0).setDepth(-3000);
     this.painting.setCrop(0, this.cropTop, this.W, this.H - this.cropTop);
-    const src = scene.textures.get(textureKey).getSourceImage() as HTMLImageElement;
+    const src = this.withPatches(scene, textureKey);
 
     for (const o of objectLayer(map, 'Furniture')) {
       const poly = polygonOf(o);
@@ -134,7 +123,8 @@ export class PaintedRoom implements Room {
       const box = bbox(poly);
       let img: Phaser.GameObjects.Image | null = null;
       if (fp.occlude !== false) {
-        const key = `${id}-furniture-${o.name}`;
+        // Keyed by the painting: the café and the select screen's café share their cut-outs.
+        const key = `${textureKey}-furniture-${o.name}`;
         // Cut once and kept: coming back to the room reuses it (the painting and the shape never change).
         if (!scene.textures.exists(key)) {
           const cv = document.createElement('canvas');
@@ -150,18 +140,78 @@ export class PaintedRoom implements Room {
         }
         img = scene.add.image(0, 0, key).setOrigin(0, 0).setDepth(DEPTH_BEHIND_ALL);
       }
-      this.furniture.push({ poly, box, foot: fp.foot === undefined ? null : Number(fp.foot), img });
+      this.furniture.push({ poly, box, foot: fp.foot === undefined ? null : Number(fp.foot), img, hideWith: fp.hideWith ? String(fp.hideWith) : null });
     }
     for (const o of objectLayer(map, 'Overlays')) {
       const op = propsOf(o);
+      const tag = op.with ? String(op.with) : null;
+      if (op.kind === 'image') {
+        const key = overlayTextureKey(String(op.src));
+        if (!scene.textures.exists(key)) {
+          console.warn(`Room ${id}: overlay ${o.name} (${String(op.src)}) isn't loaded`);
+          continue;
+        }
+        this.overlays.push({ img: scene.add.image(0, 0, key).setOrigin(0, 0).setDepth(-2990), x: o.x, y: o.y, ss: 1, with: tag });
+        continue;
+      }
       const ss = 3;
       const key = `${id}-overlay-${o.name}`;
       if (!scene.textures.exists(key)) scene.textures.addCanvas(key, overlayCanvas(String(op.kind), String(op.text), o.width, o.height, ss))?.setFilter(Phaser.Textures.FilterMode.LINEAR);
-      this.overlays.push({ img: scene.add.image(0, 0, key).setOrigin(0, 0).setDepth(-2990), x: o.x, y: o.y, ss });
+      this.overlays.push({ img: scene.add.image(0, 0, key).setOrigin(0, 0).setDepth(-2990), x: o.x, y: o.y, ss, with: tag });
     }
 
     this.walk = objectLayer(map, 'Walk').map(polygonOf);
+    this.refreshShown();
     this.buildGrid();
+  }
+
+  /**
+   * What furniture is cut from: the painting with its always-on patches, so a cut-out never
+   * brings back a piece of furniture a patch painted out. Made once per room and kept.
+   */
+  private withPatches(scene: Phaser.Scene, textureKey: string): CanvasImageSource {
+    const painting = scene.textures.get(textureKey).getSourceImage() as HTMLImageElement;
+    const patches = objectLayer(ROOM_MAPS[this.id], 'Overlays').filter((o) => {
+      const op = propsOf(o);
+      return op.kind === 'image' && !op.with && scene.textures.exists(overlayTextureKey(String(op.src)));
+    });
+    if (!patches.length) return painting;
+    const key = `${this.id}-painting-patched`;
+    if (!scene.textures.exists(key)) {
+      const cv = document.createElement('canvas');
+      cv.width = this.W;
+      cv.height = this.H;
+      const c = cv.getContext('2d')!;
+      c.drawImage(painting, 0, 0);
+      for (const o of patches) c.drawImage(scene.textures.get(overlayTextureKey(String(propsOf(o).src))).getSourceImage() as HTMLImageElement, o.x, o.y);
+      scene.textures.addCanvas(key, cv);
+    }
+    return scene.textures.get(key).getSourceImage() as HTMLCanvasElement;
+  }
+
+  // ---------- tags ----------
+
+  /** The hotspots there now (a regular's follow him: at his table, on the sofa, waiting for a refill). */
+  get hotspots(): HotspotDef[] {
+    return this.allHotspots.filter((h) => !h.with || this.shown.has(h.with));
+  }
+
+  regularSpot(name: string): RegularSpot | null {
+    return this.regulars.get(name) ?? null;
+  }
+
+  setShown(tag: string, on: boolean): void {
+    if (this.shown.has(tag) === on) return;
+    if (on) this.shown.add(tag);
+    else this.shown.delete(tag);
+    this.refreshShown();
+    // A regular's footprint comes and goes with him.
+    if (this.regulars.get(tag)?.props.blocks) this.buildGrid();
+  }
+
+  private refreshShown(): void {
+    for (const o of this.overlays) o.img.setVisible(!o.with || this.shown.has(o.with));
+    for (const f of this.furniture) f.img?.setVisible(!f.hideWith || !this.shown.has(f.hideWith));
   }
 
   // ---------- placement ----------
@@ -254,93 +304,31 @@ export class PaintedRoom implements Room {
 
   // ---------- walking ----------
 
-  private blocked(x: number, y: number): boolean {
-    return this.furniture.some((f) => inside(f.poly, x, y) && (f.foot === null || y >= lowestAt(f.poly, x) - f.foot));
-  }
-
   private buildGrid(): void {
-    if (!this.walk.length) return;
-    const b = bbox(this.walk.flat());
-    this.gx = b.x;
-    this.gy = b.y;
-    const cols = Math.ceil(b.w / CELL) + 1;
-    const rows = Math.ceil(b.h / CELL) + 1;
-    this.grid = [];
-    for (let j = 0; j < rows; j++) {
-      const row: number[] = [];
-      for (let i = 0; i < cols; i++) {
-        const x = this.gx + (i + 0.5) * CELL;
-        const y = this.gy + (j + 0.5) * CELL;
-        row.push(this.walk.some((w) => inside(w, x, y)) && !this.blocked(x, y) ? 0 : 1);
-      }
-      this.grid.push(row);
-    }
-    const door = this.spots.get('door');
-    if (door) this.keepReachable(this.nearestCell(door.u, door.v));
-    this.finder.setGrid(this.grid);
+    const blockers: Blocker[] = [...this.furniture];
+    for (const r of this.regulars.values()) if (r.footprint && r.props.blocks && this.shown.has(r.name)) blockers.push({ poly: r.footprint, foot: null });
+    this.nav = buildWalkGrid(this.walk, blockers, this.spots.get('door'));
+    if (!this.nav.grid.length) return;
+    this.finder.setGrid(this.nav.grid);
     this.finder.setAcceptableTiles([0]);
     this.finder.enableDiagonals();
     this.finder.disableCornerCutting();
     this.finder.enableSync();
   }
 
-  /**
-   * Closes floor that can't be reached from `start` (corners sealed off by furniture), so a
-   * click there sends her to the nearest point she can actually get to.
-   */
-  private keepReachable(start: { i: number; j: number }): void {
-    const open = (i: number, j: number) => this.grid[j]?.[i] === 0;
-    const seen = this.grid.map((row) => row.map(() => false));
-    const queue = [start];
-    seen[start.j][start.i] = true;
-    while (queue.length) {
-      const { i, j } = queue.pop()!;
-      for (let dj = -1; dj <= 1; dj++)
-        for (let di = -1; di <= 1; di++) {
-          const ni = i + di;
-          const nj = j + dj;
-          // The same moves as the path finder: diagonals, but not across a blocked corner.
-          if (!open(ni, nj) || seen[nj][ni] || (di && dj && (!open(ni, j) || !open(i, nj)))) continue;
-          seen[nj][ni] = true;
-          queue.push({ i: ni, j: nj });
-        }
-    }
-    this.grid.forEach((row, j) => row.forEach((_, i) => !seen[j][i] && (row[i] = 1)));
-  }
-
-  private cellOf(u: number, v: number): { i: number; j: number } {
-    return { i: Math.floor((u - this.gx) / CELL), j: Math.floor((v - this.gy) / CELL) };
-  }
-
   isWalkable(u: number, v: number): boolean {
-    const { i, j } = this.cellOf(u, v);
-    return this.grid[j]?.[i] === 0;
-  }
-
-  private nearestCell(u: number, v: number): { i: number; j: number } {
-    const c = this.cellOf(u, v);
-    if (this.grid[c.j]?.[c.i] === 0) return c;
-    let best = { i: 0, j: 0, d: Infinity };
-    this.grid.forEach((row, j) =>
-      row.forEach((cell, i) => {
-        if (cell !== 0) return;
-        const d = (i - c.i) ** 2 + (j - c.j) ** 2;
-        if (d < best.d) best = { i, j, d };
-      }),
-    );
-    return best;
+    return isOpen(this.nav, u, v);
   }
 
   nearestWalkable(u: number, v: number): { u: number; v: number } {
     if (this.isWalkable(u, v)) return { u, v };
-    const c = this.nearestCell(u, v);
-    return { u: this.gx + (c.i + 0.5) * CELL, v: this.gy + (c.j + 0.5) * CELL };
+    return cellCentre(this.nav, nearestCell(this.nav, u, v));
   }
 
   findPath(fu: number, fv: number, tu: number, tv: number): { u: number; v: number }[] | null {
-    if (!this.grid.length) return [{ u: tu, v: tv }];
-    const s = this.nearestCell(fu, fv);
-    const e = this.nearestCell(tu, tv);
+    if (!this.nav.grid.length) return [{ u: tu, v: tv }];
+    const s = nearestCell(this.nav, fu, fv);
+    const e = nearestCell(this.nav, tu, tv);
     const out: { path: { x: number; y: number }[] | null } = { path: null };
     this.finder.findPath(s.i, s.j, e.i, e.j, (p) => (out.path = p));
     this.finder.calculate();
@@ -351,7 +339,7 @@ export class PaintedRoom implements Room {
       const prev = cells[k - 1];
       const cur = cells[k];
       const next = cells[k + 1];
-      if (!next || next.x - cur.x !== cur.x - prev.x || next.y - cur.y !== cur.y - prev.y) pts.push({ u: this.gx + (cur.x + 0.5) * CELL, v: this.gy + (cur.y + 0.5) * CELL });
+      if (!next || next.x - cur.x !== cur.x - prev.x || next.y - cur.y !== cur.y - prev.y) pts.push(cellCentre(this.nav, { i: cur.x, j: cur.y }));
     }
     // The last stretch goes exactly to the target (seats and spots may sit just off the floor).
     if (pts.length) pts[pts.length - 1] = { u: tu, v: tv };
@@ -374,8 +362,13 @@ export class PaintedRoom implements Room {
       for (const a of actors) {
         const u = a.u ?? 0;
         const v = a.v ?? 0;
-        if (u < f.box.x - reach || u > f.box.x + f.box.w + reach) continue;
-        const edge = lowestAt(f.poly, Phaser.Math.Clamp(u, f.box.x + 0.5, f.box.x + f.box.w - 0.5));
+        // Something wide (a table set) is behind a piece if any of its width is.
+        const span = a.span ?? 0;
+        if (u < f.box.x - reach - span || u > f.box.x + f.box.w + reach + span) continue;
+        const lo = Phaser.Math.Clamp(u - span, f.box.x + 0.5, f.box.x + f.box.w - 0.5);
+        const hi = Phaser.Math.Clamp(u + span, f.box.x + 0.5, f.box.x + f.box.w - 0.5);
+        let edge = -Infinity;
+        for (let i = 0; i <= 8; i++) edge = Math.max(edge, lowestAt(f.poly, lo + ((hi - lo) * i) / 8));
         if (v < edge) depth = Math.max(depth, this.toScreen(u, v).y + 0.5);
       }
       f.img.setDepth(depth);

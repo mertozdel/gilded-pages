@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type DragEvent, type ReactNode } from 'react';
 import { bus } from '../bus/events';
 import { CURRENCIES, characterById, hasFeature, hotspotVisible } from '../content/characters';
+import { JUST_REFILLED_MS, REFILL_TIP, REGULAR, regularMood, regularNow, type RegularMood } from '../content/regular';
 import { roomHotspots } from '../content/rooms';
-import { raiseBest } from '../db/profiles';
+import { earn, raiseBest } from '../db/profiles';
 import { db, type BookRow, type ProgressRow } from '../db/schema';
-import { addBook, deleteBook } from '../db/queries';
+import { addBook, addGilt, deleteBook } from '../db/queries';
 import { useLive } from '../db/useLive';
 import { dayTimeOf } from '../game/iso/cafeArt';
 import { closeBookDoc, importPdf, type ImportProgress } from '../reader/pdfLoader';
@@ -19,6 +20,7 @@ import { BookSpines, type ImportJob } from './cafe/BookSpines';
 import { ContinueReading, QuietReads } from './cafe/CafePanels';
 import { MorningRush } from './cafe/MorningRush';
 import { MuralPanel } from './cafe/MuralPanel';
+import { RegularDialogue } from './cafe/RegularDialogue';
 import { RegularsPanel } from './cafe/RegularsPanel';
 import { TwinBattleBoard } from './cafe/TwinBattleBoard';
 import { LatteShift } from './cafe/latte/LatteShift';
@@ -79,7 +81,12 @@ export function CafeScreen() {
   const setProfile = useStore((s) => s.setProfile);
   const cafeAction = useStore((s) => s.cafeAction);
   const profile = useStore((s) => s.profiles[s.character]);
+  const setPlayer = useStore((s) => s.setPlayer);
   const [shift, setShift] = useState(false);
+  /** Talking to Mert, the regular: his mood when the player came over. */
+  const [talk, setTalk] = useState<{ mood: RegularMood; justRefilled: boolean } | null>(null);
+  const talkMood = useRef<RegularMood | null>(null);
+  const refilledAt = useRef(-Infinity);
 
   const progressById = new Map<string, ProgressRow>((progress ?? []).map((p) => [p.bookId, p]));
   const shelf = added ?? [];
@@ -169,8 +176,18 @@ export function CafeScreen() {
           return setPanel('shelf');
         case 'door':
           return hasFeature(character, 'worldMap') ? navigate({ name: 'map' }) : takeCrewBreak();
+        case 'matt': {
+          // His mood comes with the walk's end (the game's npc:matt:talk); without the room, the clock's.
+          const mood = talkMood.current ?? regularMood({ hour: regularNow().getHours(), typing: false, emptyForMs: null });
+          setPanel(null);
+          return setTalk({ mood, justRefilled: Date.now() - refilledAt.current < JUST_REFILLED_MS });
+        }
+        case 'matt-refill':
+          // Jason's refill is a cup of latte art; the others carry it over (the game does that walk).
+          return hasFeature(character, 'latteArt') ? setShift(true) : undefined;
       }
     };
+    talkMood.current = null;
     cancelWalk.current = walkToHotspot(id, open);
   };
   const activateRef = useRef(activateHotspot);
@@ -205,6 +222,24 @@ export function CafeScreen() {
     return () => window.removeEventListener('keydown', onKey);
   }, [panel]);
   useEffect(() => () => cancelWalk.current(), []);
+
+  // Mert: how he feels when the player comes over, and a tip for a refill brought to his table.
+  useEffect(() => {
+    const offs = [
+      bus.on('npc:matt:talk', ({ mood }) => (talkMood.current = mood)),
+      bus.on('npc:matt:refilled', ({ by, via }) => {
+        refilledAt.current = Date.now();
+        if (by !== character.id || via !== 'table') return;
+        const cur = CURRENCIES[character.currency];
+        const paid =
+          character.currency === 'gilt'
+            ? addGilt(REFILL_TIP).then(setPlayer)
+            : earn(character.id, REFILL_TIP, 0, 'refill', { refills: 1 }).then(({ profile: p }) => setProfile(p));
+        void paid.then(() => toast(`${REGULAR.name} tips you +${REFILL_TIP} ${REFILL_TIP === 1 ? cur.one : cur.name}`, 'gold'));
+      }),
+    ];
+    return () => offs.forEach((off) => off());
+  }, [character, setPlayer, setProfile, toast]);
 
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
@@ -324,7 +359,7 @@ export function CafeScreen() {
           <RoomView
             room="cafe"
             onHotspot={activateHotspot}
-            hidden={CAFE_HOTSPOTS.filter((id) => !hotspotVisible(character, id))}
+            hidden={CAFE_HOTSPOTS.filter((id) => !hotspotVisible(character, id) || (textOnly && id === 'matt-refill'))}
             labels={character.hotspots}
             renderAnchor={
               compact
@@ -395,6 +430,12 @@ export function CafeScreen() {
               </button>
               <p className="muted small">…or drop PDFs anywhere — a bike courier brings the parcel.</p>
             </DecoPanel>
+          </div>
+        )}
+
+        {talk && (
+          <div className="cafe-panel">
+            <RegularDialogue mood={talk.mood} justRefilled={talk.justRefilled} onClose={() => setTalk(null)} />
           </div>
         )}
 

@@ -1,0 +1,26 @@
+{
+  "painting": "public/assets/rooms/cafe-machorn-guests.png",
+  "out": "public/assets/rooms/patches/cafe-window-sofa.png",
+  "steps": [
+    {
+      "note": "the window sofa's back and its guest, where Mert's own sofa (matt_chill at matt_sofa) doesn't cover them: window glass",
+      "holes": [[[645, 262], [652, 256], [671, 256], [676, 270], [727, 292], [729, 312], [690, 327], [686, 360], [676, 361], [645, 350]]],
+      "minus_sprite": {
+        "sheet": "public/assets/sprites/matt/matt_sheet.png", "frames": ["matt_chill", "matt_chill_br"],
+        "x": 668, "y": 362, "scale": 0.5390625, "origin": [0.5, 0.9875]
+      },
+      "only": [[[640, 222], [770, 222], [770, 300], [729, 300], [727, 292], [676, 270], [671, 256], [652, 256], [640, 266]]],
+      "grow": 1, "radius": 70, "patch": 9
+    },
+    {
+      "note": "its left armrest, in front of the plant pot",
+      "holes": [[[611, 289], [640, 277], [642, 268], [646, 262], [646, 350], [640, 350], [615, 348], [611, 330]]],
+      "minus_sprite": {
+        "sheet": "public/assets/sprites/matt/matt_sheet.png", "frames": ["matt_chill", "matt_chill_br"],
+        "x": 668, "y": 362, "scale": 0.5390625, "origin": [0.5, 0.9875]
+      },
+      "only": [[[598, 258], [646, 258], [646, 276], [612, 290], [598, 300]], [[592, 292], [612, 290], [612, 312], [592, 312]]],
+      "grow": 1, "radius": 50, "patch": 7
+    }
+  ]
+}

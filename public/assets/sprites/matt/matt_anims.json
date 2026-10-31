@@ -1,0 +1,264 @@
+{
+ "texture": "matt",
+ "frameSize": {
+  "w": 256,
+  "h": 240
+ },
+ "anims": [
+  {
+   "key": "matt_sit_idle",
+   "frames": [
+    {
+     "frame": "matt_sit",
+     "duration": 2200
+    },
+    {
+     "frame": "matt_sit_br",
+     "duration": 900
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 1600
+    },
+    {
+     "frame": "matt_sit_br",
+     "duration": 900
+    }
+   ],
+   "repeat": -1,
+   "use": "his default: sitting at his table, breathing"
+  },
+  {
+   "key": "matt_sit_type",
+   "frames": [
+    {
+     "frame": "matt_type_1",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_3",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_4",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_1",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_3",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_4",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_1",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_3",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_type_4",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 110
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 500
+    }
+   ],
+   "repeat": -1,
+   "use": "typing on his laptop"
+  },
+  {
+   "key": "matt_sit_look",
+   "frames": [
+    {
+     "frame": "matt_sit",
+     "duration": 300
+    },
+    {
+     "frame": "matt_look_l",
+     "duration": 1300
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 400
+    },
+    {
+     "frame": "matt_look_r",
+     "duration": 1300
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 300
+    }
+   ],
+   "repeat": 0,
+   "use": "glances up and around the room (someone walks in, the door bell)"
+  },
+  {
+   "key": "matt_sit_sip",
+   "frames": [
+    {
+     "frame": "matt_sit",
+     "duration": 200
+    },
+    {
+     "frame": "matt_sip_1",
+     "duration": 320
+    },
+    {
+     "frame": "matt_sip_2",
+     "duration": 260
+    },
+    {
+     "frame": "matt_sip_3",
+     "duration": 1200
+    },
+    {
+     "frame": "matt_sip_2",
+     "duration": 260
+    },
+    {
+     "frame": "matt_sip_1",
+     "duration": 320
+    },
+    {
+     "frame": "matt_sit",
+     "duration": 300
+    }
+   ],
+   "repeat": 0,
+   "use": "drinks his coffee"
+  },
+  {
+   "key": "matt_walk_sw",
+   "frames": [
+    {
+     "frame": "matt_walk_2",
+     "duration": 120
+    },
+    {
+     "frame": "matt_walk_3",
+     "duration": 120
+    },
+    {
+     "frame": "matt_walk_4",
+     "duration": 120
+    },
+    {
+     "frame": "matt_walk_5",
+     "duration": 120
+    },
+    {
+     "frame": "matt_walk_6",
+     "duration": 120
+    }
+   ],
+   "repeat": -1,
+   "use": "walking 3/4 toward the viewer, heading left (flipX for SE)"
+  },
+  {
+   "key": "matt_stand",
+   "frames": [
+    {
+     "frame": "matt_stand",
+     "duration": 1500
+    },
+    {
+     "frame": "matt_stand_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "standing (at the counter, at the door)"
+  },
+  {
+   "key": "matt_stand_cup",
+   "frames": [
+    {
+     "frame": "matt_cup_stand",
+     "duration": 1500
+    },
+    {
+     "frame": "matt_cup_stand_br",
+     "duration": 700
+    }
+   ],
+   "repeat": -1,
+   "use": "standing with a coffee (refill trip)"
+  },
+  {
+   "key": "matt_chill",
+   "frames": [
+    {
+     "frame": "matt_chill",
+     "duration": 1800
+    },
+    {
+     "frame": "matt_chill_br",
+     "duration": 900
+    }
+   ],
+   "repeat": -1,
+   "use": "lounging on his sofa"
+  }
+ ],
+ "origin": {
+  "x": 0.5,
+  "y": 0.9875
+ },
+ "seat": {
+  "note": "sit_* frames include his own chair, table, laptop and mug. The origin is the floor point under the table set; depth-sort by y like furniture.",
+  "footprint_tiles": [
+   2,
+   2
+  ]
+ },
+ "facing": {
+  "SW": "walk_sw",
+  "SE": "walk_sw + flipX"
+ }
+}
