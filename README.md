@@ -1,4 +1,4 @@
-# Gilded Pages
+# Macho
 
 Read your PDFs with Roxy Lark, a curly-haired barista at **Café Machorn** (New York, 2026) who steps into
 F. Scott Fitzgerald's **1925** through every book she opens. Reading earns Gilt; Gilt and finished

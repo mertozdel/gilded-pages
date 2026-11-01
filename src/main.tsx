@@ -27,5 +27,5 @@ boot()
   .then(() => mountGame(document.getElementById('game-layer')!))
   .catch((e) => {
     console.error('[boot]', e);
-    document.getElementById('root')!.textContent = 'Gilded Pages could not open its local library (IndexedDB). Is private browsing blocking storage?';
+    document.getElementById('root')!.textContent = 'Macho could not open its local library (IndexedDB). Is private browsing blocking storage?';
   });

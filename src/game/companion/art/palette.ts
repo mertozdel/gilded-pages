@@ -1,4 +1,4 @@
-/** The core 12 colours of the Gilded Pages palette, plus the extended tones the sprites need. */
+/** The core 12 colours of the Macho palette, plus the extended tones the sprites need. */
 export const PAL = {
   midnightNavy: '#141B2D',
   jazzBlack: '#0B0B0F',
