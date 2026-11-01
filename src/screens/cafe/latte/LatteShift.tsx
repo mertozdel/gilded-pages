@@ -868,7 +868,7 @@ export function LatteShift({ onClose }: { onClose: () => void }) {
           {phase === 'verdict' && throwdown && (
             <div className="latte-result perfect" role="status">
               <strong>{throwdown.judge}'s verdict</strong>
-              <span>Best cup {Math.round(Math.max(...throwdown.cups.map((c) => c.quality)))}/100 — pinned to the photo board.</span>
+              <span>Best cup {Math.round(Math.max(...throwdown.cups.map((c) => c.quality)))}/100.</span>
               <button
                 className="deco-btn"
                 onClick={() => {

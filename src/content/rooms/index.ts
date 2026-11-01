@@ -103,6 +103,8 @@ export interface HotspotDef {
   facing: Facing;
   /** Only there while the room has this tag on (a regular's hotspot follows him: `matt_seat`, `matt_waiting`). */
   with?: string;
+  /** Just the glowing dot in the room, never a name over it (the regular). */
+  dot?: boolean;
 }
 
 export function roomHotspots(room: RoomId): HotspotDef[] {
@@ -121,6 +123,7 @@ export function roomHotspots(room: RoomId): HotspotDef[] {
         stand: { u: Number(p.standX ?? o.x), v: Number(p.standY ?? o.y) },
         facing: (p.facing as Facing) ?? 'SE',
         ...(p.with ? { with: String(p.with) } : {}),
+        ...(p.dot ? { dot: true } : {}),
       };
     });
   }

@@ -19,8 +19,9 @@ describe('character registry', () => {
     const roxy = characterById('roxy');
     for (const id of ['sofa', 'silo', 'banquette', 'mural', 'counter', 'door']) expect(hotspotVisible(roxy, id)).toBe(true);
     const jason = characterById('jason');
-    expect(['sofa', 'silo', 'banquette'].map((id) => hotspotVisible(jason, id))).toEqual([false, false, false]);
-    expect(['mural', 'counter', 'door'].map((id) => hotspotVisible(jason, id))).toEqual([true, true, true]);
+    // The mural is only decoration for him (no photo board).
+    expect(['sofa', 'silo', 'banquette', 'mural'].map((id) => hotspotVisible(jason, id))).toEqual([false, false, false, false]);
+    expect(['counter', 'door'].map((id) => hotspotVisible(jason, id))).toEqual([true, true]);
     const joel = characterById('joel');
     expect(hotspotVisible(joel, 'counter')).toBe(true);
     expect(hotspotVisible(joel, 'mural')).toBe(false);

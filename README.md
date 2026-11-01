@@ -233,8 +233,8 @@ The last pick is preselected; the HUD's ⇄ button saves and comes back here. De
   faster, steeper pours with tighter windows, tips ×1 / ×1.5 / ×2 / ×3), from the Heart through the Fitzgerald
   specials to the Phoenix, Dragon and Unicorn, unlocked with his tips (all open from the start while
   `EVERYTHING_OPEN` is on); a picker pours the customer's choice or any pattern he has. Roxy, Joel and Jonas
-  pour the easy and medium patterns (8 of 15, `baristaMax` in `latte.json`) — hard and master are Jason's; rush hour every 4–6 min; the Daily Throwdown pins its best cup to his photo board (the mural
-  wall).
+  pour the easy and medium patterns (8 of 15, `baristaMax` in `latte.json`) — hard and master are Jason's; rush hour every 4–6 min; the Daily Throwdown keeps its best cup in his save (the mural wall is
+  only decoration: his photo board isn't shown; add a `mural` hotspot for him in `characters.json` to bring it back).
 - **Rhythm engine** (`src/game/rhythm/`) — AudioClock (Web Audio time, `getOutputTimestamp` for inputs), Chart
   (validated JSON), Judge (±45/90/135 ms, holds, doubles, slides, scratches, crossfades), ScoreModel, InputRouter
   (remappable keys, touch zones, swipes, rubbing, two-finger star power), HighwayView (wooden fretboard or LED

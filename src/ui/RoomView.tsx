@@ -143,10 +143,12 @@ export function RoomView({ room, onHotspot, hints, renderAnchor, hidden, labels,
             aria-label={`${d.label}: ${hints?.[d.id] ?? d.hint}`}
           >
             <span className="room-hotspot-dot" aria-hidden="true" />
-            <span className="room-hotspot-label">
-              {d.label}
-              <small>{hints?.[d.id] ?? d.hint}</small>
-            </span>
+            {!d.dot && (
+              <span className="room-hotspot-label">
+                {d.label}
+                <small>{hints?.[d.id] ?? d.hint}</small>
+              </span>
+            )}
           </button>
         );
       })}

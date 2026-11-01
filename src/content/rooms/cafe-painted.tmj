@@ -1466,6 +1466,11 @@
        "name": "with",
        "type": "string",
        "value": "matt_seat"
+      },
+      {
+       "name": "dot",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -1510,6 +1515,11 @@
        "name": "with",
        "type": "string",
        "value": "matt_sofa"
+      },
+      {
+       "name": "dot",
+       "type": "bool",
+       "value": true
       }
      ]
     },
@@ -1554,6 +1564,11 @@
        "name": "with",
        "type": "string",
        "value": "matt_waiting"
+      },
+      {
+       "name": "dot",
+       "type": "bool",
+       "value": true
       }
      ]
     }
