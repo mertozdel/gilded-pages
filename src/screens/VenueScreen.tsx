@@ -8,6 +8,7 @@ import type { ChartMode } from '../game/rhythm/ChartGen';
 import { bestKey, loadPlayable, playableSongs, type Loaded, type Playable } from '../game/rhythm/playable';
 import { RhythmSession, type SessionSnapshot, type SongResult } from '../game/rhythm/Session';
 import { beatMs, leadInMs } from '../game/rhythm/Song';
+import { EVERYTHING_OPEN } from '../rules/unlocks';
 import { useStore } from '../store';
 import { flashingReduced } from '../store/settingsSlice';
 import { PixelIcon } from '../ui/PixelIcon';
@@ -91,7 +92,8 @@ export function VenueScreen({ venue: venueId }: { venue: VenueId }) {
     if (song) void loadPlayable(song, mode).then(setLoaded);
   }, [song, mode]);
 
-  const locked = (p: Playable | undefined) => !!p && p.unlock > profile.currency;
+  // While everything is open (src/rules/unlocks.ts), so is every song; the prices stay for later.
+  const locked = (p: Playable | undefined) => !EVERYTHING_OPEN && !!p && p.unlock > profile.currency;
 
   const start = async () => {
     if (!song || locked(song)) return;
@@ -153,7 +155,7 @@ export function VenueScreen({ venue: venueId }: { venue: VenueId }) {
         toast(`New venue unlocked: ${v.name} (coming soon)`, 'gold');
       }
     }
-    for (const s of songs) if (s.unlock && p.currency >= s.unlock && e.profile.currency - earned < s.unlock) toast(`New song unlocked: ${s.title}`, 'gold');
+    if (!EVERYTHING_OPEN) for (const s of songs) if (s.unlock && p.currency >= s.unlock && e.profile.currency - earned < s.unlock) toast(`New song unlocked: ${s.title}`, 'gold');
     setProfile(p);
     setResult({ ...r, earned, newBest: e.newBest });
   };

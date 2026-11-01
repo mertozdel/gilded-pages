@@ -11,8 +11,9 @@
 import type { CharacterId } from '../../content/characters';
 
 export type TrackName = 'kick' | 'snare' | 'clap' | 'hat' | 'bass' | 'pah' | 'lead' | 'pluck' | 'fx';
-export type LeadVoice = 'accordion' | 'clarinet' | 'erhu' | 'dizi';
-export type SongStyle = 'polka' | 'waltz' | 'march' | 'edm';
+/** synth: a bright J-pop lead · trumpet: the brass band's. */
+export type LeadVoice = 'accordion' | 'clarinet' | 'erhu' | 'dizi' | 'synth' | 'trumpet';
+export type SongStyle = 'polka' | 'waltz' | 'march' | 'edm' | 'jpop' | 'schlager';
 
 export interface PatternDef {
   bars: number;
@@ -128,4 +129,27 @@ export function bars(...b: string[]): string {
 /** Repeats a token string n times. */
 export function rep(s: string, n: number): string {
   return Array(n).fill(s.trim()).join(' ');
+}
+
+/**
+ * A melody (or any track) written as notes with lengths, `token/steps`: `4/2 7/2 9/4` is a 4 held
+ * for two steps, a 7 for two, a 9 for four. A token without a length lasts one step; a rest
+ * (`.`) of n steps is n rests.
+ */
+export function line(spec: string): string {
+  return spec
+    .trim()
+    .split(/\s+/)
+    .map((item) => {
+      const [tok, len = '1'] = item.split('/');
+      const n = Number(len);
+      if (!tok || !Number.isInteger(n) || n < 1) throw new Error(`bad note "${item}"`);
+      return [tok, ...Array(n - 1).fill(tok === '.' ? '.' : '-')].join(' ');
+    })
+    .join(' ');
+}
+
+/** How many steps a track string spans. */
+export function stepCount(track: string): number {
+  return track.trim().split(/\s+/).length;
 }

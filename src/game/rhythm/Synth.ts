@@ -154,6 +154,7 @@ export class Instruments {
 
   /** The melody voice. */
   lead(t: number, dur: number, pitch: number, voice: LeadVoice): void {
+    if (voice === 'synth' || voice === 'trumpet') return this.brightLead(t, dur, pitch, voice);
     const hz = midiHz(pitch);
     const out = this.env(t, voice === 'dizi' ? 0.2 : 0.16, voice === 'erhu' ? 0.06 : 0.02, Math.max(0.1, dur));
     const f = this.ctx.createBiquadFilter();
@@ -204,6 +205,50 @@ export class Instruments {
         o.frequency.setValueAtTime(hz * 0.97, t);
         o.frequency.exponentialRampToValueAtTime(hz, t + 0.06);
       }
+      o.connect(f);
+      o.start(t);
+      o.stop(t + dur + 0.2);
+    }
+  }
+
+  /**
+   * synth: two detuned saws and a square an octave under, bright and quick (a J-pop lead).
+   * trumpet: a saw whose filter opens as the note speaks, with a little vibrato (the brass band).
+   */
+  private brightLead(t: number, dur: number, pitch: number, voice: 'synth' | 'trumpet'): void {
+    const hz = midiHz(pitch);
+    const trumpet = voice === 'trumpet';
+    const out = this.env(t, trumpet ? 0.17 : 0.11, trumpet ? 0.035 : 0.006, Math.max(0.1, dur));
+    const f = this.ctx.createBiquadFilter();
+    f.type = 'lowpass';
+    if (trumpet) {
+      f.frequency.setValueAtTime(700, t);
+      f.frequency.exponentialRampToValueAtTime(Math.min(4200, hz * 6), t + 0.07);
+      f.Q.value = 1.5;
+    } else f.frequency.value = 5200;
+    f.connect(out);
+    const vib = this.ctx.createOscillator();
+    const vibAmt = this.ctx.createGain();
+    vib.frequency.value = trumpet ? 5.2 : 6;
+    vibAmt.gain.setValueAtTime(0, t);
+    // Vibrato comes in on held notes only.
+    vibAmt.gain.linearRampToValueAtTime(trumpet ? 9 : 6, t + Math.min(0.35, dur));
+    vib.connect(vibAmt);
+    vib.start(t);
+    vib.stop(t + dur + 0.2);
+    const oscs: [OscillatorType, number, number][] = trumpet
+      ? [['sawtooth', 0, 1]]
+      : [
+          ['sawtooth', -9, 1],
+          ['sawtooth', 9, 1],
+          ['square', 0, 0.5],
+        ];
+    for (const [type, cents, mult] of oscs) {
+      const o = this.ctx.createOscillator();
+      o.type = type;
+      o.frequency.value = hz * mult;
+      o.detune.value = cents;
+      vibAmt.connect(o.detune);
       o.connect(f);
       o.start(t);
       o.stop(t + dur + 0.2);

@@ -11,17 +11,21 @@
  *       chart's `audio` field names the file.
  *
  * Optional `unlock`: the Fans (Joel) or Applause (Jonas) needed before the song can be played.
- * Only originals or public-domain tunes — never copyrighted recordings or songs.
+ * Only originals or public-domain tunes — never copyrighted recordings or songs, and never a
+ * real song's melody (a melody is copyrighted on its own): write new ones in a genre's style.
+ * The sets so far are in src/content/setlists/: Joel's J-pop, Jonas's German party hits.
  * In dev builds every venue also lists a plain test pattern (src/game/rhythm/testPattern.ts).
  */
 import type { SongDef, SongStyle } from '../game/rhythm/Song';
 import type { CharacterId } from './characters';
+import { JOEL_SONGS } from './setlists/joel';
+import { JONAS_SONGS } from './setlists/jonas';
 
 export type SongSource =
   | { kind: 'synth'; song: SongDef; unlock?: number }
   | { kind: 'audio'; id: string; title: string; composer: string; character: CharacterId; style: SongStyle; chartUrl: string; unlock?: number };
 
-export const SONGS: SongSource[] = [];
+export const SONGS: SongSource[] = [...JOEL_SONGS, ...JONAS_SONGS].map(({ song, unlock }) => ({ kind: 'synth', song, unlock }));
 
 export function songId(s: SongSource): string {
   return s.kind === 'synth' ? s.song.id : s.id;

@@ -19,7 +19,8 @@ interface Result {
  * 100% Perfect, so the charts and the audio agree.
  */
 test('Autoplay reaches 100% Perfect on every chart', async ({ page }) => {
-  test.setTimeout(300_000);
+  // Six seconds of every chart in real time: the test patterns and both setlists, four difficulties each.
+  test.setTimeout(600_000);
   const errors = watchErrors(page);
   await page.goto('/#/dev/rhythm-test');
   await expect.poll(() => inApp<boolean>(page, 'return !!window.__rhythmTest'), { timeout: 30_000 }).toBe(true);
