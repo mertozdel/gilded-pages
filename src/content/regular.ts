@@ -66,11 +66,6 @@ export function regularMood(o: { hour: number; typing: boolean; emptyForMs: numb
   return o.typing ? 'busy' : 'calm';
 }
 
-/** Saturday or Sunday on the device clock: he lounges on the window sofa instead. */
-export function isWeekend(d: Date): boolean {
-  return d.getDay() === 0 || d.getDay() === 6;
-}
-
 /**
  * The device clock his day follows. Dev builds can start it elsewhere for a test, with
  * `localStorage['gp.regularClock']` = an ISO time (it runs on from there).

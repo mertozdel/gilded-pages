@@ -1860,7 +1860,7 @@
      "width": 0,
      "height": 0,
      "rotation": 0,
-     "visible": true,
+     "visible": false,
      "point": true,
      "properties": [
       {
@@ -1881,7 +1881,7 @@
       {
        "name": "note",
        "type": "string",
-       "value": "Weekends (device clock Sat/Sun): matt_chill on the window sofa, which hides while he is there."
+       "value": "Off (Tiled's way of commenting an object out): Mert sits at his table every day. This was his weekend spot, matt_chill on the window sofa (which hides while he's there); switch it on and pick it in WorldScene.buildRegular to bring it back."
       }
      ]
     },

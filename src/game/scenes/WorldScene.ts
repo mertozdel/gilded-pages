@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import { nowPlaying, onMusicChange } from '../../audio/music';
 import { bus, type SceneId, type StageRect } from '../../bus/events';
 import type { CharacterId } from '../../content/characters';
-import { isWeekend, regularNow } from '../../content/regular';
 import { paintingOf, roomKind, ROOM_MAPS, propsOf, type HotspotDef, type RoomId } from '../../content/rooms';
 import { useStore } from '../../store';
 import { Chatter } from '../crew/Chatter';
@@ -288,10 +287,10 @@ export class WorldScene extends Phaser.Scene {
     this.chatter = new Chatter(() => (roxy ? [roxy, ...crew.voices()] : crew.voices()), { returning });
   }
 
-  /** Mert at his table (at the weekend, on the window sofa), if the room has a place for him. */
+  /** Mert at his table, every day, if the room has a place for him. */
   private buildRegular(room: Room): void {
     this.regular?.destroy(false);
-    const spot = RegularNpc.spotIn(room, isWeekend(regularNow()));
+    const spot = RegularNpc.spotIn(room, false);
     const regular = spot ? new RegularNpc(this, room, spot, () => this.room && this.emitHotspots(this.room)) : null;
     this.regular = regular;
     if (import.meta.env.DEV) {
